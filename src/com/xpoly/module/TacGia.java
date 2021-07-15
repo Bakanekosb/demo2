@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.helper;
+package com.xpoly.module;
+
+import java.util.Date;
 
 /**
  *
  * @author Admin
  */
-public class newclass {
-    
+public class TacGia {
+
+   
 }
