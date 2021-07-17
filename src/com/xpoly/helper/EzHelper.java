@@ -12,18 +12,27 @@ import javax.swing.JTextField;
  *
  * @author Dell
  */
-public class EzHelper extends javax.swing.JFrame{
-    public static boolean blank(JTextField txt, String tenTruong,Component parent){
-        if(txt.getText().isBlank()){
+public class EzHelper extends javax.swing.JFrame {
+
+    public static boolean blank(JTextField txt, String tenTruong, Component parent) {
+        if (txt.getText().isBlank()) {
             txt.requestFocus();
             DialogHelper.alert(parent, tenTruong + " không được để trống");
             return true;
         }
         return false;
     }
-    
-    public static Integer isInt(JTextField txt, String message,Component parent){
+
+    public static Integer isInt(JTextField txt, String message, Component parent) {
         try {
+            if (blank(txt, message, parent)) {
+                return null;
+            }
+            if (Integer.parseInt(txt.getText()) < 0) {
+                txt.requestFocus();
+                DialogHelper.alert(parent, message + " phải >= 0");
+                return null;
+            }
             return Integer.parseInt(txt.getText());
         } catch (Exception e) {
             txt.requestFocus();
@@ -31,9 +40,17 @@ public class EzHelper extends javax.swing.JFrame{
             return null;
         }
     }
-    
-    public static Double isDouble(JTextField txt, String message,Component parent){
+
+    public static Double isDouble(JTextField txt, String message, Component parent) {
         try {
+            if (blank(txt, message, parent)) {
+                return null;
+            }
+            if (Double.parseDouble(txt.getText()) < 0) {
+                txt.requestFocus();
+                DialogHelper.alert(parent, message + " phải >= 0");
+                return null;
+            }
             return Double.parseDouble(txt.getText());
         } catch (Exception e) {
             txt.requestFocus();

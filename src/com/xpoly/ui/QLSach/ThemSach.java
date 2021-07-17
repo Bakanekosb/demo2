@@ -423,12 +423,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         String maDanhMuc = danhMuc.getMaDanhMuc();
         String tenSach = txt_tenSach.getText();
         String tacGia = txt_tg.getText();
-        String nxb = txt_namxb.getText();
-        String namxb = txt_namxb.getText();
-        String soTrang = txt_soTrang.getText();
-        String giaTien = txt_gia.getText();
-        String soLuong = txt_soLuong.getText();
-        String soDocTaiCho = txt_docTaiCho.getText();
+        String nxb = txt_namxb.getText();       
         String viTriXep = txt_viTri.getText();
         String moTa = txt_moTa.getText();
         String ghiChu = txt_ghiChu.getText();
@@ -436,14 +431,20 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         
         if(EzHelper.blank(txt_tenSach, "Tên sách", jPanel1) ||
                 EzHelper.blank(txt_tg, "Tên tác giả", jPanel1) ||
-                EzHelper.blank(txt_soTrang, "Số trang", jPanel1) ||
-                EzHelper.blank(txt_gia, "Giá tiền", jPanel1) ||
-                EzHelper.blank(txt_soLuong, "Số lượng", jPanel1) ||
-                EzHelper.blank(txt_docTaiCho, "Đọc tại chỗ", jPanel1)||
-                EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1) == null
+                EzHelper.isInt(txt_namxb, "Năm xuất bản", jPanel1) == null ||
+                EzHelper.isInt(txt_soTrang, "Số trang", jPanel1) == null ||
+                EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1) == null ||
+                EzHelper.isInt(txt_docTaiCho, "Số sách đọc tại chỗ", jPanel1) == null ||
+                EzHelper.isDouble(txt_gia, "Giá tiền", jPanel1) == null
                 ){
             return null;
         }
+        
+        int namxb = EzHelper.isInt(txt_namxb, "Năm xuất bản", jPanel1);
+        int soTrang = EzHelper.isInt(txt_soTrang, "Số trang", jPanel1);
+        int soLuong = EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1);
+        int docTaiCho = EzHelper.isInt(txt_docTaiCho, "Số sách đọc tại chỗ", jPanel1);
+        double gia = EzHelper.isDouble(txt_gia, "Giá tiền", jPanel1);
         
        
         
