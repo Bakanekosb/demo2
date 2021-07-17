@@ -7,8 +7,7 @@ package com.xpoly.DAO;
 
 import com.xpoly.Interface.IDAO;
 import com.xpoly.helper.JdbcHelper;
-import com.xpoly.helper.EzHelper;
-import com.xpoly.model.DanhMuc;
+import com.xpoly.model.Sach_Tg;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,24 +17,17 @@ import java.util.List;
  *
  * @author Dell
  */
-public class DanhMucDAO implements IDAO<DanhMuc, String>{
+public class Sach_TacGiaDAO implements IDAO<Sach_Tg, String> {
 
-    public DanhMucDAO() {
-        List<DanhMuc> lst_danhMuc = selectAll();
-        for (int i = 0; i < lst_danhMuc.size(); i++) {
-            EzHelper.MAP_DANHMUC.put(lst_danhMuc.get(i).getMaDanhMuc(), lst_danhMuc.get(i).getTenDanhMuc());
-        }
-    }
-
-    
-    
     @Override
-    public void insert(DanhMuc model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void insert(Sach_Tg model) {
+        String insert_sql = "INSERT INTO sach_tg (matuasach,matg) "
+                + "VALUES (?,?)";
+        JdbcHelper.executeUpdate(insert_sql, model.getMaTuaSach(), model.getMaTacGia());
     }
 
     @Override
-    public void update(DanhMuc model) {
+    public void update(Sach_Tg model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -45,26 +37,25 @@ public class DanhMucDAO implements IDAO<DanhMuc, String>{
     }
 
     @Override
-    public DanhMuc selectById(String id) {
+    public Sach_Tg selectById(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<DanhMuc> selectAll() {
-        String selectAll_sql = "SELECT * FROM DANHMUC";
+    public List<Sach_Tg> selectAll() {
+        String selectAll_sql = "SELECT * FROM Sach_tg";
         return selectBySql(selectAll_sql);
     }
 
     @Override
-    public List<DanhMuc> selectBySql(String sql, Object... args) {
-        List<DanhMuc> lst = new ArrayList<>();
+    public List<Sach_Tg> selectBySql(String sql, Object... args) {
+        List<Sach_Tg> lst = new ArrayList<>();
         try {
-            System.out.println("select");
             ResultSet rs = null;
             try {
                 rs = JdbcHelper.executeQuery(sql, args);
                 while (rs.next()) {
-                    DanhMuc model = readFromResultSet(rs);
+                    Sach_Tg model = readFromResultSet(rs);
                     lst.add(model);
                 }
             } finally {
@@ -77,12 +68,11 @@ public class DanhMucDAO implements IDAO<DanhMuc, String>{
     }
 
     @Override
-    public DanhMuc readFromResultSet(ResultSet rs) throws SQLException {
-        DanhMuc model = new DanhMuc();
-        model.setMaDanhMuc(rs.getString(1));
-        model.setTenDanhMuc(rs.getString(2));
+    public Sach_Tg readFromResultSet(ResultSet rs) throws SQLException {
+        Sach_Tg model = new Sach_Tg();
+        model.setMaTuaSach(rs.getInt(1));
+        model.setMaTacGia(rs.getInt(2));
         return model;
     }
-    
 
 }

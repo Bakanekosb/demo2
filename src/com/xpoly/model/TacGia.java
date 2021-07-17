@@ -12,10 +12,11 @@ import java.util.Date;
  * @author Admin
  */
 public class TacGia {
-       private int maTg  ;
-  private String tenTg;
-  private Date ngaySinh;
- private  String quocTich;
+
+    private int maTg;
+    private String tenTg;
+    private Date ngaySinh;
+    private String quocTich;
 
     public TacGia() {
     }
@@ -61,12 +62,13 @@ public class TacGia {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("TacGia{maTg=").append(maTg);
-        sb.append(", tenTg=").append(tenTg);
-        sb.append(", ngaySinh=").append(ngaySinh);
-        sb.append(", quocTich=").append(quocTich);
-        sb.append('}');
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("TacGia{maTg=").append(maTg);
+//        sb.append(", tenTg=").append(tenTg);
+//        sb.append(", ngaySinh=").append(ngaySinh);
+//        sb.append(", quocTich=").append(quocTich);
+//        sb.append('}');
+//        return sb.toString();
+        return tenTg;
     }
 }

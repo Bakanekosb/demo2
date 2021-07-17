@@ -16,19 +16,19 @@ public class QuyenSach {
     private int tinhTrang;
     private int trangThai;
     private String ghiChu;
-    String maTuaSach;
+    int maTuaSach;
 
     public QuyenSach() {
     }
 
-    public QuyenSach(int maQuyenSach, String viTri, boolean duocMuonVe, int tinhTrang, int trangThai, String ghiChu) {
-        this.maQuyenSach = maQuyenSach;
+    public QuyenSach(String viTri, boolean duocMuonVe, String ghiChu, int maTuaSach) {
         this.viTri = viTri;
         this.duocMuonVe = duocMuonVe;
-        this.tinhTrang = tinhTrang;
-        this.trangThai = trangThai;
         this.ghiChu = ghiChu;
+        this.maTuaSach = maTuaSach;
     }
+    
+   
 
     public int getMaQuyenSach() {
         return maQuyenSach;
@@ -78,11 +78,11 @@ public class QuyenSach {
         this.ghiChu = ghiChu;
     }
 
-    public String getMaTuaSach() {
+    public int getMaTuaSach() {
         return maTuaSach;
     }
 
-    public void setMaTuaSach(String maTuaSach) {
+    public void setMaTuaSach(int maTuaSach) {
         this.maTuaSach = maTuaSach;
     }
 

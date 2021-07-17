@@ -7,13 +7,18 @@ package com.xpoly.ui.QLSach;
 
 import com.xpoly.DAO.DanhMucDAO;
 import com.xpoly.DAO.QuyenSachDAO;
+import com.xpoly.DAO.Sach_TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
+import com.xpoly.model.Sach_Tg;
+import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -25,11 +30,19 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     TuaSachDAO tuaSachDAO = new TuaSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
     DanhMucDAO danhMucDAO = new DanhMucDAO();
-    
+    Sach_TacGiaDAO stgDAO = new Sach_TacGiaDAO();
+
     DanhMuc danhMuc = new DanhMuc();
     TuaSach tuaSach = new TuaSach();
     QuyenSach quyenSach = new QuyenSach();
-    
+    Sach_Tg stg = new Sach_Tg();
+    List<QuyenSach> lst_qSach = new ArrayList<>();
+    List<TuaSach> lst_tSach = new ArrayList<>();
+    List<Sach_Tg> lst_stg = new ArrayList<>();
+
+    String viTriXep;
+    int docTaiCho;
+
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
 
     /**
@@ -58,7 +71,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         txt_tenSach = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_tg = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_chonTg = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         txt_nxb = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -106,7 +119,12 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
         jLabel5.setText("Tác giả:");
 
-        jButton1.setText("+");
+        btn_chonTg.setText("+");
+        btn_chonTg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_chonTgActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Nhà xuất bản:");
 
@@ -190,7 +208,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                                     .addComponent(txt_gia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_viTri, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btn_chonTg)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -208,7 +226,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txt_tg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btn_chonTg))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -305,6 +323,19 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         insert();
     }//GEN-LAST:event_btn_saveActionPerformed
 
+    private void btn_chonTgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chonTgActionPerformed
+        // TODO add your handling code here:
+        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame();
+        chonTG.setVisible(true);
+    }//GEN-LAST:event_btn_chonTgActionPerformed
+
+    public static void hienThiTG(List<TacGia> lst){
+        String s = "";
+        for (TacGia x : lst) {
+            s += x.getTenTg() + "; "; 
+        }
+        txt_tg.setText(s);
+    }
     /**
      * @param args the command line arguments
      */
@@ -342,10 +373,10 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_chonTg;
     private javax.swing.JButton btn_clear;
     private javax.swing.JButton btn_save;
     private javax.swing.JComboBox<String> cbo_danhMuc;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -372,14 +403,15 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     private javax.swing.JTextField txt_soLuong;
     private javax.swing.JTextField txt_soTrang;
     private javax.swing.JTextField txt_tenSach;
-    private javax.swing.JTextField txt_tg;
+    public static javax.swing.JTextField txt_tg;
     private javax.swing.JTextField txt_viTri;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void init() {
-        cbo_danhMuc.setModel((DefaultComboBoxModel)cboModel);
+        cbo_danhMuc.setModel((DefaultComboBoxModel) cboModel);
         loadComboboxDanhMuc();
+        lst_tSach = tuaSachDAO.selectAll();
     }
 
     @Override
@@ -389,11 +421,9 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     @Override
     public void insert() {
-        if(getModel()!= null)
-        {
-            
-        }
-        else{
+        if (getModel() != null) {
+           
+        } else {
             DialogHelper.alert(jPanel1, "Fail");
         }
     }
@@ -423,28 +453,36 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         String maDanhMuc = danhMuc.getMaDanhMuc();
         String tenSach = txt_tenSach.getText();
         String tacGia = txt_tg.getText();
-        String nxb = txt_namxb.getText();       
-        String viTriXep = txt_viTri.getText();
+        String nxb = txt_namxb.getText();
+        viTriXep = txt_viTri.getText();
         String moTa = txt_moTa.getText();
         String ghiChu = txt_ghiChu.getText();
         int namxb = EzHelper.isInt(txt_namxb, "Năm xuất bản", jPanel1);
         int soTrang = EzHelper.isInt(txt_soTrang, "Số trang", jPanel1);
         int soLuong = EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1);
-        int docTaiCho = EzHelper.isInt(txt_docTaiCho, "Số sách đọc tại chỗ", jPanel1);
-        double gia = EzHelper.isDouble(txt_gia, "Giá tiền", jPanel1);
+        docTaiCho = EzHelper.isInt(txt_docTaiCho, "Số sách đọc tại chỗ", jPanel1);
+        double gia = EzHelper.isDouble(txt_gia, "Giá tiền", jPanel1);  
         
-        if(EzHelper.blank(txt_tenSach, "Tên sách", jPanel1) ||
-                EzHelper.blank(txt_tg, "Tên tác giả", jPanel1) ||
-                namxb < 0 ||  soTrang < 0 ||  soLuong < 0 || docTaiCho < 0 || gia < 0
-                ){
+        EzHelper ez = new EzHelper();
+        ez.selectImage(lbl_cover);
+        String anh = lbl_cover.getToolTipText();
+
+        if (EzHelper.blank(txt_tenSach, "Tên sách", jPanel1)
+                || EzHelper.blank(txt_tg, "Tên tác giả", jPanel1)
+                || namxb < 0 || soTrang < 0 || soLuong < 0 || docTaiCho < 0 || gia < 0) {
             return null;
         }
-        
-        
-        
-       
-        
-     return new TuaSach();   
+        for (TuaSach x  : lst_tSach) {
+            if(x.getTenTuaSach().equalsIgnoreCase(tenSach)
+                    && x.getNxb().equalsIgnoreCase(nxb)
+                    && x.getNamxb() == namxb
+                    && x.getSoTrang() == soTrang){
+                lst_stg = stgDAO.selectAll();
+            }
+        }
+        return new TuaSach(tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
+// public TuaSach(String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm) 
+
     }
 
     private void loadComboboxDanhMuc() {

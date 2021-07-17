@@ -21,11 +21,25 @@ public class TuaSach {
   private int trangThai;
   private int soLuong;
   private String madm;
+  private String anh;
 
     public TuaSach() {
     }
 
-    public TuaSach(int maTuaSach, String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int trangThai, int soLuong, String madm) {
+    public TuaSach(String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm, String anh) {
+        this.tenTuaSach = tenTuaSach;
+        this.nxb = nxb;
+        this.namxb = namxb;
+        this.soTrang = soTrang;
+        this.giaTien = giaTien;
+        this.moTa = moTa;
+        this.ghiChu = ghiChu;
+        this.soLuong = soLuong;
+        this.madm = madm;
+        this.anh = anh;
+    }
+
+    public TuaSach(int maTuaSach, String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int trangThai, int soLuong, String madm, String anh) {
         this.maTuaSach = maTuaSach;
         this.tenTuaSach = tenTuaSach;
         this.nxb = nxb;
@@ -37,9 +51,22 @@ public class TuaSach {
         this.trangThai = trangThai;
         this.soLuong = soLuong;
         this.madm = madm;
+        this.anh = anh;
+    }
+    
+    
+
+    
+
+    public String getAnh() {
+        return anh;
     }
 
+    public void setAnh(String anh) {
+        this.anh = anh;
+    }
 
+    
 
     public int getNamxb() {
         return namxb;
