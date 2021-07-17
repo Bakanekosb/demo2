@@ -21,4 +21,24 @@ public class EzHelper extends javax.swing.JFrame{
         }
         return false;
     }
+    
+    public static Integer isInt(JTextField txt, String message,Component parent){
+        try {
+            return Integer.parseInt(txt.getText());
+        } catch (Exception e) {
+            txt.requestFocus();
+            DialogHelper.alert(parent, message + " phải là số nguyên");
+            return null;
+        }
+    }
+    
+    public static Double isDouble(JTextField txt, String message,Component parent){
+        try {
+            return Double.parseDouble(txt.getText());
+        } catch (Exception e) {
+            txt.requestFocus();
+            DialogHelper.alert(parent, message + " phải là số");
+            return null;
+        }
+    }
 }

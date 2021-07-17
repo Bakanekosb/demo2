@@ -19,7 +19,7 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
 
     @Override
     public void insert(TuaSach model) {
-        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxb,sotrang,giatien,mota,ghichu,soluong,madm) "
+        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxb,sotrang,giatien,motxa,ghichu,soluong,madm) "
                 + "VALUES(?,?,?,?,?,?,?,?,?)";
         JdbcHelper.executeUpdate(insert_sql, model.getMaTuaSach(),
                 model.getNxb(),model.getNamxb(),

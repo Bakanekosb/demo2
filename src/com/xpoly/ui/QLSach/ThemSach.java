@@ -439,10 +439,12 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 EzHelper.blank(txt_soTrang, "Số trang", jPanel1) ||
                 EzHelper.blank(txt_gia, "Giá tiền", jPanel1) ||
                 EzHelper.blank(txt_soLuong, "Số lượng", jPanel1) ||
-                EzHelper.blank(txt_docTaiCho, "Đọc tại chỗ", jPanel1)
+                EzHelper.blank(txt_docTaiCho, "Đọc tại chỗ", jPanel1)||
+                EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1) == null
                 ){
             return null;
         }
+        
        
         
      return new TuaSach();   
