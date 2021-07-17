@@ -6,58 +6,53 @@
 package com.xpoly.DAO;
 
 import com.xpoly.Interface.IDAO;
-import com.xpoly.helper.JdbcHelper;
-import com.xpoly.model.TuaSach;
+import com.xpoly.model.DanhMuc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 /**
  *
  * @author Dell
  */
-public class TuaSachDAO implements IDAO<TuaSach, Integer>{
+public class DanhMucDAO implements IDAO<DanhMuc, String>{
 
     @Override
-    public void insert(TuaSach model) {
-        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxb,sotrang,giatien,mota,ghichu,soluong,madm) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
-        JdbcHelper.executeUpdate(insert_sql, model.getMaTuaSach(),
-                model.getNxb(),model.getNamxb(),
-                model.getSoLuong(),model.getGiaTien(),
-                model.getMoTa(),model.getGhiChu(),
-                model.getSoLuong(),model.getMadm()
-        
-        );
-    }
-    
-    @Override
-    public void update(TuaSach model) {
+    public void insert(DanhMuc model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<TuaSach> selectAll() {
+    public void update(DanhMuc model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<TuaSach> selectBySql(String sql, Object... args) {
+    public void delete(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(Integer id) {
+    public DanhMuc selectById(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public TuaSach selectById(Integer id) {
+    public List<DanhMuc> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public TuaSach readFromResultSet(ResultSet rs) throws SQLException {
+    public List<DanhMuc> selectBySql(String sql, Object... args) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public DanhMuc readFromResultSet(ResultSet rs) throws SQLException {
+        DanhMuc model = new DanhMuc();
+        model.setMaDanhMuc(rs.getString(0));
+        model.setTenDanhMuc(rs.getString(1));
+        return model;
     }
     
 }

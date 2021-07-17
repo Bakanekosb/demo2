@@ -5,6 +5,8 @@
  */
 package com.xpoly.Interface;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -26,4 +28,6 @@ public interface IDAO<EntityType, KeyType> {
     public List<EntityType> selectAll();
 
     List<EntityType> selectBySql(String sql, Object... args);
+    EntityType readFromResultSet(ResultSet rs) throws SQLException;
+    
 }

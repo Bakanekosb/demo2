@@ -16,20 +16,18 @@ public class QuyenSach {
     private int tinhTrang;
     private int trangThai;
     private String ghiChu;
-    private String anh;
     String maTuaSach;
 
     public QuyenSach() {
     }
 
-    public QuyenSach(int maQuyenSach, String viTri, boolean duocMuonVe, int tinhTrang, int trangThai, String ghiChu, String anh) {
+    public QuyenSach(int maQuyenSach, String viTri, boolean duocMuonVe, int tinhTrang, int trangThai, String ghiChu) {
         this.maQuyenSach = maQuyenSach;
         this.viTri = viTri;
         this.duocMuonVe = duocMuonVe;
         this.tinhTrang = tinhTrang;
         this.trangThai = trangThai;
         this.ghiChu = ghiChu;
-        this.anh = anh;
     }
 
     public int getMaQuyenSach() {
@@ -80,14 +78,6 @@ public class QuyenSach {
         this.ghiChu = ghiChu;
     }
 
-    public String getAnh() {
-        return anh;
-    }
-
-    public void setAnh(String anh) {
-        this.anh = anh;
-    }
-
     public String getMaTuaSach() {
         return maTuaSach;
     }
@@ -105,7 +95,6 @@ public class QuyenSach {
         sb.append(", tinhTrang=").append(tinhTrang);
         sb.append(", trangThai=").append(trangThai);
         sb.append(", ghiChu=").append(ghiChu);
-        sb.append(", anh=").append(anh);
         sb.append(", maTuaSach=").append(maTuaSach);
         sb.append('}');
         return sb.toString();

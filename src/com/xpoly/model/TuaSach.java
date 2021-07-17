@@ -13,21 +13,23 @@ public class TuaSach {
     private int maTuaSach;
   private String tenTuaSach;
   private String nxb;
+  private int namxb;
   private int soTrang;
   private double giaTien;
   private String moTa;
   private String ghiChu;
-  private String trangThai;
+  private int trangThai;
   private int soLuong;
   private String madm;
 
     public TuaSach() {
     }
 
-    public TuaSach(int maTuaSach, String tenTuaSach, String nxb, int soTrang, double giaTien, String moTa, String ghiChu, String trangThai, int soLuong, String madm) {
+    public TuaSach(int maTuaSach, String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int trangThai, int soLuong, String madm) {
         this.maTuaSach = maTuaSach;
         this.tenTuaSach = tenTuaSach;
         this.nxb = nxb;
+        this.namxb = namxb;
         this.soTrang = soTrang;
         this.giaTien = giaTien;
         this.moTa = moTa;
@@ -37,6 +39,16 @@ public class TuaSach {
         this.madm = madm;
     }
 
+
+
+    public int getNamxb() {
+        return namxb;
+    }
+
+    public void setNamxb(int namxb) {
+        this.namxb = namxb;
+    }
+    
     public int getMaTuaSach() {
         return maTuaSach;
     }
@@ -93,11 +105,11 @@ public class TuaSach {
         this.ghiChu = ghiChu;
     }
 
-    public String getTrangThai() {
+    public int getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(String trangThai) {
+    public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
 

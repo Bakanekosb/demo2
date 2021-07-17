@@ -7,41 +7,32 @@ package com.xpoly.DAO;
 
 import com.xpoly.Interface.IDAO;
 import com.xpoly.helper.JdbcHelper;
-import com.xpoly.model.TuaSach;
+import com.xpoly.model.QuyenSach;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 /**
  *
  * @author Dell
  */
-public class TuaSachDAO implements IDAO<TuaSach, Integer>{
+public class QuyenSachDAO implements IDAO<QuyenSach, Integer>{
 
-    @Override
-    public void insert(TuaSach model) {
-        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxb,sotrang,giatien,mota,ghichu,soluong,madm) "
-                + "VALUES(?,?,?,?,?,?,?,?,?)";
-        JdbcHelper.executeUpdate(insert_sql, model.getMaTuaSach(),
-                model.getNxb(),model.getNamxb(),
-                model.getSoLuong(),model.getGiaTien(),
-                model.getMoTa(),model.getGhiChu(),
-                model.getSoLuong(),model.getMadm()
-        
-        );
-    }
+//    vitri nvarchar(20) not null,
+//duocmuonve bit not null, -- (duocmuonve = 1, doctaicho = 0)
+//tinhtrang int not null, -- (dangphucvu = 0, hong = 1, mat = 2, ngungphucvu = 3)
+//trangthai int not null, -- (sansanchomuon = 0, dangmuon = 1, duocdat = 2 )
+//ghichu nvarchar(50),
+//matuasach
     
     @Override
-    public void update(TuaSach model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void insert(QuyenSach model) {
+        String insert_sql = "INSERT INTO Quyensach (vitri,duocmuonve,matuasach)  "
+                + "VALUES(?,?,?,?,?,?,?,?,?)";
+        JdbcHelper.executeUpdate(insert_sql,model.getViTri(),model.isDuocMuonVe(), model.getMaTuaSach());    }
 
     @Override
-    public List<TuaSach> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<TuaSach> selectBySql(String sql, Object... args) {
+    public void update(QuyenSach model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -51,12 +42,22 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
     }
 
     @Override
-    public TuaSach selectById(Integer id) {
+    public QuyenSach selectById(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public TuaSach readFromResultSet(ResultSet rs) throws SQLException {
+    public List<QuyenSach> selectAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<QuyenSach> selectBySql(String sql, Object... args) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public QuyenSach readFromResultSet(ResultSet rs) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
