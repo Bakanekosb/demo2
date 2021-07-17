@@ -37,7 +37,7 @@ public class DialogHelper extends JDialog {
     }
 
     public static boolean confirm(Component parent, String message) {
-        String options[] = {"Có", "Không"};
+        String options[] = {"Yes", "Cancel"};
         pane = new JOptionPane(message, JOptionPane.YES_NO_OPTION, JOptionPane.YES_OPTION, new ImageIcon("icon\\fpt.png"), options, options[0]);
         createJDialog(pane);
         if (pane.getValue() != null) {

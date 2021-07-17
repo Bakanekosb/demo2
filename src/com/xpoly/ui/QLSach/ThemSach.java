@@ -9,6 +9,7 @@ import com.xpoly.DAO.DanhMucDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
+import com.xpoly.helper.DialogHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.TuaSach;
@@ -18,13 +19,17 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Dell
  */
-public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
+public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     TuaSachDAO tuaSachDAO = new TuaSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
     DanhMucDAO danhMucDAO = new DanhMucDAO();
+    
+    DanhMuc danhMuc = new DanhMuc();
     TuaSach tuaSach = new TuaSach();
     QuyenSach quyenSach = new QuyenSach();
+    
+    DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
 
     /**
      * Creates new form ThemSach
@@ -71,7 +76,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
         txt_moTa = new javax.swing.JTextArea();
         txt_docTaiCho = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txt_gia1 = new javax.swing.JTextField();
+        txt_viTri = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btn_clear = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
@@ -89,6 +94,12 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin sách", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel8.setText("Danh mục:");
+
+        cbo_danhMuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbo_danhMucActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Tên sách:");
 
@@ -136,10 +147,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
                             .addComponent(jLabel8))
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbo_danhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txt_tenSach)))
+                            .addComponent(txt_tenSach)
+                            .addComponent(cbo_danhMuc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +187,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
                                 .addGap(18, 18, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_gia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_gia1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txt_viTri, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -217,7 +226,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
                     .addComponent(txt_soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(txt_docTaiCho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_gia1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_viTri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,6 +242,11 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
         btn_clear.setText("Clear");
 
         btn_save.setText("Save");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
         btn_cancel.setText("Cancel");
 
@@ -274,6 +288,21 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbo_danhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_danhMucActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (cbo_danhMuc.getSelectedIndex() >= 0) {
+                danhMuc = (DanhMuc) cboModel.getSelectedItem();
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cbo_danhMucActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        // TODO add your handling code here:
+        insert();
+    }//GEN-LAST:event_btn_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -336,7 +365,6 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
     private javax.swing.JTextField txt_docTaiCho;
     private javax.swing.JTextArea txt_ghiChu;
     private javax.swing.JTextField txt_gia;
-    private javax.swing.JTextField txt_gia1;
     private javax.swing.JTextArea txt_moTa;
     private javax.swing.JTextField txt_namxb;
     private javax.swing.JTextField txt_nxb;
@@ -344,10 +372,12 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
     private javax.swing.JTextField txt_soTrang;
     private javax.swing.JTextField txt_tenSach;
     private javax.swing.JTextField txt_tg;
+    private javax.swing.JTextField txt_viTri;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void init() {
+        cbo_danhMuc.setModel((DefaultComboBoxModel)cboModel);
         loadComboboxDanhMuc();
     }
 
@@ -358,7 +388,10 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
 
     @Override
     public void insert() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(getModel()!= null)
+        {
+            System.out.println("ok");
+        }
     }
 
     @Override
@@ -382,19 +415,36 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
     }
 
     @Override
-    public Integer getModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public TuaSach getModel() {
+        String maDanhMuc = danhMuc.getMaDanhMuc();
+        String tenSach = txt_tenSach.getText();
+        String tacGia = txt_tg.getText();
+        String nxb = txt_namxb.getText();
+        String namxb = txt_namxb.getText();
+        String soTrang = txt_soTrang.getText();
+        String giaTien = txt_gia.getText();
+        String soLuong = txt_soLuong.getText();
+        String soDocTaiCho = txt_docTaiCho.getText();
+        String viTriXep = txt_viTri.getText();
+        String moTa = txt_moTa.getText();
+        String ghiChu = txt_ghiChu.getText();
 
-    @Override
-    public void setModel(Integer model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(tenSach.isBlank()){
+            DialogHelper.alert(this, "Tên sách không được để trống");
+            return null;
+        }
+        
+     return new TuaSach();   
     }
 
     private void loadComboboxDanhMuc() {
         for (DanhMuc x : danhMucDAO.selectAll()) {
-            System.out.println("xxx");
-            cbo_danhMuc.addItem(x.toString());
+            cboModel.addElement(x);
         }
+    }
+
+    @Override
+    public void setModel(TuaSach model) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

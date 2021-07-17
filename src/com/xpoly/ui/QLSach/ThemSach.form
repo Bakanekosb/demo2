@@ -104,11 +104,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="cbo_danhMuc" min="-2" pref="186" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
                               <Component id="txt_tenSach" max="32767" attributes="0"/>
+                              <Component id="cbo_danhMuc" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -157,7 +154,7 @@
                                   <EmptySpace type="separate" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txt_gia" alignment="1" min="-2" pref="47" max="-2" attributes="0"/>
-                                      <Component id="txt_gia1" alignment="1" min="-2" pref="47" max="-2" attributes="0"/>
+                                      <Component id="txt_viTri" alignment="1" min="-2" pref="47" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -208,7 +205,7 @@
                       <Component id="txt_soLuong" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_docTaiCho" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_gia1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_viTri" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -238,6 +235,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbo_danhMucActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -343,7 +343,7 @@
             <Property name="text" type="java.lang.String" value="&#x110;&#x1ecd;c t&#x1ea1;i ch&#x1ed7;:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_gia1">
+        <Component class="javax.swing.JTextField" name="txt_viTri">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -361,6 +361,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_saveActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_cancel">
       <Properties>
