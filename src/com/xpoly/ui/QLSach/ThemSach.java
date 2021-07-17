@@ -427,24 +427,20 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         String viTriXep = txt_viTri.getText();
         String moTa = txt_moTa.getText();
         String ghiChu = txt_ghiChu.getText();
-
-        
-        if(EzHelper.blank(txt_tenSach, "Tên sách", jPanel1) ||
-                EzHelper.blank(txt_tg, "Tên tác giả", jPanel1) ||
-                EzHelper.isInt(txt_namxb, "Năm xuất bản", jPanel1) == null ||
-                EzHelper.isInt(txt_soTrang, "Số trang", jPanel1) == null ||
-                EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1) == null ||
-                EzHelper.isInt(txt_docTaiCho, "Số sách đọc tại chỗ", jPanel1) == null ||
-                EzHelper.isDouble(txt_gia, "Giá tiền", jPanel1) == null
-                ){
-            return null;
-        }
-        
         int namxb = EzHelper.isInt(txt_namxb, "Năm xuất bản", jPanel1);
         int soTrang = EzHelper.isInt(txt_soTrang, "Số trang", jPanel1);
         int soLuong = EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1);
         int docTaiCho = EzHelper.isInt(txt_docTaiCho, "Số sách đọc tại chỗ", jPanel1);
         double gia = EzHelper.isDouble(txt_gia, "Giá tiền", jPanel1);
+        
+        if(EzHelper.blank(txt_tenSach, "Tên sách", jPanel1) ||
+                EzHelper.blank(txt_tg, "Tên tác giả", jPanel1) ||
+                namxb < 0 ||  soTrang < 0 ||  soLuong < 0 || docTaiCho < 0 || gia < 0
+                ){
+            return null;
+        }
+        
+        
         
        
         

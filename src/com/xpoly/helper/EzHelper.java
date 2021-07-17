@@ -26,36 +26,36 @@ public class EzHelper extends javax.swing.JFrame {
     public static Integer isInt(JTextField txt, String message, Component parent) {
         try {
             if (blank(txt, message, parent)) {
-                return null;
+                return -1;
             }
             if (Integer.parseInt(txt.getText()) < 0) {
                 txt.requestFocus();
                 DialogHelper.alert(parent, message + " phải >= 0");
-                return null;
+                return -1;
             }
             return Integer.parseInt(txt.getText());
         } catch (Exception e) {
             txt.requestFocus();
             DialogHelper.alert(parent, message + " phải là số nguyên");
-            return null;
+            return -1;
         }
     }
 
     public static Double isDouble(JTextField txt, String message, Component parent) {
         try {
             if (blank(txt, message, parent)) {
-                return null;
+                return -1.0;
             }
             if (Double.parseDouble(txt.getText()) < 0) {
                 txt.requestFocus();
                 DialogHelper.alert(parent, message + " phải >= 0");
-                return null;
+                return -1.0;
             }
             return Double.parseDouble(txt.getText());
         } catch (Exception e) {
             txt.requestFocus();
             DialogHelper.alert(parent, message + " phải là số");
-            return null;
+            return -1.0;
         }
     }
 }
