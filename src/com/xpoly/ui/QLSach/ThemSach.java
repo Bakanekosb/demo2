@@ -10,6 +10,7 @@ import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
+import com.xpoly.helper.EzHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.TuaSach;
@@ -390,7 +391,10 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     public void insert() {
         if(getModel()!= null)
         {
-            System.out.println("ok");
+            
+        }
+        else{
+            DialogHelper.alert(jPanel1, "Fail");
         }
     }
 
@@ -429,10 +433,17 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         String moTa = txt_moTa.getText();
         String ghiChu = txt_ghiChu.getText();
 
-        if(tenSach.isBlank()){
-            DialogHelper.alert(this, "Tên sách không được để trống");
+        
+        if(EzHelper.blank(txt_tenSach, "Tên sách", jPanel1) ||
+                EzHelper.blank(txt_tg, "Tên tác giả", jPanel1) ||
+                EzHelper.blank(txt_soTrang, "Số trang", jPanel1) ||
+                EzHelper.blank(txt_gia, "Giá tiền", jPanel1) ||
+                EzHelper.blank(txt_soLuong, "Số lượng", jPanel1) ||
+                EzHelper.blank(txt_docTaiCho, "Đọc tại chỗ", jPanel1)
+                ){
             return null;
         }
+       
         
      return new TuaSach();   
     }
