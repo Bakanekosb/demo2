@@ -5,27 +5,33 @@
  */
 package com.xpoly.ui.QLSach;
 
+import com.xpoly.DAO.DanhMucDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
+import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.TuaSach;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
  * @author Dell
  */
-public class ThemSach extends javax.swing.JFrame implements IService<Integer>{
+public class ThemSach extends javax.swing.JFrame implements IService<Integer> {
 
     TuaSachDAO tuaSachDAO = new TuaSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
+    DanhMucDAO danhMucDAO = new DanhMucDAO();
     TuaSach tuaSach = new TuaSach();
     QuyenSach quyenSach = new QuyenSach();
+
     /**
      * Creates new form ThemSach
      */
     public ThemSach() {
         initComponents();
+        init();
     }
 
     /**
@@ -342,7 +348,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer>{
 
     @Override
     public void init() {
-        
+        loadComboboxDanhMuc();
     }
 
     @Override
@@ -383,5 +389,12 @@ public class ThemSach extends javax.swing.JFrame implements IService<Integer>{
     @Override
     public void setModel(Integer model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void loadComboboxDanhMuc() {
+        for (DanhMuc x : danhMucDAO.selectAll()) {
+            System.out.println("xxx");
+            cbo_danhMuc.addItem(x.toString());
+        }
     }
 }

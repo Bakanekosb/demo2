@@ -40,11 +40,7 @@ public class DanhMuc {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("DanhMuc{maDanhMuc=").append(maDanhMuc);
-        sb.append(", tenDanhMuc=").append(tenDanhMuc);
-        sb.append('}');
-        return sb.toString();
+        return tenDanhMuc;
     }
     
 }
