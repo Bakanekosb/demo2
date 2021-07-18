@@ -21,10 +21,10 @@ import java.sql.SQLException;
  */
 public class JdbcHelper {
 
-    private static String driver ;//= "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String dburl ;//= "jdbc:sqlserver://localhost;database=qltv";
-    private static String username ;//= "poly";
-    private static String password ;//= "123";
+    private static String driver;//= "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static String dburl;//= "jdbc:sqlserver://localhost;database=qltv";
+    private static String username;//= "poly";
+    private static String password;//= "123";
 
     static {
         try {
@@ -39,6 +39,15 @@ public class JdbcHelper {
     }
 
     ;
+    
+    public static Connection ketNoi() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(dburl, "poly", "123");
+        } catch (Exception e) {
+        }
+        return conn;
+    }
 
     public static PreparedStatement getStatement(String sql, Object... args) throws SQLException {
         Connection conn = DriverManager.getConnection(dburl, username, password);

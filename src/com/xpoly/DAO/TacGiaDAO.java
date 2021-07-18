@@ -22,8 +22,8 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public void insert(TacGia model) {
-    String sql = "insert into tacgia values (?,?,?)";
-    JdbcHelper.executeUpdate(sql, model.getMaTg(),model.getTenTg(),model.getNgaySinh(),model.getQuocTich());
+    String sql = "insert into tacgia (tentg, ngaysinh, quoctich) values (?,?,?)";
+    JdbcHelper.executeUpdate(sql, model.getTenTg(),model.getNgaySinh(),model.getQuocTich());
     }
 
     @Override
@@ -43,7 +43,8 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public List<TacGia> selectAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String selectAll_sql = "SELECT * FROM TACGIA";
+        return selectBySql(selectAll_sql);
 
     }
 
