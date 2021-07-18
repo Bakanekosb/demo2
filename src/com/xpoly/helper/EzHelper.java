@@ -145,4 +145,5 @@ public class EzHelper extends javax.swing.JFrame {
     public static Date now() {
         return new Date();
     }
+    
 }
