@@ -162,6 +162,7 @@ public class TuaSach {
         sb.append("TuaSach{maTuaSach=").append(maTuaSach);
         sb.append(", tenTuaSach=").append(tenTuaSach);
         sb.append(", nxb=").append(nxb);
+        sb.append(", namxb=").append(namxb);
         sb.append(", soTrang=").append(soTrang);
         sb.append(", giaTien=").append(giaTien);
         sb.append(", moTa=").append(moTa);

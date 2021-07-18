@@ -36,9 +36,10 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
     int totalPage;
 
     TacGiaDAO tgDAO = new TacGiaDAO();
-    List<TacGia> lst_tg, lst_chonTG = new ArrayList<>();
+    List<TacGia> lst_tg = new ArrayList<>();
     DefaultListModel jlistModel = new DefaultListModel();
-
+    static List<TacGia> lst_chonTG = new ArrayList<>();
+    
     public ChonTacGiaJFrame() {
         initComponents();
         init();

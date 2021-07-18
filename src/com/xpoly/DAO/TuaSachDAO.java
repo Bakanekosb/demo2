@@ -21,11 +21,11 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
 
     @Override
     public void insert(TuaSach model) {
-        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxb,sotrang,giatien,mota,ghichu,soluong,madm, anh) "
-                + "VALUES(?,?,?,?,?,?,?,?,?, ?)";
-        JdbcHelper.executeUpdate(insert_sql, model.getMaTuaSach(),
+        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxuatban,sotrang,giatien,mota,ghichu,soluong,madm,anh) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        JdbcHelper.executeUpdate(insert_sql, model.getTenTuaSach(),
                 model.getNxb(),model.getNamxb(),
-                model.getSoLuong(),model.getGiaTien(),
+                model.getSoTrang(),model.getGiaTien(),
                 model.getMoTa(),model.getGhiChu(),
                 model.getSoLuong(),model.getMadm(), model.getAnh()
         );

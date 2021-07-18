@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -108,5 +110,39 @@ public class EzHelper extends javax.swing.JFrame {
             DialogHelper.alert(this, "Lỗi save ảnh");
         }
 
+    }
+    
+    static final SimpleDateFormat DATE_FORMATER = new SimpleDateFormat("dd/MM/yyyy");
+
+    
+    // VD: EzHelper.toDate(txt_ngaySinh.getText())
+    public static Date toDate(String date, String... pattern) {
+        try {
+            if (pattern.length > 0) {
+                DATE_FORMATER.applyPattern(pattern[0]);
+            }
+            if (date == null) {
+                return EzHelper.now();
+            }
+            return DATE_FORMATER.parse(date);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    
+    // VD: DateHelper.toString(model.getNgaySinh())
+    public static String toString(Date date, String... pattern) {
+        if (pattern.length > 0) {
+            DATE_FORMATER.applyPattern(pattern[0]);
+        }
+        if (date == null) {
+            date = EzHelper.now();
+        }
+        return DATE_FORMATER.format(date);
+    }
+    
+    public static Date now() {
+        return new Date();
     }
 }
