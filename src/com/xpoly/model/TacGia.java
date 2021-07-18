@@ -28,6 +28,8 @@ public class TacGia {
         this.quocTich = quocTich;
     }
 
+   
+
     public int getMaTg() {
         return maTg;
     }

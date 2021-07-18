@@ -11,9 +11,13 @@ import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.TacGia;
 import java.awt.GridLayout;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -133,6 +137,7 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
     private void btnaddTGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddTGActionPerformed
         // TODO add your handling code here:
         insert();
+        System.out.println(getModel());
     }//GEN-LAST:event_btnaddTGActionPerformed
 
     /**
@@ -240,14 +245,23 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
 
     @Override
     public TacGia getModel() {
+        int i = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String tenTg = txtTenTG.getText();
-        String ngaySinh = txtNgaySinh.getText();
+        String ngaySinh1 = txtNgaySinh.getText();
+        Date ngaySinh = null;
+        try {
+           ngaySinh = sdf.parse(ngaySinh1);
+        } catch (ParseException ex) {
+            Logger.getLogger(AddTacGia.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String quocTich = txtQuocTich.getText();
         if(validateForm().length() > 0){
             DialogHelper.alert(jLabel1, tenTg);
           return null;  
         }
-        return new TacGia(WIDTH, tenTg,  ngaySinh, quocTich);
+        
+        return new TacGia(i++, tenTg,  ngaySinh, quocTich);    
     }
 
     @Override
