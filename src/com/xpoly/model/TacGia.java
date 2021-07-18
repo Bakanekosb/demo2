@@ -28,6 +28,14 @@ public class TacGia {
         this.quocTich = quocTich;
     }
 
+  
+
+    public TacGia(String tenTg, Date ngaySinh, String quocTich) {
+        this.tenTg = tenTg;
+        this.ngaySinh = ngaySinh;
+        this.quocTich = quocTich;
+    }
+
    
 
     public int getMaTg() {

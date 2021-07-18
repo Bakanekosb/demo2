@@ -261,7 +261,7 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
           return null;  
         }
         
-        return new TacGia(i++, tenTg,  ngaySinh, quocTich);    
+        return new TacGia(tenTg, ngaySinh, quocTich);
     }
 
     @Override
