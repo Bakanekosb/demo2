@@ -9,6 +9,7 @@ import com.xpoly.Interface.IDAO;
 import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.TacGia;
+import com.xpoly.ui.QLSach.ThemSach;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,8 +29,9 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public void update(TacGia model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+          String sql = "update tacgia set tentg = N'? , ngaysinh = '?' ,quoctich = N'?'  where tentg =  N'?'";
+          JdbcHelper.executeUpdate(sql, model.getTenTg(), model.getNgaySinh(),model.getQuocTich(),model.getTenTg());
+   }
 
     @Override
     public void delete(Integer id) {

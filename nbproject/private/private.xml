@@ -4,14 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/QLSach/AddTacGia.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/DAO/QuyenSachDAO.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/DialogHelper.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/QLSach/ThemSach.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/JdbcHelper.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/Interface/IDAO.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/model/TacGia.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/EzHelper.java</file>
             <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/DAO/TacGiaDAO.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/model/QuyenSach.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/Interface/IService.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/QLSach/ChonTacGiaJFrame.java</file>
         </group>
     </open-files>
 </project-private>
