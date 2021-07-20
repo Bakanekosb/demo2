@@ -28,8 +28,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Admin
  */
 public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
+
     TacGiaDAO tacGiaDaO = new TacGiaDAO();
     List<TacGia> lst_tacgia = new ArrayList<>();
+    String head[] = {"Mã Tác Giả","Tên Tác Giả ", " Ngày Tháng Năm Sinh ", "Quốc Tịch"};
+    DefaultTableModel model = new DefaultTableModel(head, 0);
+    int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
+    String keyword = "";
+    int totalPage;
 
     /**
      * Creates new form AddTacGia
@@ -57,13 +63,18 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
         jLabel4 = new javax.swing.JLabel();
         txtQuocTich = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TableList = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btnaddTG = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
         txtseach = new javax.swing.JTextField();
         btnseach = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        btn_first = new javax.swing.JButton();
+        btn_prev = new javax.swing.JButton();
+        btn_next = new javax.swing.JButton();
+        btn_last = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,7 +87,7 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
 
         jLabel4.setText("Quốc Tịch");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -87,7 +98,7 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TableList);
 
         btnaddTG.setText("Thêm");
         btnaddTG.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +115,38 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
         jPanel2.add(btndelete);
 
         btnseach.setText("Tìm Kiếm");
+
+        btn_first.setText("<<");
+        btn_first.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_firstActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_first);
+
+        btn_prev.setText("<");
+        btn_prev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_prevActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_prev);
+
+        btn_next.setText(">");
+        btn_next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nextActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_next);
+
+        btn_last.setText(">>");
+        btn_last.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lastActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_last);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -139,8 +182,11 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
                                 .addComponent(btnseach))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(202, 202, 202)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +208,9 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
                         .addComponent(txtQuocTich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -183,7 +231,7 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,6 +245,36 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
         insert();
         System.out.println(getModel());
     }//GEN-LAST:event_btnaddTGActionPerformed
+
+    private void btn_lastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lastActionPerformed
+        // TODO add your handling code here:
+           pageNumber = totalPage;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_lastActionPerformed
+
+    private void btn_firstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_firstActionPerformed
+        // TODO add your handling code here:
+                pageNumber = 1;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_firstActionPerformed
+
+    private void btn_prevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prevActionPerformed
+        // TODO add your handling code here:
+                pageNumber--;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_prevActionPerformed
+
+    private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
+        // TODO add your handling code here:
+         pageNumber++;
+        loadTable();
+        buttonEnabled();
+        
+        
+    }//GEN-LAST:event_btn_nextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,6 +312,11 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TableList;
+    private javax.swing.JButton btn_first;
+    private javax.swing.JButton btn_last;
+    private javax.swing.JButton btn_next;
+    private javax.swing.JButton btn_prev;
     private javax.swing.JButton btnaddTG;
     private javax.swing.JButton btndelete;
     private javax.swing.JButton btnseach;
@@ -244,8 +327,8 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtQuocTich;
     private javax.swing.JTextField txtTenTG;
@@ -255,21 +338,35 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
     @Override
     public void init() {
         setLocationRelativeTo(this);
+        TableList.setModel(model);
+
         loadTable();
-        String head [] = {"Tên Tác Giả " ," Ngày Tháng Năm Sinh ", "Quốc Tịch"};
-        DefaultTableModel model = new DefaultTableModel(head, 0);
-        
         pack();
     }
 
     @Override
     public void loadTable() {
-        
+        model.setRowCount(0);
+        try {
+            int total = (int) Math.ceil((float) tacGiaDaO.getTotalRows(keyword) / rowsOfPage);
+            totalPage = total > 0 ? total : 1;
+            pageNumber = pageNumber > totalPage ? 1 : pageNumber;
+           lst_tacgia = tacGiaDaO.selectByKeyword(keyword, pageNumber, rowsOfPage);
+            if (!lst_tacgia.isEmpty()) {
+                for (TacGia x : lst_tacgia) {
+                    model.addRow(new Object[]{
+                        x.getMaTg(), x.getTenTg(), x.getNgaySinh(), x.getQuocTich()
+                    });
+                }
+            }
+        } catch (Exception e) {
+        }
+
     }
 
     @Override
     public void insert() {
-        if(getModel() != null ){
+        if (getModel() != null) {
             try {
                 tacGiaDaO.insert(getModel());
                 DialogHelper.alert(jLabel1, "thêm thành Công !");
@@ -281,7 +378,7 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
 
     @Override
     public void update() {
-        if(getModel() != null ){
+        if (getModel() != null) {
             try {
                 tacGiaDaO.update(getModel());
                 DialogHelper.alert(jLabel1, "Sửa thành công !");
@@ -293,13 +390,13 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
 
     @Override
     public void delete() {
-        
+
     }
 
     @Override
     public void clear() {
-        
-   }
+
+    }
 
     @Override
     public StringBuilder validateForm() {
@@ -311,11 +408,11 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
             EzHelper.blank(txtTenTG, "Tên tác giả ", jLabel1);
             return null;
         }
-         if (ngaySinh.isBlank()) {
+        if (ngaySinh.isBlank()) {
             EzHelper.blank(txtTenTG, "Ngày sinh  ", jLabel1);
             return null;
         }
-          if (quocTich.isBlank()) {
+        if (quocTich.isBlank()) {
             EzHelper.blank(txtTenTG, "Quốc tịch  ", jLabel1);
             return null;
         }
@@ -331,21 +428,27 @@ public class AddTacGia extends javax.swing.JFrame implements IService<TacGia> {
         String ngaySinh1 = txtNgaySinh.getText();
         Date ngaySinh = null;
         try {
-           ngaySinh = sdf.parse(ngaySinh1);
+            ngaySinh = sdf.parse(ngaySinh1);
         } catch (ParseException ex) {
             Logger.getLogger(AddTacGia.class.getName()).log(Level.SEVERE, null, ex);
         }
         String quocTich = txtQuocTich.getText();
-        if(validateForm().length() > 0){
+        if (validateForm().length() > 0) {
             DialogHelper.alert(jLabel1, tenTg);
-          return null;  
+            return null;
         }
-        
+
         return new TacGia(tenTg, ngaySinh, quocTich);
     }
 
     @Override
     public void setModel(TacGia model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+        void buttonEnabled() {
+        btn_first.setEnabled(pageNumber > 1);
+        btn_prev.setEnabled(pageNumber > 1);
+        btn_last.setEnabled(pageNumber < totalPage);
+        btn_next.setEnabled(pageNumber < totalPage);
     }
 }

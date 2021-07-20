@@ -17,18 +17,22 @@ public class TacGia {
     private String tenTg;
     private Date ngaySinh;
     private String quocTich;
+    private int trangthai;
 
     public TacGia() {
     }
 
-    public TacGia(int maTg, String tenTg, Date ngaySinh, String quocTich) {
+    public TacGia(int maTg, String tenTg, Date ngaySinh, String quocTich, int trangthai) {
         this.maTg = maTg;
         this.tenTg = tenTg;
         this.ngaySinh = ngaySinh;
         this.quocTich = quocTich;
+        this.trangthai = trangthai;
     }
 
-  
+    
+
+ 
 
     public TacGia(String tenTg, Date ngaySinh, String quocTich) {
         this.tenTg = tenTg;
@@ -36,8 +40,12 @@ public class TacGia {
         this.quocTich = quocTich;
     }
 
-   
-
+      public void setTrangthai(int trangthai) {
+        this.trangthai = trangthai;
+    }
+    public int getTrangthai() {
+        return trangthai;
+    }
     public int getMaTg() {
         return maTg;
     }

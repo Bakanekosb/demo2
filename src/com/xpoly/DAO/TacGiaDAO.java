@@ -35,7 +35,8 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public void delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "update tacgia set trangthai = 1 where tentg =  ?";
+        JdbcHelper.executeUpdate(sql, 1);
     }
 
     @Override
