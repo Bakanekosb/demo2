@@ -79,7 +79,6 @@ public class JdbcHelper {
     public static ResultSet executeQuery(String sql, Object... args) {
         try {
             PreparedStatement pstm = getStatement(sql, args);
-            System.out.println("true");
             return pstm.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);

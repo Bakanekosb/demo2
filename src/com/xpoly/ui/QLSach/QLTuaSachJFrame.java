@@ -6,44 +6,27 @@
 package com.xpoly.ui.QLSach;
 
 import com.xpoly.DAO.DanhMucDAO;
+import com.xpoly.DAO.SachUaThichDAO;
 import com.xpoly.DAO.Sach_TacGiaDAO;
 import com.xpoly.DAO.TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.helper.TableColumnHider;
 import com.xpoly.model.DanhMuc;
+import com.xpoly.model.NguoiDung;
+import com.xpoly.model.SachUaThich;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -71,6 +54,8 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     List<TuaSach> lst_tuaSach = new ArrayList<>();
     TuaSachDAO tuaSachDAO = new TuaSachDAO();
     List<Sach_Tg> lst_stg;
+    List<SachUaThich> lst_sachUaThich;
+    SachUaThichDAO sachUaThichDAO = new SachUaThichDAO();
 
     public QLTuaSachJFrame() {
         initComponents();
@@ -110,7 +95,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         cbo_danhMuc = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btn_like = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,6 +159,11 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
             }
         ));
         tbl_tuaSach.setRowHeight(30);
+        tbl_tuaSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_tuaSachMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_tuaSach);
 
         javax.swing.GroupLayout Panel_listLayout = new javax.swing.GroupLayout(Panel_list);
@@ -284,7 +274,12 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
         jButton3.setText("Đặt sách");
 
-        jButton4.setText("Like");
+        btn_like.setText("Like");
+        btn_like.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_likeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -320,7 +315,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btn_like)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -348,7 +343,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                             .addComponent(jButton1)
                             .addComponent(jButton2)
                             .addComponent(jButton3)
-                            .addComponent(jButton4))))
+                            .addComponent(btn_like))))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -423,6 +418,28 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
     }//GEN-LAST:event_cbo_danhMucActionPerformed
 
+    private void tbl_tuaSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_tuaSachMouseClicked
+        // TODO add your handling code here:
+        rowIndex = tbl_tuaSach.getSelectedRow();
+        System.out.println(rowIndex);
+        if (tblModel.getValueAt(rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex()).toString().equals("Like")) {
+            btn_like.setEnabled(false);
+        } else {
+            btn_like.setEnabled(true);
+        }
+    }//GEN-LAST:event_tbl_tuaSachMouseClicked
+
+    private void btn_likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_likeActionPerformed
+        // TODO add your handling code here:
+        try {
+            int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
+            sachUaThichDAO.insert(new SachUaThich(LoginHelper.USER.getMaND(), maTuaSach));
+            tblModel.setValueAt("Like", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
+            btn_like.setEnabled(false);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_likeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -465,6 +482,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private javax.swing.JButton btn_first1;
     private javax.swing.JButton btn_last;
     private javax.swing.JButton btn_last1;
+    private javax.swing.JButton btn_like;
     private javax.swing.JButton btn_next;
     private javax.swing.JButton btn_next1;
     private javax.swing.JButton btn_prev;
@@ -474,7 +492,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -534,6 +551,9 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
         panel_chk.setLayout(new GridLayout(1, 10));
 
+        LoginHelper.USER = new NguoiDung("ND001");
+        lst_sachUaThich = sachUaThichDAO.selectAllById(LoginHelper.USER.getMaND());
+
         loadTable();
     }
 //{"Mã tựa sách", "Tên tựa sách", "Nhà xuất bản", "Năm xuất bản", "Số trang", "Giá tiền",
@@ -551,12 +571,17 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
             if (!lst_tuaSach.isEmpty()) {
                 for (TuaSach x : lst_tuaSach) {
                     lst_stg = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
-
+                    String like = "";
+                    for (SachUaThich y : lst_sachUaThich) {
+                        if (y.getMaTuaSach() == x.getMaTuaSach()) {
+                            like = "Like";
+                            break;
+                        }
+                    }
                     tblModel.addRow(new Object[]{
                         x.getMaTuaSach(), x.getTenTuaSach(), "tacgia", x.getNxb(), x.getNamxb(),
                         x.getSoTrang(), x.getGiaTien(), x.getMoTa(), x.getGhiChu(), x.getSoLuong(),
-                        EzHelper.MAP_DANHMUC.get(x.getMadm()), x.getSoLuotThich(), "Like"
-                    });
+                        EzHelper.MAP_DANHMUC.get(x.getMadm()), x.getSoLuotThich(), like});
 
                 }
             }
@@ -614,4 +639,3 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
     }
 }
-
