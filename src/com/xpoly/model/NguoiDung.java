@@ -28,6 +28,11 @@ public class NguoiDung {
     public NguoiDung() {
     }
 
+    public NguoiDung(String maND) {
+        this.maND = maND;
+    }   
+    
+
     public NguoiDung(String maND, String hoTen, Date ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, int vaiTro, String ghiChu, String matKhau, double viTien, String anh) {
         this.maND = maND;
         this.hoTen = hoTen;
