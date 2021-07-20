@@ -52,6 +52,42 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
         String selectAll_sql = "SELECT * FROM TUASACH";
         return selectBySql(selectAll_sql);
     }
+    
+
+    
+     public List<TuaSach> selectByKeyword(String keyword, int pageNumber, int rowsOfPage) throws SQLException {
+        String sql = "{call SP_SELECTTUASACH (?,?,?)}";
+        List<TuaSach> lst = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%", pageNumber, rowsOfPage);
+            while (rs.next()) {
+                lst.add(readFromResultSet(rs));
+            }
+        } finally {
+            rs.getStatement().getConnection().close();
+        }
+        return lst;
+    }
+     
+     public int getTotalRows(String keyword){
+        int total = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "{call SP_TuaSachTOTALROWS (?)}";
+                rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%");
+                while (rs.next()) {
+                    total = rs.getInt("Total");
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return total;
+    }
 
     @Override
     public List<TuaSach> selectBySql(String sql, Object... args) {
@@ -82,10 +118,17 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
     public TuaSach selectById(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public TuaSach selectLastItem(){
+        String selectById_sql = "SELECT * FROM TUASACH where matuasach = (select max(matuasach) from tuasach)";
+        List<TuaSach> lst = selectBySql(selectById_sql);
+        return lst.isEmpty() ? null : lst.get(0);
+    }
+    
 
     @Override
     public TuaSach readFromResultSet(ResultSet rs) throws SQLException {
-TuaSach model = new TuaSach();
+        TuaSach model = new TuaSach();
         model.setMaTuaSach(rs.getInt("matuasach"));
         model.setTenTuaSach(rs.getString("tentuasach"));
         model.setNxb(rs.getString("nxb"));
@@ -95,6 +138,7 @@ TuaSach model = new TuaSach();
         model.setMoTa(rs.getString("mota"));
         model.setTrangThai(rs.getInt("trangthai"));
         model.setGhiChu(rs.getString("GHICHU"));
+        model.setSoLuong(rs.getInt("soluong"));
         model.setAnh(rs.getString("anh"));
         model.setMadm(rs.getString("madm"));        
         return model;

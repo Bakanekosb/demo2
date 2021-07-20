@@ -44,9 +44,10 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     String viTriXep;
     int docTaiCho;
     boolean isAD = true;
+    int soLuong;
 
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
-    DefaultComboBoxModel<String> cboModelNam = new DefaultComboBoxModel<>(new String[]{"AD","BC"});
+    DefaultComboBoxModel<String> cboModelNam = new DefaultComboBoxModel<>(new String[]{"AD", "BC"});
 
     /**
      * Creates new form ThemSach
@@ -304,11 +305,12 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbl_cover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btn_cancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                        .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
@@ -364,10 +366,9 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     private void cbo_namxbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_namxbActionPerformed
         // TODO add your handling code here:
-        if(cbo_namxb.getSelectedIndex() == 0){
+        if (cbo_namxb.getSelectedIndex() == 0) {
             isAD = true;
-        }
-        else{
+        } else {
             isAD = false;
         }
     }//GEN-LAST:event_cbo_namxbActionPerformed
@@ -470,6 +471,16 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         if (tuaSach != null) {
             try {
                 tuaSachDAO.insert(getModel());
+                tuaSach = tuaSachDAO.selectLastItem();
+                System.out.println(tuaSach.getMaTuaSach());
+                for (TacGia x : ChonTacGiaJFrame.lst_chonTG) {
+                    stgDAO.insert(new Sach_Tg(tuaSach.getMaTuaSach(), x.getMaTg()));
+                }
+                for (int i = 0; i < soLuong; i++) {
+                    quyenSach = new QuyenSach(viTriXep, i >= docTaiCho, tuaSach.getGhiChu(), tuaSach.getMaTuaSach());
+                    quyenSachDAO.insert(quyenSach);
+                }
+
                 DialogHelper.alert(jPanel1, "Thêm thành công");
             } catch (Exception e) {
                 DialogHelper.alert(jPanel1, "Thêm không thành công");
@@ -478,9 +489,9 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
             DialogHelper.alert(jPanel1, "Fail");
         }
     }
-    
-    public void themQuyenSach(){
-        
+
+    public void themQuyenSach() {
+
     }
 
     @Override
@@ -495,7 +506,17 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cbo_danhMuc.setSelectedIndex(0);
+        txt_tenSach.setText("");
+        txt_tg.setText("");
+        txt_nxb.setText("");
+        txt_namxb.setText("");
+        txt_soTrang.setText("");
+        txt_gia.setText("");
+        txt_soLuong.setText("");
+        txt_docTaiCho.setText("");
+        txt_viTri.setText("");
+        txt_soTrang.setText("");
     }
 
     @Override
@@ -526,7 +547,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         if (soTrang < 0) {
             return null;
         }
-        int soLuong = EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1);
+        soLuong = EzHelper.isInt(txt_soLuong, "Số lượng", jPanel1);
         if (soLuong < 0) {
             return null;
         }
@@ -541,12 +562,17 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         Calendar calendar = Calendar.getInstance();
 
         if (namxb > (calendar.get(Calendar.YEAR))) {
-                DialogHelper.alert(jPanel1, "Năm xuất bản không được lớn hơn năm hiện tại");
-                return null;
+            DialogHelper.alert(jPanel1, "Năm xuất bản không được lớn hơn năm hiện tại");
+            return null;
         }
-        
-        if(docTaiCho > soLuong){
+
+        if (docTaiCho > soLuong) {
             DialogHelper.alert(jPanel1, "Số lượng sách đọc tại chỗ không được lớn hơn số lượng sách");
+            return null;
+        }
+
+        if (soLuong > 0 && docTaiCho == 0) {
+            DialogHelper.alert(jPanel1, "Cần tối thiểu 1 quyển sách đọc tại chỗ");
             return null;
         }
 
@@ -561,7 +587,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 lst_stg = stgDAO.selectAll();
             }
         }
-        
+
         namxb = isAD ? namxb : namxb * (-1);
         tuaSach = new TuaSach(tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
         System.out.println(tuaSach.toString());

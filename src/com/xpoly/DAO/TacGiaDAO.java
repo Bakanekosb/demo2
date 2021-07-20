@@ -6,6 +6,7 @@
 package com.xpoly.DAO;
 
 import com.xpoly.Interface.IDAO;
+import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.TacGia;
@@ -20,6 +21,13 @@ import java.util.List;
  * @author Dell
  */
 public class TacGiaDAO implements IDAO<TacGia, Integer> {
+    
+     public TacGiaDAO() {
+        List<TacGia> lst_tg = selectAll();
+        for (int i = 0; i < lst_tg.size(); i++) {
+            EzHelper.MAP_TG.put(lst_tg.get(i).getMaTg(), lst_tg.get(i).getTenTg());
+        }
+    }
 
     @Override
     public void insert(TacGia model) {

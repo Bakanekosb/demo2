@@ -41,6 +41,11 @@ public class Sach_TacGiaDAO implements IDAO<Sach_Tg, String> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public List<Sach_Tg> selectTacgia(int id) {
+        String selectAll_sql = "SELECT * FROM SACH_TG WHERE MATUASACH = ?";
+        return selectBySql(selectAll_sql,id);
+    }
+
     @Override
     public List<Sach_Tg> selectAll() {
         String selectAll_sql = "SELECT * FROM Sach_tg";

@@ -27,9 +27,10 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer>{
     
     @Override
     public void insert(QuyenSach model) {
-        String insert_sql = "INSERT INTO Quyensach (vitri,duocmuonve,matuasach)  "
-                + "VALUES(?,?,?)";
-        JdbcHelper.executeUpdate(insert_sql,model.getViTri(),model.isDuocMuonVe(), model.getMaTuaSach());    }
+        String insert_sql = "INSERT INTO Quyensach (vitri,duocmuonve,ghichu, matuasach)  "
+                + "VALUES(?,?,?,?)";
+        JdbcHelper.executeUpdate(insert_sql,model.getViTri(),model.isDuocMuonVe(), 
+                model.getGhiChu(),model.getMaTuaSach());    }
 
     @Override
     public void update(QuyenSach model) {

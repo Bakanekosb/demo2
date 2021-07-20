@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 public class EzHelper extends javax.swing.JFrame {
 
     public static HashMap<String, String> MAP_DANHMUC = new HashMap<>();
+    public static HashMap<Integer, String> MAP_TG = new HashMap<>();
 
     public static boolean blank(JTextField txt, String tenTruong, Component parent) {
         if (txt.getText().isBlank()) {

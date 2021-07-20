@@ -22,6 +22,7 @@ public class TuaSach {
   private int soLuong;
   private String madm;
   private String anh;
+  private int soLuotThich;
 
     public TuaSach() {
     }
@@ -52,6 +53,30 @@ public class TuaSach {
         this.soLuong = soLuong;
         this.madm = madm;
         this.anh = anh;
+    }
+
+    public TuaSach(int maTuaSach, String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int trangThai, int soLuong, String madm, String anh, int soLuotThich) {
+        this.maTuaSach = maTuaSach;
+        this.tenTuaSach = tenTuaSach;
+        this.nxb = nxb;
+        this.namxb = namxb;
+        this.soTrang = soTrang;
+        this.giaTien = giaTien;
+        this.moTa = moTa;
+        this.ghiChu = ghiChu;
+        this.trangThai = trangThai;
+        this.soLuong = soLuong;
+        this.madm = madm;
+        this.anh = anh;
+        this.soLuotThich = soLuotThich;
+    }
+
+    public int getSoLuotThich() {
+        return soLuotThich;
+    }
+
+    public void setSoLuotThich(int soLuotThich) {
+        this.soLuotThich = soLuotThich;
     }
     
     
@@ -170,6 +195,7 @@ public class TuaSach {
         sb.append(", trangThai=").append(trangThai);
         sb.append(", soLuong=").append(soLuong);
         sb.append(", madm=").append(madm);
+        sb.append(", anh=").append(anh);
         sb.append('}');
         return sb.toString();
     }
