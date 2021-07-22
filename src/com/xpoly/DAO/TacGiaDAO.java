@@ -37,7 +37,7 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public void update(TacGia model) {
-          String sql = "update tacgia set tentg = N'? , ngaysinh = '?' ,quoctich = N'?'  where tentg =  N'?'";
+          String sql = "update tacgia set tentg = ?, ngaysinh = ? ,quoctich =?  where tentg =  ?";
           JdbcHelper.executeUpdate(sql, model.getTenTg(), model.getNgaySinh(),model.getQuocTich(),model.getTenTg());
    }
 
