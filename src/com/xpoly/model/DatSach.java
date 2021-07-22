@@ -19,6 +19,16 @@ public class DatSach {
     public DatSach() {
     }
 
+    public DatSach(int maTuaSach, int trangThai, String mand, Date ngayDat, Date ngayHenLaySach) {
+        this.maTuaSach = maTuaSach;
+        this.trangThai = trangThai;
+        this.mand = mand;
+        this.ngayDat = ngayDat;
+        this.ngayHenLaySach = ngayHenLaySach;
+    }
+    
+    
+
     public DatSach(int maDatSach, int maTuaSach, int trangThai, String mand, Date ngayDat, Date ngayHenLaySach) {
         this.maDatSach = maDatSach;
         this.maTuaSach = maTuaSach;

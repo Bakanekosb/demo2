@@ -43,7 +43,6 @@ public class SachUaThichDAO implements IDAO<SachUaThich, String> {
     
     public List<SachUaThich> selectAllById(String id){
         String selectById_sql = "SELECT * FROM sachuathich WHERE mand = ?";
-        System.out.println(id);
         return selectBySql(selectById_sql,id);
     }
 
