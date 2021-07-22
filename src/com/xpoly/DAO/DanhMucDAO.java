@@ -31,13 +31,16 @@ public class DanhMucDAO implements IDAO<DanhMuc, String>{
     
     @Override
     public void insert(DanhMuc model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "insert into danhmuc (madm,tendm)\n" +
+" values (?,?)";
+        JdbcHelper.executeUpdate(sql, model.getMaDanhMuc(),model.getTenDanhMuc());
     }
 
     @Override
     public void update(DanhMuc model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        String sql = "update danhmuc set tendm = ? where madm = ? ";
+        JdbcHelper.executeUpdate(sql, model.getTenDanhMuc(),model.getMaDanhMuc());
+   }
 
     @Override
     public void delete(String id) {
@@ -46,7 +49,7 @@ public class DanhMucDAO implements IDAO<DanhMuc, String>{
 
     @Override
     public DanhMuc selectById(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
