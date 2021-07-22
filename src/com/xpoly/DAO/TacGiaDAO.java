@@ -37,7 +37,7 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public void update(TacGia model) {
-          String sql = "update tacgia set tentg = ?, ngaysinh = ? ,quoctich =?  where tentg =  ?";
+          String sql = "update tacgia set tentg = ?, ngaysinh = ? ,quoctich =?  where tentg = ?";
           JdbcHelper.executeUpdate(sql, model.getTenTg(), model.getNgaySinh(),model.getQuocTich(),model.getTenTg());
    }
 
@@ -49,7 +49,7 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public TacGia selectById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         return null;
     }
 
     @Override

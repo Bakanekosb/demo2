@@ -32,7 +32,7 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
 
     
     List<TacGia> lst_tacgia = new ArrayList<>();
-    String head[] = {"STT", "Tên Tác Giả ", " Ngày Tháng Năm Sinh ", "Quốc Tịch"};
+    String head[] = {"Mã Tác Giả", "Tên Tác Giả ", " Ngày Tháng Năm Sinh ", "Quốc Tịch"};
     DefaultTableModel model = new DefaultTableModel(head, 0);
     int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
     String keyword = "";
@@ -102,6 +102,11 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TableList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TableList);
 
         btnaddTG.setText("Thêm");
@@ -326,26 +331,37 @@ addTacGia adtg = new addTacGia();
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         clear();
+        loadTable();
+
+        
 //        loadTable();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnseachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnseachActionPerformed
-        try {
-            // TODO add your handling code here:
-            tacGiaDaO.selectByKeyword(txtseach.getText(), pageNumber, rowsOfPage);
-        } catch (SQLException ex) {
-            Logger.getLogger(QLTacGia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    keyword = txtseach.getText();
+        loadTable();
     }//GEN-LAST:event_btnseachActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
+        tacGiaDaO.delete(WIDTH);
+        loadTable();
     }//GEN-LAST:event_btndeleteActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
         // TODO add your handling code here:
         update();
+        loadTable();
     }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void TableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableListMouseClicked
+        // TODO add your handling code here:
+        int i = TableList.getSelectedRow();
+        txtTenTG.setText(TableList.getValueAt(i, 1).toString());
+        Date date = (Date) TableList.getValueAt(i, 2);
+        jdate.setDate(date);
+        txtQuocTich.setText(TableList.getValueAt(i, 3).toString());
+    }//GEN-LAST:event_TableListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -373,6 +389,7 @@ addTacGia adtg = new addTacGia();
             java.util.logging.Logger.getLogger(TacGia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
@@ -413,7 +430,7 @@ addTacGia adtg = new addTacGia();
     public void init() {
         setLocationRelativeTo(this);
         TableList.setModel(model);
-        filltable();
+        loadTable();
     
 
 //        loadTable();
@@ -431,6 +448,7 @@ addTacGia adtg = new addTacGia();
     }
     @Override
     public void loadTable() {
+        int i = 0;
         model.setRowCount(0);
         try {
             int total = (int) Math.ceil((float) tacGiaDaO.getTotalRows(keyword) / rowsOfPage);
@@ -446,7 +464,7 @@ addTacGia adtg = new addTacGia();
             }
         } catch (SQLException e) {
         }
-
+lblTextview.setText("Tổng số  : " + (i - 1));
     }
 
     @Override
@@ -487,7 +505,7 @@ addTacGia adtg = new addTacGia();
 
     @Override
     public void clear() {
-       
+       jdate.setDate(EzHelper.now());
         txtQuocTich.setText("");
         txtTenTG.setText("");
         txtseach.setText("");
@@ -523,16 +541,8 @@ addTacGia adtg = new addTacGia();
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String tenTg = txtTenTG.getText();
-        String ngaySinh1 = jdate.getDateFormatString();;
-        Date ngaySinh = null;
-        EzHelper.toDate(ngaySinh1, ngaySinh1);
-        try {
-            ngaySinh = sdf.parse(ngaySinh1);
-        } catch (ParseException ex) {
-            Logger.getLogger(TacGia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Date ngaySinh = jdate.getDate();      
         String quocTich = txtQuocTich.getText();
-
         return new TacGia(tenTg, ngaySinh, quocTich);
     }
 
