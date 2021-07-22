@@ -61,7 +61,6 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
         jLabel2 = new javax.swing.JLabel();
         txtTenTG = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtNgaySinh = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtQuocTich = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -78,6 +77,7 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
         btn_prev = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
         btn_last = new javax.swing.JButton();
+        jdate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +112,11 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
         jPanel2.add(btnaddTG);
 
         btnupdate.setText("Cập Nhập");
+        btnupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnupdate);
 
         btndelete.setText("Xóa ");
@@ -186,7 +191,7 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                                 .addComponent(txtQuocTich, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -195,9 +200,9 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(10, 10, 10)))
                                 .addGap(24, 24, 24)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtTenTG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtTenTG, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                                    .addComponent(jdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(46, 46, 46)
@@ -224,11 +229,11 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
                     .addComponent(txtTenTG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtseach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnseach))
-                .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(17, 17, 17)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
@@ -314,7 +319,7 @@ addTacGia adtg = new addTacGia();
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         clear();
-        loadTable();
+//        loadTable();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnseachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnseachActionPerformed
@@ -325,6 +330,11 @@ addTacGia adtg = new addTacGia();
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+        // TODO add your handling code here:
+        update();
+    }//GEN-LAST:event_btnupdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,7 +391,7 @@ addTacGia adtg = new addTacGia();
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtNgaySinh;
+    private com.toedter.calendar.JDateChooser jdate;
     private javax.swing.JTextField txtQuocTich;
     private javax.swing.JTextField txtTenTG;
     private javax.swing.JTextField txtseach;
@@ -391,6 +401,7 @@ addTacGia adtg = new addTacGia();
     public void init() {
         setLocationRelativeTo(this);
         TableList.setModel(model);
+    
 
 //        loadTable();
         pack();
@@ -454,7 +465,7 @@ addTacGia adtg = new addTacGia();
 
     @Override
     public void clear() {
-        txtNgaySinh.setText("");
+       
         txtQuocTich.setText("");
         txtTenTG.setText("");
         txtseach.setText("");
@@ -464,14 +475,14 @@ addTacGia adtg = new addTacGia();
     public StringBuilder validateForm() {
         StringBuilder sb = new StringBuilder();
         String tenTg = txtTenTG.getText();
-        String ngaySinh = txtNgaySinh.getText();
+        String ngaySinh = jdate.getDateFormatString();
         String quocTich = txtQuocTich.getText();
         if (tenTg.isBlank()) {
             EzHelper.blank(txtTenTG, "Tên tác giả ", jLabel1);
             return null;
         }
         if (ngaySinh.isBlank()) {
-            EzHelper.blank(txtTenTG, "Ngày sinh  ", jLabel1);
+            EzHelper.blankdate(jdate, "Ngày sinh  ", jLabel1);
             return null;
         }
         if (quocTich.isBlank()) {
@@ -490,7 +501,7 @@ addTacGia adtg = new addTacGia();
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String tenTg = txtTenTG.getText();
-        String ngaySinh1 = txtNgaySinh.getText();
+        String ngaySinh1 = jdate.getDateFormatString();;
         Date ngaySinh = null;
         EzHelper.toDate(ngaySinh1, ngaySinh1);
         try {
@@ -505,7 +516,6 @@ addTacGia adtg = new addTacGia();
 
     @Override
     public void setModel(TacGia model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     void buttonEnabled() {

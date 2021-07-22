@@ -43,7 +43,7 @@ public class TacGiaDAO implements IDAO<TacGia, Integer> {
 
     @Override
     public void delete(Integer id) {
-        String sql = "update tacgia set trangthai = 1 where tentg =  ?";
+        String sql = "update tacgia set trangthai = 1 where matg =  ?";
         JdbcHelper.executeUpdate(sql, 1);
     }
 

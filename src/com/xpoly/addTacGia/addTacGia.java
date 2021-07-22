@@ -45,11 +45,11 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
         jLabel2 = new javax.swing.JLabel();
         txtTentacGia = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtNgaySinh = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtQuocTich = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         btnClose = new javax.swing.JButton();
+        jdate = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -89,8 +89,8 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtQuocTich, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtQuocTich, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                            .addComponent(jdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(141, 141, 141)
                         .addComponent(btnAdd)
@@ -115,11 +115,11 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtTentacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addComponent(jdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtQuocTich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,7 +186,7 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtNgaySinh;
+    private com.toedter.calendar.JDateChooser jdate;
     private javax.swing.JTextField txtQuocTich;
     private javax.swing.JTextField txtTentacGia;
     // End of variables declaration//GEN-END:variables
@@ -208,6 +208,7 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
                 tacGiaDaO.insert(getModel());
                 DialogHelper.alert(jLabel1, "thêm thành Công !");
             } catch (Exception e) {
+                DialogHelper.alert(jLabel1, "thêm thất bại !");
                 e.printStackTrace();
             }
         }
@@ -232,14 +233,14 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
     public StringBuilder validateForm() {
         StringBuilder sb = new StringBuilder();
         String tenTg = txtTentacGia.getText();
-        String ngaySinh = txtNgaySinh.getText();
+        String ngaySinh = jdate.getDateFormatString();
         String quocTich = txtQuocTich.getText();
         if (tenTg.isBlank()) {
             EzHelper.blank(txtTentacGia, "Tên tác giả ", jLabel1);
             return null;
         }
         if (ngaySinh.isBlank()) {
-            EzHelper.blank(txtNgaySinh, "Ngày sinh  ", jLabel1);
+            EzHelper.blankdate(jdate, "Ngày sinh  ", jLabel1);
             return null;
         }
         if (quocTich.isBlank()) {
@@ -256,9 +257,9 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
             DialogHelper.alert(jLabel1, "");
             return null;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YYYY");
         String tenTg = txtTentacGia.getText();
-        String ngaySinh1 = txtNgaySinh.getText();
+        String ngaySinh1 = jdate.getDateFormatString();
         Date ngaySinh = null;
         EzHelper.toDate(ngaySinh1, ngaySinh1);
         try {

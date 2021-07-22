@@ -5,6 +5,7 @@
  */
 package com.xpoly.helper;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -74,6 +75,14 @@ public class EzHelper extends javax.swing.JFrame {
             return -1.0;
         }
     }
+
+    public static boolean blankdate(JDateChooser jdate, String tenTruong, JLabel jLabel1) {
+    if (jdate.getDateFormatString().isBlank()) {
+            jdate.requestFocus();
+            DialogHelper.alert(jdate, tenTruong + " không được để trống");
+            return true;
+        }
+        return false;}
 
     public boolean saveImg(File file) {
         File dir = new File("images");
