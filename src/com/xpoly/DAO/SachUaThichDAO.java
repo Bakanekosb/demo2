@@ -46,6 +46,26 @@ public class SachUaThichDAO implements IDAO<SachUaThich, String> {
         return selectBySql(selectById_sql,id);
     }
 
+    public List<Integer> selectMaTuaSachFromSachUaThichByMaND(String id){
+        String sql = "SELECT * FROM sachuathich WHERE mand = ?";
+        List<Integer> lst = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            try {
+                rs = JdbcHelper.executeQuery(sql,id);
+                while (rs.next()) {
+                    SachUaThich model = readFromResultSet(rs);
+                    lst.add(model.getMaTuaSach());
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return lst;
+    }
+    
     @Override
     public List<SachUaThich> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

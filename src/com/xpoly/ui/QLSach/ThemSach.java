@@ -20,6 +20,7 @@ import com.xpoly.model.TuaSach;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -374,7 +375,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     }//GEN-LAST:event_cbo_namxbActionPerformed
 
     public static void hienThiTG(List<TacGia> lst) {
-        String s = "";
+        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList()); 
+        String s = String.join(";", namesList);
         for (TacGia x : lst) {
             s += x.getTenTg() + "; ";
         }

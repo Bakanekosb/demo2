@@ -116,7 +116,9 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
 
     @Override
     public TuaSach selectById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String selectById_sql = "SELECT * FROM TUASACH where matuasach = ?";
+        List<TuaSach> lst = selectBySql(selectById_sql, id);
+        return lst.isEmpty() ? null : lst.get(0);
     }
     
     public TuaSach selectLastItem(){

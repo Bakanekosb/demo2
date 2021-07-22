@@ -26,7 +26,7 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Dell
  */
-public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
+public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     TuaSachDAO tuaSachDAO = new TuaSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
@@ -52,9 +52,13 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     /**
      * Creates new form ThemSach
      */
-    public ThemSach() {
+    public UpdateSach(TuaSach model, String tacGia, int soSachDocTaiCho) {
         initComponents();
         init();
+        setModel(model, tacGia, soSachDocTaiCho);
+        System.out.println(model.toString());
+        System.out.println(tacGia);
+        System.out.println(soSachDocTaiCho);
     }
 
     /**
@@ -97,6 +101,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         txt_viTri = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         cbo_namxb = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
@@ -105,7 +110,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("THÊM TỰA SÁCH");
+        jLabel1.setText("SỬA THÔNG TIN SÁCH");
 
         lbl_cover.setBackground(new java.awt.Color(255, 255, 255));
         lbl_cover.setText("Chọn ảnh bìa");
@@ -148,6 +153,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
         jLabel10.setText("Số lượng:");
 
+        txt_soLuong.setEnabled(false);
+
         txt_ghiChu.setColumns(20);
         txt_ghiChu.setRows(5);
         jScrollPane1.setViewportView(txt_ghiChu);
@@ -162,6 +169,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
         jLabel13.setText("Đọc tại chỗ:");
 
+        txt_viTri.setEnabled(false);
+
         jLabel3.setText("Vị trí xếp:");
 
         cbo_namxb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AD", "BC" }));
@@ -170,6 +179,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 cbo_namxbActionPerformed(evt);
             }
         });
+
+        jButton1.setText("+");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -210,7 +221,10 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                                         .addComponent(txt_namxb, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(cbo_namxb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txt_soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton1)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
@@ -265,7 +279,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                             .addComponent(jLabel10)
                             .addComponent(txt_soLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_viTri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
+                            .addComponent(jLabel3)
+                            .addComponent(jButton1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_soTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,6 +310,11 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         });
 
         btn_cancel.setText("Cancel");
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -321,7 +341,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 14, Short.MAX_VALUE))
+                        .addGap(0, 11, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,6 +393,11 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         }
     }//GEN-LAST:event_cbo_namxbActionPerformed
 
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btn_cancelActionPerformed
+
     public static void hienThiTG(List<TacGia> lst) {
         String s = "";
         for (TacGia x : lst) {
@@ -398,20 +423,21 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThemSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThemSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThemSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThemSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ThemSach().setVisible(true);
+//                new UpdateSach().setVisible(true);
             }
         });
     }
@@ -423,6 +449,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     private javax.swing.JButton btn_save;
     private javax.swing.JComboBox<String> cbo_danhMuc;
     private javax.swing.JComboBox<String> cbo_namxb;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -601,6 +628,19 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         for (DanhMuc x : danhMucDAO.selectAll()) {
             cboModel.addElement(x);
         }
+    }
+
+    public void setModel(TuaSach model, String tacGia, int soSachDocTaiCho) {
+        cbo_danhMuc.setSelectedItem(EzHelper.MAP_DANHMUC.get(model.getMadm()));
+        txt_tenSach.setText(model.getTenTuaSach());
+        txt_tg.setText(tacGia);
+        txt_nxb.setText(model.getNxb());
+        txt_namxb.setText(model.getNamxb() + "");
+        txt_soTrang.setText(model.getSoTrang() + "");
+        txt_gia.setText(model.getGiaTien() + "");
+        txt_soLuong.setText(model.getSoLuong() + "");
+        txt_docTaiCho.setText(soSachDocTaiCho + "");
+
     }
 
     @Override

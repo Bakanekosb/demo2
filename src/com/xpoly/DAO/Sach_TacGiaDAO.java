@@ -6,8 +6,10 @@
 package com.xpoly.DAO;
 
 import com.xpoly.Interface.IDAO;
+import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.Sach_Tg;
+import com.xpoly.model.TacGia;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +20,10 @@ import java.util.List;
  * @author Dell
  */
 public class Sach_TacGiaDAO implements IDAO<Sach_Tg, String> {
+
+    public Sach_TacGiaDAO() {
+        new TacGiaDAO();
+    }
 
     @Override
     public void insert(Sach_Tg model) {
@@ -41,9 +47,25 @@ public class Sach_TacGiaDAO implements IDAO<Sach_Tg, String> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<Sach_Tg> selectTacgia(int id) {
-        String selectAll_sql = "SELECT * FROM SACH_TG WHERE MATUASACH = ?";
-        return selectBySql(selectAll_sql,id);
+    public String selectTacgia(int id) {
+        String sql = "SELECT * FROM SACH_TG WHERE MATUASACH = ?";
+        List<String> lst = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            try {
+                rs = JdbcHelper.executeQuery(sql,id);
+                while (rs.next()) {
+                    Sach_Tg model = readFromResultSet(rs);
+                    lst.add(EzHelper.MAP_TG.get(model.getMaTacGia()));
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+       
+        return String.join(";", lst);
     }
 
     @Override

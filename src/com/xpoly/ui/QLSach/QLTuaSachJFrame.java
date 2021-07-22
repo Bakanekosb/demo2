@@ -62,7 +62,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     JCheckBox hideCols[] = new JCheckBox[columns.length - 2];
     List<TuaSach> lst_tuaSach = new ArrayList<>();
     List<Sach_Tg> lst_stg;
-    List<SachUaThich> lst_sachUaThich;
+    List<Integer> lst_sachUaThich;
     List<DatSach> lst_datSach;
     List<QuyenSach> lst_quyenSach;
 
@@ -97,7 +97,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_tuaSach = new javax.swing.JTable();
         Panel_grid = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_timKiem = new javax.swing.JTextField();
@@ -228,7 +228,12 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         Panel_grid.setLayout(new java.awt.GridLayout(2, 5, 15, 15));
         jPanel2.add(Panel_grid, "card2");
 
-        jButton1.setText("Update");
+        btn_update.setText("Update");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Add");
 
@@ -330,7 +335,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                 .addGap(183, 183, 183)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btn_update)
                 .addGap(18, 18, 18)
                 .addComponent(btn_datSach)
                 .addGap(18, 18, 18)
@@ -359,7 +364,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                     .addComponent(btn_next1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(btn_update)
                             .addComponent(jButton2)
                             .addComponent(btn_datSach)
                             .addComponent(btn_like))
@@ -489,6 +494,15 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
     }//GEN-LAST:event_btn_datSachActionPerformed
 
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        // TODO add your handling code here:
+        int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
+        int soSachDocTaiCho = quyenSachDAO.soSachDocTaiCho(maTuaSach);
+        String tacGia = (String) tblModel.getValueAt(rowIndex, 2);
+        
+        new UpdateSach(tuaSachDAO.selectById(maTuaSach), tacGia, soSachDocTaiCho).setVisible(true);
+    }//GEN-LAST:event_btn_updateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -538,8 +552,8 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private javax.swing.JButton btn_prev;
     private javax.swing.JButton btn_prev1;
     private javax.swing.JButton btn_search;
+    private javax.swing.JButton btn_update;
     private javax.swing.JComboBox<String> cbo_danhMuc;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -601,7 +615,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         panel_chk.setLayout(new GridLayout(1, 10));
 
         LoginHelper.USER = new NguoiDung("ND001");
-        lst_sachUaThich = sachUaThichDAO.selectAllById(LoginHelper.USER.getMaND());
+        lst_sachUaThich = sachUaThichDAO.selectMaTuaSachFromSachUaThichByMaND(LoginHelper.USER.getMaND());
         lst_datSach = datSachDAO.selectByMand(LoginHelper.USER.getMaND());
 
         loadTable();
@@ -620,18 +634,11 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
             int i = 0;
             if (!lst_tuaSach.isEmpty()) {
                 for (TuaSach x : lst_tuaSach) {
-                    lst_stg = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
-
-                    String like = "";
-                    String datSach = "";
-                    String tacGia = "";
                     
-                    for (SachUaThich y : lst_sachUaThich) {
-                        if (y.getMaTuaSach() == x.getMaTuaSach()) {
-                            like = "Like";
-                            break;
-                        }
-                    }
+                    String like = lst_sachUaThich.contains(x.getMaTuaSach()) ? "Like" : "";
+                    String datSach = "";
+                    String tacGia = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
+                                    
                     for (DatSach y : lst_datSach) {
                         if (y.getMaTuaSach() == x.getMaTuaSach()) {
                             if (y.getTrangThai() == 0) {
@@ -642,9 +649,10 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                                 datSach = "Đã hủy";
                             }
                         }
-                    }
+                    }                    
+                    
                     tblModel.addRow(new Object[]{
-                        x.getMaTuaSach(), x.getTenTuaSach(), "tacgia", x.getNxb(), x.getNamxb(),
+                        x.getMaTuaSach(), x.getTenTuaSach(), tacGia, x.getNxb(), x.getNamxb(),
                         x.getSoTrang(), x.getGiaTien(), x.getMoTa(), x.getGhiChu(), x.getSoLuong(),
                         EzHelper.MAP_DANHMUC.get(x.getMadm()), x.getSoLuotThich(), like, datSach});
 

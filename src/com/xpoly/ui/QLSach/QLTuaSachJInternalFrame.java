@@ -581,11 +581,9 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
             int i = 0;
             if (!lst_tuaSach.isEmpty()) {
                 for (TuaSach x : lst_tuaSach) {
-                    lst_stg = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
-
                     String like = "";
                     String datSach = "";
-                    String tacGia = "";
+                    String tacGia = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
                     
                     for (SachUaThich y : lst_sachUaThich) {
                         if (y.getMaTuaSach() == x.getMaTuaSach()) {

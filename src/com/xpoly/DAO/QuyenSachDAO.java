@@ -45,7 +45,7 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
 
     @Override
     public QuyenSach selectById(Integer id) {
-      String selectById_sql = "SELECT * FROM QuyenSach WHERE MAQUYENSACH = ?";
+        String selectById_sql = "SELECT * FROM QuyenSach WHERE MAQUYENSACH = ?";
         List<QuyenSach> lst = selectBySql(selectById_sql, id);
         return lst.isEmpty() ? null : lst.get(0);
     }
@@ -54,13 +54,36 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
     public List<QuyenSach> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public List<QuyenSach> selectAllByMaTuaSach(Integer id) {
+        String sql = "SELECT * FROM QuyenSach WHERE MaTuaSach = ?";
+        return selectBySql(sql, id);
+    }
+
+    public int soSachDocTaiCho(Integer id) {
+        int soSachDocTaiCho = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "{call SP_sosachdoctaicho (?)}";
+                rs = JdbcHelper.executeQuery(sql, id);
+                while (rs.next()) {
+                    soSachDocTaiCho = rs.getInt(1);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return soSachDocTaiCho;
+    }
+
     public List<QuyenSach> selectSachSanSangChoMuonByTuaSach(int id) {
         String selectAllByTuaSach_sql = "select * from QuyenSach where matuasach = ? and duocmuonve = 1 and tinhtrang = 0 and trangthai = 0";
         List<QuyenSach> lst = selectBySql(selectAllByTuaSach_sql, id);
         return lst;
     }
-    
 
     @Override
     public List<QuyenSach> selectBySql(String sql, Object... args) {
