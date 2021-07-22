@@ -53,7 +53,7 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
 
     @Override
     public List<NguoiDung> selectAll() {
-        String sql = "select * from nguoidung";
+        String sql = "select * from nguoidung where vaitro  =  0 or vaitro = 1";
         return selectBySql(sql);
     }
 
