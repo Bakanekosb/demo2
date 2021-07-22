@@ -10,9 +10,9 @@ import com.xpoly.DAO.DatSachDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.SachUaThichDAO;
 import com.xpoly.DAO.Sach_TacGiaDAO;
-import com.xpoly.DAO.TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
+import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.helper.TableColumnHider;
@@ -22,10 +22,8 @@ import com.xpoly.model.NguoiDung;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.SachUaThich;
 import com.xpoly.model.Sach_Tg;
-import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
 import java.awt.GridLayout;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,10 +38,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Dell
  */
-public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Integer> {
+public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implements IService<Integer>{
 
     /**
-     * Creates new form QLTuaSachJFrame
+     * Creates new form QLTuaSachJInternalFrame
      */
     DanhMucDAO danhMucDAO = new DanhMucDAO();
 
@@ -70,8 +67,8 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     SachUaThichDAO sachUaThichDAO = new SachUaThichDAO();
     DatSachDAO datSachDAO = new DatSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
-
-    public QLTuaSachJFrame() {
+    
+    public QLTuaSachJInternalFrame() {
         initComponents();
         init();
     }
@@ -110,8 +107,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         jLabel8 = new javax.swing.JLabel();
         btn_datSach = new javax.swing.JButton();
         btn_like = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -192,7 +187,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(panel_chk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 25, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_listLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,7 +300,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
@@ -363,21 +358,11 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                             .addComponent(jButton2)
                             .addComponent(btn_datSach)
                             .addComponent(btn_like))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txt_timKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timKiemKeyReleased
-
-    }//GEN-LAST:event_txt_timKiemKeyReleased
-
-    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        // TODO add your handling code here:
-        keyword = txt_timKiem.getText();
-        loadTable();
-    }//GEN-LAST:event_btn_searchActionPerformed
 
     private void btn_firstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_firstActionPerformed
         pageNumber = 1;
@@ -402,6 +387,33 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         loadTable();
         buttonEnabled();
     }//GEN-LAST:event_btn_lastActionPerformed
+
+    private void tbl_tuaSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_tuaSachMouseClicked
+        // TODO add your handling code here:
+        rowIndex = tbl_tuaSach.getSelectedRow();
+        System.out.println(rowIndex);
+        if (tblModel.getValueAt(rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex()).toString().equals("Like")) {
+            btn_like.setEnabled(false);
+        } else {
+            btn_like.setEnabled(true);
+        }
+        if(datSachDAO.datDuocKhong(LoginHelper.USER.getMaND(), (Integer) tblModel.getValueAt(rowIndex, 0))){
+            btn_datSach.setEnabled(true);
+        }
+        else{
+            btn_datSach.setEnabled(false);
+        }
+    }//GEN-LAST:event_tbl_tuaSachMouseClicked
+
+    private void txt_timKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timKiemKeyReleased
+
+    }//GEN-LAST:event_txt_timKiemKeyReleased
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        // TODO add your handling code here:
+        keyword = txt_timKiem.getText();
+        loadTable();
+    }//GEN-LAST:event_btn_searchActionPerformed
 
     private void btn_first1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_first1ActionPerformed
         pageNumber = 1;
@@ -437,22 +449,28 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
     }//GEN-LAST:event_cbo_danhMucActionPerformed
 
-    private void tbl_tuaSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_tuaSachMouseClicked
+    private void btn_datSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_datSachActionPerformed
         // TODO add your handling code here:
-        rowIndex = tbl_tuaSach.getSelectedRow();
-        System.out.println(rowIndex);
-        if (tblModel.getValueAt(rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex()).toString().equals("Like")) {
+        try {
+            int trangThai = 0;
+            Date ngayHen = null;
+            int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
+            lst_quyenSach = quyenSachDAO.selectSachSanSangChoMuonByTuaSach(maTuaSach);
+            if (!lst_quyenSach.isEmpty()) {
+                trangThai = 1;
+                ngayHen = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
+                ////                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                ////                String formattedDate = formatter.format(ngayHen);
+                //                System.out.println(formattedDate);
+            }
+            datSachDAO.insert(new DatSach(maTuaSach, trangThai, LoginHelper.USER.getMaND(), EzHelper.now(), ngayHen));
+            DialogHelper.alert(this, "Đặt sách thành công");
+            tblModel.setValueAt("Like", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
             btn_like.setEnabled(false);
-        } else {
-            btn_like.setEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if(datSachDAO.datDuocKhong(LoginHelper.USER.getMaND(), (Integer) tblModel.getValueAt(rowIndex, 0))){
-            btn_datSach.setEnabled(true);
-        }
-        else{
-            btn_datSach.setEnabled(false);
-        }
-    }//GEN-LAST:event_tbl_tuaSachMouseClicked
+    }//GEN-LAST:event_btn_datSachActionPerformed
 
     private void btn_likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_likeActionPerformed
         // TODO add your handling code here:
@@ -465,63 +483,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
     }//GEN-LAST:event_btn_likeActionPerformed
 
-    private void btn_datSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_datSachActionPerformed
-        // TODO add your handling code here:
-        try {
-            int trangThai = 0;
-            Date ngayHen = null;
-            int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
-            lst_quyenSach = quyenSachDAO.selectSachSanSangChoMuonByTuaSach(maTuaSach);
-            if (!lst_quyenSach.isEmpty()) {
-                trangThai = 1;
-                ngayHen = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
-////                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-////                String formattedDate = formatter.format(ngayHen);
-//                System.out.println(formattedDate);
-            }
-            datSachDAO.insert(new DatSach(maTuaSach, trangThai, LoginHelper.USER.getMaND(), EzHelper.now(), ngayHen));
-            JOptionPane.showMessageDialog(this, "dat sach thanh cong");
-            tblModel.setValueAt("Like", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
-            btn_like.setEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btn_datSachActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLTuaSachJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLTuaSachJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLTuaSachJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLTuaSachJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QLTuaSachJFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_grid;
@@ -551,7 +512,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private javax.swing.JTextField txt_timKiem;
     // End of variables declaration//GEN-END:variables
 
-    @Override
+   @Override
     public void init() {
         for (int i = 0; i < 10; i++) {
             JPanel jpanel = new JPanel();
