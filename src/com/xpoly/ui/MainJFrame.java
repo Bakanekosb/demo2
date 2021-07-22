@@ -32,6 +32,7 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         execute();
+        
     }
 
     private void execute() {

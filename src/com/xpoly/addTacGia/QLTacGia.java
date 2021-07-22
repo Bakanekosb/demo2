@@ -32,7 +32,7 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
 
     
     List<TacGia> lst_tacgia = new ArrayList<>();
-    String head[] = {"Mã Tác Giả", "Tên Tác Giả ", " Ngày Tháng Năm Sinh ", "Quốc Tịch"};
+    String head[] = {"STT", "Tên Tác Giả ", " Ngày Tháng Năm Sinh ", "Quốc Tịch"};
     DefaultTableModel model = new DefaultTableModel(head, 0);
     int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
     String keyword = "";
@@ -78,6 +78,7 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
         btn_next = new javax.swing.JButton();
         btn_last = new javax.swing.JButton();
         jdate = new com.toedter.calendar.JDateChooser();
+        lblTextview = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,6 +181,8 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
         });
         jPanel3.add(btn_last);
 
+        lblTextview.setText("Tổng số : ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -217,7 +220,9 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
+                        .addComponent(lblTextview, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -242,7 +247,9 @@ public class QLTacGia extends javax.swing.JFrame implements IService<TacGia> {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTextview))
                 .addContainerGap())
         );
 
@@ -323,8 +330,12 @@ addTacGia adtg = new addTacGia();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnseachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnseachActionPerformed
-        // TODO add your handling code here:
-        
+        try {
+            // TODO add your handling code here:
+            tacGiaDaO.selectByKeyword(txtseach.getText(), pageNumber, rowsOfPage);
+        } catch (SQLException ex) {
+            Logger.getLogger(QLTacGia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnseachActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
@@ -392,6 +403,7 @@ addTacGia adtg = new addTacGia();
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdate;
+    private javax.swing.JLabel lblTextview;
     private javax.swing.JTextField txtQuocTich;
     private javax.swing.JTextField txtTenTG;
     private javax.swing.JTextField txtseach;
@@ -401,12 +413,22 @@ addTacGia adtg = new addTacGia();
     public void init() {
         setLocationRelativeTo(this);
         TableList.setModel(model);
+        filltable();
     
 
 //        loadTable();
         pack();
     }
+    private void filltable() {
+        model.setRowCount(0);
+        int i = 1;
+        for (TacGia x : tacGiaDaO.selectAll()) {
 
+            model.addRow(new Object[]{i++, x.getTenTg(), x.getNgaySinh(), x.getQuocTich()});
+//            System.out.println("x" + x);
+            lblTextview.setText("Tổng số  : " + (i - 1));
+        }
+    }
     @Override
     public void loadTable() {
         model.setRowCount(0);
