@@ -254,19 +254,12 @@ public class addTacGia extends javax.swing.JFrame implements IService<TacGia> {
     @Override
     public TacGia getModel() {
         if (validateForm().length() > 0) {
-            DialogHelper.alert(jLabel1, "");
+            DialogHelper.alert(jLabel1, validateForm().toString());
             return null;
         }
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-YYYY");
-        String tenTg = txtTentacGia.getText();
-        String ngaySinh1 = jdate.getDateFormatString();
-        Date ngaySinh = null;
-        EzHelper.toDate(ngaySinh1, ngaySinh1);
-        try {
-            ngaySinh = sdf.parse(ngaySinh1);
-        } catch (ParseException ex) {
-            Logger.getLogger(TacGia.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String tenTg = txtTentacGia.getText();     
+        Date ngaySinh = jdate.getDate();  
         String quocTich = txtQuocTich.getText();
 
         return new TacGia(tenTg, ngaySinh, quocTich);
