@@ -44,8 +44,24 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
     
     @Override
     public void update(TuaSach model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String update_sql = "update TUASACH set tentuasach = ?, nxb = ?, namxuatban = ?, sotrang = ?, "
+                + "giatien = ?, mota = ?,ghichu = ?,soluong = ?,madm = ?,anh = ? where matuasach = ? "
+                ;
+        JdbcHelper.executeUpdate(update_sql, model.getTenTuaSach(),
+                model.getNxb(),model.getNamxb(),
+                model.getSoTrang(),model.getGiaTien(),
+                model.getMoTa(),model.getGhiChu(),
+                model.getSoLuong(),model.getMadm(), 
+                model.getAnh(), model.getMaTuaSach()
+        );
     }
+    
+    public void updateSL(int matuasach, int soluong) {
+        String update_sql = "update TUASACH set soluong = ? where matuasach = ? "
+                ;
+        JdbcHelper.executeUpdate(update_sql, soluong, matuasach);
+    }
+    
 
     @Override
     public List<TuaSach> selectAll() {

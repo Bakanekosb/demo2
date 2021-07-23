@@ -27,6 +27,22 @@ public class TuaSach {
     public TuaSach() {
     }
 
+    public TuaSach(int maTuaSach, String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm, String anh) {
+        this.maTuaSach = maTuaSach;
+        this.tenTuaSach = tenTuaSach;
+        this.nxb = nxb;
+        this.namxb = namxb;
+        this.soTrang = soTrang;
+        this.giaTien = giaTien;
+        this.moTa = moTa;
+        this.ghiChu = ghiChu;
+        this.soLuong = soLuong;
+        this.madm = madm;
+        this.anh = anh;
+    }
+    
+    
+
     public TuaSach(String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm, String anh) {
         this.tenTuaSach = tenTuaSach;
         this.nxb = nxb;

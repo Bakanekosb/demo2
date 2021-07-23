@@ -35,7 +35,10 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
 
     @Override
     public void update(QuyenSach model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String update_sql = "update quyensach set vitri = ?, duocmuonve = ?, tinhtrang = ?, trangthai = ?, ghichu = ? where maquyensach = ?";
+        JdbcHelper.executeUpdate(update_sql, model.getViTri(), model.isDuocMuonVe(),
+                model.getTinhTrang(),model.getTrangThai(),
+                model.getGhiChu(), model.getMaQuyenSach());
     }
 
     @Override

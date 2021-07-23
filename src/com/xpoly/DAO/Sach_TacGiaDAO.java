@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Dell
  */
-public class Sach_TacGiaDAO implements IDAO<Sach_Tg, String> {
+public class Sach_TacGiaDAO implements IDAO<Sach_Tg, Integer> {
 
     public Sach_TacGiaDAO() {
         new TacGiaDAO();
@@ -38,12 +38,13 @@ public class Sach_TacGiaDAO implements IDAO<Sach_Tg, String> {
     }
 
     @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Integer id) {
+        String sql = "delete from sach_tg where matuasach = ?";
+        JdbcHelper.executeUpdate(sql, id);
     }
 
     @Override
-    public Sach_Tg selectById(String id) {
+    public Sach_Tg selectById(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -377,10 +377,9 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     public static void hienThiTG(List<TacGia> lst) {
         List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList()); 
         String s = String.join(";", namesList);
-        for (TacGia x : lst) {
-            s += x.getTenTg() + "; ";
-        }
+       
         txt_tg.setText(s);
+        ChonTacGiaJFrame.lst_chonTG.clear();
     }
 
     /**

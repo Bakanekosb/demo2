@@ -101,7 +101,7 @@ public class EzHelper extends javax.swing.JFrame {
         }
     }
 
-    public ImageIcon readImg(String fileName) {
+    public static ImageIcon readImg(String fileName) {
         File path = new File("images", fileName);
         return new ImageIcon(path.getAbsolutePath());
     }

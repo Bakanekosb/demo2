@@ -64,7 +64,7 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
         btn_prev = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
         btn_last = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_ok = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlst_tg = new javax.swing.JList<>();
         btn_add = new javax.swing.JButton();
@@ -141,10 +141,10 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_ok.setText("OK");
+        btn_ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_okActionPerformed(evt);
             }
         });
 
@@ -200,7 +200,7 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btn_ok)
                         .addGap(18, 18, 18)
                         .addComponent(jButton4))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -231,7 +231,7 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
                     .addComponent(btn_next, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_last)
-                        .addComponent(jButton1)
+                        .addComponent(btn_ok)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
@@ -305,11 +305,12 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_removeActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
         // TODO add your handling code here:
-        ThemSach.hienThiTG(lst_chonTG);
+//        ThemSach.hienThiTG(lst_chonTG);
+        UpdateSach.hienThiTG(lst_chonTG);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_okActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,10 +352,10 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_first;
     private javax.swing.JButton btn_last;
     private javax.swing.JButton btn_next;
+    private javax.swing.JButton btn_ok;
     private javax.swing.JButton btn_prev;
     private javax.swing.JButton btn_remove;
     private javax.swing.JButton btn_search;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

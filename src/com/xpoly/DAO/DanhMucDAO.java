@@ -49,7 +49,9 @@ public class DanhMucDAO implements IDAO<DanhMuc, String>{
 
     @Override
     public DanhMuc selectById(String id) {
-        return null;
+        String selectById_sql = "SELECT * FROM DANHMUC where madm = ?";
+        List<DanhMuc> lst = selectBySql(selectById_sql, id);
+        return lst.isEmpty() ? null : lst.get(0);
     }
 
     @Override

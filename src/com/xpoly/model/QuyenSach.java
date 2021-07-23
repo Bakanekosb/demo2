@@ -27,6 +27,16 @@ public class QuyenSach {
         this.ghiChu = ghiChu;
         this.maTuaSach = maTuaSach;
     }
+
+    public QuyenSach(int maQuyenSach, String viTri, boolean duocMuonVe, int tinhTrang, int trangThai, String ghiChu) {
+        this.maQuyenSach = maQuyenSach;
+        this.viTri = viTri;
+        this.duocMuonVe = duocMuonVe;
+        this.tinhTrang = tinhTrang;
+        this.trangThai = trangThai;
+        this.ghiChu = ghiChu;
+    }
+    
     
    
 

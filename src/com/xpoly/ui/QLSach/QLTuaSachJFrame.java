@@ -13,6 +13,7 @@ import com.xpoly.DAO.Sach_TacGiaDAO;
 import com.xpoly.DAO.TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
+import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.helper.TableColumnHider;
@@ -36,6 +37,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import jdk.jshell.Diag;
 
 /**
  *
@@ -52,12 +54,20 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     String keyword = "";
     int totalPage;
     DanhMuc danhMuc = new DanhMuc();
+    static int maTuaSachChiTiet;
 
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
     String[] columns = {"Mã tựa sách", "Tên tựa sách", "Tác giả", "Nhà xuất bản", "Năm xuất bản", "Số trang", "Giá tiền",
         "Mô tả", "Ghi chú", "Số lượng", "Danh mục", "Số lượng thích", "Like", "Đặt sách"};
 
-    DefaultTableModel tblModel = new DefaultTableModel(columns, 0);
+    DefaultTableModel tblModel = new DefaultTableModel(columns, 0) {
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    };
     TableColumnHider tblHider;
     JCheckBox hideCols[] = new JCheckBox[columns.length - 2];
     List<TuaSach> lst_tuaSach = new ArrayList<>();
@@ -97,7 +107,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_tuaSach = new javax.swing.JTable();
         Panel_grid = new javax.swing.JPanel();
-        btn_update = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_timKiem = new javax.swing.JTextField();
@@ -110,6 +120,9 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         jLabel8 = new javax.swing.JLabel();
         btn_datSach = new javax.swing.JButton();
         btn_like = new javax.swing.JButton();
+        btn_reload = new javax.swing.JButton();
+        btn_themSL = new javax.swing.JButton();
+        btn_chiTiet = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -213,8 +226,8 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                     .addComponent(panel_chk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(229, 229, 229)
                 .addGroup(Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_first, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_prev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,10 +241,10 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         Panel_grid.setLayout(new java.awt.GridLayout(2, 5, 15, 15));
         jPanel2.add(Panel_grid, "card2");
 
-        btn_update.setText("Update");
-        btn_update.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_updateActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -305,6 +318,27 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
             }
         });
 
+        btn_reload.setText("Reload");
+        btn_reload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reloadActionPerformed(evt);
+            }
+        });
+
+        btn_themSL.setText("Thêm SL");
+        btn_themSL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themSLActionPerformed(evt);
+            }
+        });
+
+        btn_chiTiet.setText("Chi tiết");
+        btn_chiTiet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_chiTietActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -323,23 +357,31 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                 .addGap(18, 18, 18)
                 .addComponent(btn_search)
                 .addGap(68, 68, 68))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(187, 187, 187)
-                .addComponent(btn_first1)
-                .addGap(18, 18, 18)
-                .addComponent(btn_prev1)
-                .addGap(38, 38, 38)
-                .addComponent(btn_next1)
-                .addGap(18, 18, 18)
-                .addComponent(btn_last1)
-                .addGap(183, 183, 183)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_update)
-                .addGap(18, 18, 18)
-                .addComponent(btn_datSach)
-                .addGap(18, 18, 18)
-                .addComponent(btn_like)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_chiTiet)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_themSL)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_reload)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_first1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_prev1)
+                        .addGap(38, 38, 38)
+                        .addComponent(btn_next1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_last1)
+                        .addGap(373, 373, 373)
+                        .addComponent(btn_datSach)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_like)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -364,12 +406,17 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                     .addComponent(btn_next1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_update)
-                            .addComponent(jButton2)
                             .addComponent(btn_datSach)
                             .addComponent(btn_like))
                         .addComponent(btn_last1)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(btn_reload)
+                    .addComponent(btn_themSL)
+                    .addComponent(btn_chiTiet))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -496,12 +543,35 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
         int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
         int soSachDocTaiCho = quyenSachDAO.soSachDocTaiCho(maTuaSach);
         String tacGia = (String) tblModel.getValueAt(rowIndex, 2);
         
         new UpdateSach(tuaSachDAO.selectById(maTuaSach), tacGia, soSachDocTaiCho).setVisible(true);
-    }//GEN-LAST:event_btn_updateActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_reloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reloadActionPerformed
+        // TODO add your handling code here:
+        loadTable();
+    }//GEN-LAST:event_btn_reloadActionPerformed
+
+    private void btn_themSLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themSLActionPerformed
+        // TODO add your handling code here:
+        nhapThemSoLuongSach();
+       
+    }//GEN-LAST:event_btn_themSLActionPerformed
+
+    private void btn_chiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chiTietActionPerformed
+        // TODO add your handling code here:
+        maTuaSachChiTiet = (Integer) tblModel.getValueAt(rowIndex, 0);
+        System.out.println(maTuaSachChiTiet);
+        new ChiTietSachJFrame(maTuaSachChiTiet).setVisible(true);
+    }//GEN-LAST:event_btn_chiTietActionPerformed
 
     /**
      * @param args the command line arguments
@@ -541,6 +611,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_grid;
     private javax.swing.JPanel Panel_list;
+    private javax.swing.JButton btn_chiTiet;
     private javax.swing.JButton btn_datSach;
     private javax.swing.JButton btn_first;
     private javax.swing.JButton btn_first1;
@@ -551,9 +622,11 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private javax.swing.JButton btn_next1;
     private javax.swing.JButton btn_prev;
     private javax.swing.JButton btn_prev1;
+    private javax.swing.JButton btn_reload;
     private javax.swing.JButton btn_search;
-    private javax.swing.JButton btn_update;
+    private javax.swing.JButton btn_themSL;
     private javax.swing.JComboBox<String> cbo_danhMuc;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -709,6 +782,25 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private void loadComboboxDanhMuc() {
         for (DanhMuc x : danhMucDAO.selectAll()) {
             cboModel.addElement(x);
+        }
+    }
+
+    private void nhapThemSoLuongSach() {
+        int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
+        TuaSach model = tuaSachDAO.selectById(maTuaSach);
+         try {
+            int slthem = Integer.parseInt(JOptionPane.showInputDialog(this, "Nhập thêm số lượng sách"));
+            int soLuong = model.getSoLuong();
+            soLuong += slthem;
+            tuaSachDAO.updateSL(maTuaSach, soLuong);
+            for (int i = 0; i < slthem; i++) {
+                    quyenSachDAO.insert(new QuyenSach("", true, model.getGhiChu(), maTuaSach));
+                    System.out.println("something"); 
+                           
+                }
+            loadTable();
+        } catch (Exception e) {
+             DialogHelper.alert(jPanel2, "Error");
         }
     }
 }
