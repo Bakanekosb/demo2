@@ -7,6 +7,7 @@ package com.xpoly.ui;
 
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
+import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -27,12 +28,12 @@ public class MainJFrame extends javax.swing.JFrame {
      * Creates new form MainJFrame
      */
     List<JInternalFrame> lst_internalFrame = new ArrayList<>();
-    
+
     public MainJFrame() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         execute();
-        
+
     }
 
     private void execute() {
@@ -46,7 +47,7 @@ public class MainJFrame extends javax.swing.JFrame {
         ImageIcon iconItem = new ImageIcon("icon\\item.png");
 
         //create submenu Sach
-        MenuItem menuSach_danhSach = new MenuItem(iconItem, "Danh sách",new ActionListener() {
+        MenuItem menuSach_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new QLTuaSachJInternalFrame());
@@ -54,24 +55,31 @@ public class MainJFrame extends javax.swing.JFrame {
 //                panel_body.revalidate();
             }
         });
-        MenuItem menuSach_them = new MenuItem(iconItem, "Thêm tựa sách",null);
-        MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích",null);
-        MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách",null);
-        
+        MenuItem menuSach_them = new MenuItem(iconItem, "Thêm tựa sách",new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new ThemSachJInternalFrame());
+//                panel_body.repaint();
+//                panel_body.revalidate();
+            }
+        });
+        MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích", null);
+        MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách", null);
+
 //        // create submenu bandoc
-        MenuItem menuBanDoc_danhSach = new MenuItem(iconItem, "Danh sách",null);
-        MenuItem menuBanDoc_them = new MenuItem(iconItem, "Thêm bạn đọc",null);
+        MenuItem menuBanDoc_danhSach = new MenuItem(iconItem, "Danh sách", null);
+        MenuItem menuBanDoc_them = new MenuItem(iconItem, "Thêm bạn đọc", null);
 //        
 //         //create submenu NguoiDung
-        MenuItem menuNguoiDung_banDoc = new MenuItem(iconSubMenu, "Bạn đọc",null, menuBanDoc_danhSach,menuBanDoc_them);
-        MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự",null);
-        MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản",null);
+        MenuItem menuNguoiDung_banDoc = new MenuItem(iconSubMenu, "Bạn đọc", null, menuBanDoc_danhSach, menuBanDoc_them);
+        MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", null);
+        MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null);
 
-        MenuItem menuSach = new MenuItem(iconSach, "Sách",null, menuSach_danhSach,menuSach_them, menuSach_uaThich, menuSach_datSach);
+        MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_uaThich, menuSach_datSach);
 
-        MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng",null,menuNguoiDung_banDoc,menuNguoiDung_nhanSu,menuNguoiDung_taiKhoan);
-        MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn",null);
-        MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả",null);
+        MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan);
+        MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null);
+        MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null);
         addMenu(menuSach, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
     }
 
@@ -85,23 +93,25 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         panel_menu.revalidate();
     }
-    
-     void showChucNang(JInternalFrame newJIF) {
-         try {
-             if (!lst_internalFrame.isEmpty()) {
-                 for (JInternalFrame x : lst_internalFrame) {
-                     x.dispose();
-                 }
-             }
-             lst_internalFrame = new ArrayList<>();
-             lst_internalFrame.add(newJIF);
-             panel_body.add(newJIF);
-             newJIF.setVisible(true);
-             newJIF.setBorder(null);
-             newJIF.setMaximum(true);
-             newJIF.setBorder(null);
-         } catch (PropertyVetoException propertyVetoException) {
-         }
+
+    public void showChucNang(JInternalFrame newJIF) {
+        try {
+//             if (!lst_internalFrame.isEmpty()) {
+//                 for (JInternalFrame x : lst_internalFrame) {
+//                     x.dispose();
+//                 }
+//             }
+//             lst_internalFrame = new ArrayList<>();
+//             lst_internalFrame.add(newJIF);
+            panel_body.removeAll();
+            panel_body.add(newJIF);
+            panel_body.repaint();
+            newJIF.setVisible(true);
+            newJIF.setBorder(null);
+            newJIF.setMaximum(true);
+            newJIF.setBorder(null);
+        } catch (PropertyVetoException propertyVetoException) {
+        }
     }
 
     /**
@@ -114,10 +124,10 @@ public class MainJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         panel_header = new javax.swing.JPanel();
-        panel_body = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panel_menu = new javax.swing.JPanel();
+        panel_body = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,21 +145,6 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(panel_header, java.awt.BorderLayout.PAGE_START);
-
-        panel_body.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout panel_bodyLayout = new javax.swing.GroupLayout(panel_body);
-        panel_body.setLayout(panel_bodyLayout);
-        panel_bodyLayout.setHorizontalGroup(
-            panel_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 911, Short.MAX_VALUE)
-        );
-        panel_bodyLayout.setVerticalGroup(
-            panel_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(panel_body, java.awt.BorderLayout.CENTER);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(220, 476));
@@ -171,6 +166,19 @@ public class MainJFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
+
+        javax.swing.GroupLayout panel_bodyLayout = new javax.swing.GroupLayout(panel_body);
+        panel_body.setLayout(panel_bodyLayout);
+        panel_bodyLayout.setHorizontalGroup(
+            panel_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 911, Short.MAX_VALUE)
+        );
+        panel_bodyLayout.setVerticalGroup(
+            panel_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 476, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel_body, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -213,7 +221,7 @@ public class MainJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel panel_body;
+    public static javax.swing.JDesktopPane panel_body;
     private javax.swing.JPanel panel_header;
     private javax.swing.JPanel panel_menu;
     // End of variables declaration//GEN-END:variables

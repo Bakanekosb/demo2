@@ -308,7 +308,7 @@ public class ChonTacGiaJFrame extends javax.swing.JFrame {
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
         // TODO add your handling code here:
 //        ThemSach.hienThiTG(lst_chonTG);
-        UpdateSach.hienThiTG(lst_chonTG);
+        ThemSachJInternalFrame.hienThiTG(lst_chonTG);
         this.dispose();
     }//GEN-LAST:event_btn_okActionPerformed
 

@@ -99,6 +99,11 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         jLabel1.setText("CHI TIẾT SÁCH ");
 
         btn_quit.setText("Exit");
+        btn_quit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_quitActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Vị trí:");
 
@@ -199,8 +204,7 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
                         .addComponent(btn_quit, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -237,6 +241,11 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         // TODO add your handling code here:
         update();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btn_quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_quitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btn_quitActionPerformed
 
     /**
      * @param args the command line arguments
