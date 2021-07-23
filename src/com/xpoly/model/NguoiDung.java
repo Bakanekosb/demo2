@@ -24,6 +24,7 @@ public class NguoiDung {
     private String matKhau;
     private double viTien;
     private String anh;
+    private  int trangthai;
 
     public NguoiDung() {
     }
@@ -31,9 +32,8 @@ public class NguoiDung {
     public NguoiDung(String maND) {
         this.maND = maND;
     }   
-    
 
-    public NguoiDung(String maND, String hoTen, Date ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, int vaiTro, String ghiChu, String matKhau, double viTien, String anh) {
+    public NguoiDung(String maND, String hoTen, Date ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, int vaiTro, String ghiChu, String matKhau, double viTien, String anh, int trangthai) {
         this.maND = maND;
         this.hoTen = hoTen;
         this.ngaySinh = ngaySinh;
@@ -46,8 +46,11 @@ public class NguoiDung {
         this.matKhau = matKhau;
         this.viTien = viTien;
         this.anh = anh;
+        this.trangthai = trangthai;
     }
+    
 
+ 
     public String getMaND() {
         return maND;
     }
@@ -142,6 +145,14 @@ public class NguoiDung {
 
     public void setAnh(String anh) {
         this.anh = anh;
+    }
+
+    public int getTrangthai() {
+        return trangthai;
+    }
+
+    public void setTrangthai(int trangthai) {
+        this.trangthai = trangthai;
     }
 
     @Override

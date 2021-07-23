@@ -23,11 +23,12 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
 
     @Override
     public void insert(NguoiDung model) {
-        String sql = "insert into nguoidung (mand,hoten,ngaysinh,gioitinh,sdt,email,diachi,vaitro,ghichu,matkhau,vitien,anh)\n"
-                + "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into nguoidung (mand,hoten,ngaysinh,gioitinh,sdt,email,diachi,vaitro,ghichu,matkhau,vitien,anh,trangthai)\n"
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         JdbcHelper.executeUpdate(sql, model.getMaND(), model.getHoTen(), model.getNgaySinh(),
                 model.isGioiTinh(), model.getSdt(), model.getEmail(), model.getDiaChi(),
-                model.getVaiTro(), model.getGhiChu(), model.getMatKhau(), model.getViTien(), model.getAnh());
+                model.getVaiTro(), model.getGhiChu(), model.getMatKhau(), model.getViTien(),
+                model.getAnh(),model.getTrangthai());
 
     }
 
@@ -43,8 +44,9 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+                String sql = "update nguoidung set trangthai = 1 where mand = ?";
+                JdbcHelper.executeUpdate(sql,id);
+   }
 
     @Override
     public NguoiDung selectById(String id) {
@@ -53,7 +55,7 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
 
     @Override
     public List<NguoiDung> selectAll() {
-        String sql = "select * from nguoidung where vaitro  =  0 or vaitro = 1";
+        String sql = "select * from nguoidung where (vaitro  =  0 or vaitro = 1) and trangthai = 0";
         return selectBySql(sql);
     }
 
