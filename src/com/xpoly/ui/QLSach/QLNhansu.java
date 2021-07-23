@@ -9,7 +9,9 @@ import java.lang.Object;
 import com.xpoly.DAO.NguoiDungDao;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
+import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
+import java.awt.Button;
 import java.awt.MenuContainer;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -17,8 +19,10 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.accessibility.Accessible;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -35,6 +39,9 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
     String keyword = "";
     JFileChooser chooser ; 
     File f = null;
+    NguoiDung nguoidung = new NguoiDung();
+    double vitien;
+    int trangthai = 0;
 
     /**
      * Creates new form QLNhansu
@@ -217,15 +224,16 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                     .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txthoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txthoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel8))
                     .addComponent(jdatengaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtdiachi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -378,6 +386,8 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
 
     private void btnimgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimgActionPerformed
         // TODO add your handling code here:
+        
+        selectImage(btnimg);
         chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & GIF Images", "jpg", "gif");
@@ -391,7 +401,23 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             System.out.println("chooser" + chooser);
         }
     }//GEN-LAST:event_btnimgActionPerformed
+    public void selectImage(JButton btn) {
+        EzHelper ez = new EzHelper();
+        try {
+            JFileChooser fc = new JFileChooser("images\\");
+            if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                if (ez.saveImg(file)) {
+                    btnimg.setIcon(ez.readImg(file.getName()));
+                    btnimg.setToolTipText(file.getName());
+                }
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi save ảnh");
+        }
 
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -511,6 +537,14 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
 
     @Override
     public void insert() {
+        try {
+            if(nguoidung != null){
+        nguoidungDAO.insert(getModel());
+        }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Thêm thất bại !");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -606,9 +640,9 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
 //    String vaitro = txtMand.getText();
         String ghichu = txtghichu.getText();
         String matkhau = txtmatkhau.getText();
-        double vitien = txtvitien.getText();
-        
-    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, chooser);
+        vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", jPanel1);
+        String anh = chooser.getName(f);
+    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, anh,trangthai);
         
     }
 

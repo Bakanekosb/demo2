@@ -24,10 +24,11 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
     @Override
     public void insert(NguoiDung model) {
         String sql = "insert into nguoidung (mand,hoten,ngaysinh,gioitinh,sdt,email,diachi,vaitro,ghichu,matkhau,vitien,anh)\n"
-                + "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         JdbcHelper.executeUpdate(sql, model.getMaND(), model.getHoTen(), model.getNgaySinh(),
                 model.isGioiTinh(), model.getSdt(), model.getEmail(), model.getDiaChi(),
-                model.getVaiTro(), model.getGhiChu(), model.getMatKhau(), model.getViTien(), model.getAnh());
+                model.getVaiTro(), model.getGhiChu(), model.getMatKhau(), model.getViTien(),
+                model.getAnh(),model.getTrangthai());
 
     }
 
