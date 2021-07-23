@@ -33,6 +33,11 @@ public class NguoiDung {
         this.maND = maND;
     }   
 
+    public NguoiDung(String maND, double viTien) {
+        this.maND = maND;
+        this.viTien = viTien;
+    }
+    
     public NguoiDung(String maND, String hoTen, Date ngaySinh, boolean gioiTinh, String sdt, String email, String diaChi, int vaiTro, String ghiChu, String matKhau, double viTien, String anh, int trangthai) {
         this.maND = maND;
         this.hoTen = hoTen;
