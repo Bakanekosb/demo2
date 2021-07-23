@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.ui.QLSach;
+package com.xpoly.ui;
 
 import java.lang.Object;
 import com.xpoly.DAO.NguoiDungDao;
@@ -422,6 +422,7 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         int i = TableList.getSelectedRow();
         if(i>=0){
             txtMand.setText(TableList.getValueAt(i, 1).toString());
+            txtMand.setEditable(false);
             txthoten.setText(TableList.getValueAt(i, 2).toString());
             jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
             if(TableList.getValueAt(i, 4)== "Nam"){
@@ -436,6 +437,7 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             txtghichu.setText(TableList.getValueAt(i, 9).toString());
             txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
             txtvitien.setText(TableList.getValueAt(i, 11).toString());
+            txtvitien.setEditable(false);
             
             
         
