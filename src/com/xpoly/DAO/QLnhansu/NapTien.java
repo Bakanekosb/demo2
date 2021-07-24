@@ -5,12 +5,15 @@
  */
 package com.xpoly.DAO.QLnhansu;
 
+import com.xpoly.DAO.LsgdDAO;
 import com.xpoly.DAO.NguoiDungDao;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
+import com.xpoly.model.LichSuGiaoDich;
 import com.xpoly.model.NguoiDung;
+import java.util.Date;
 
 /**
  *
@@ -20,6 +23,7 @@ public class NapTien extends javax.swing.JFrame implements IService<NguoiDung> {
 
     String keyword = "";
     NguoiDungDao nguoidungDAO = new NguoiDungDao();
+    LsgdDAO lsgd = new LsgdDAO();
 int i;
     /**
      * Creates new form NapTien
@@ -157,8 +161,11 @@ int i;
         // TODO add your handling code here:
         if("".equals(txttennd.getText())){
             DialogHelper.alert(this, "Không tìm thấy Người dùng !");
+            System.out.println("thất bại !");
         }else{
            update();
+           lsgd.insert(lsgdgetmodel());
+            System.out.println("thành công ");
         if(i == 0){
             this.dispose(); 
         }
@@ -294,7 +301,16 @@ int i;
         double tiennap = vitien + tiennaptxt;
         return new NguoiDung(mand, tiennap);
     }
+public LichSuGiaoDich lsgdgetmodel(){
+   
+    String mand = txtmand.getText();
+    Date ngayDG = EzHelper.now();
+    double sotien = EzHelper.isDouble(txtMoney, "số tiền", this);
+    String nguoitaogd = "ND001";
+    
+        return new LichSuGiaoDich(i++, mand, ngayDG, sotien, "Nạp Tiền", nguoitaogd);
 
+}
     @Override
     public void setModel(NguoiDung model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
