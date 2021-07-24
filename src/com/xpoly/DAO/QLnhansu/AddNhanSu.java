@@ -30,6 +30,8 @@ String keyword = "";
     NguoiDung nguoidung = new NguoiDung();
     double vitien;
     int trangthai = 0;
+    String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
+    String resdt = "0[0-9]{9}";
     /**
      * Creates new form AddNhanSu
      */
@@ -468,7 +470,9 @@ String keyword = "";
     @Override
     public StringBuilder validateForm() {
      StringBuilder sb = new StringBuilder();
+     
         String mand = txtMand.getText();
+        
         String hoten = txthoten.getText();
         Date ngaysinh = jdatengaysinh.getDate();
         boolean gioitinh = rdbnam.isSelected() ? true : false;
@@ -480,43 +484,40 @@ String keyword = "";
         String matkhau = txtmatkhau.getText();
         String vitien = txtvitien.getText();
         if (mand.isBlank()) {
-            DialogHelper.alert(this, "Mã Người dùng Không được để trống ! ");
-            return null;
+            
+           
+            return sb.append("Mã Nhân viên không được để trống !");
+        }
+        if(!mand.matches(reMaNV)){
+       return sb.append(" \n Bạn nhập định dạng mã nhân viên sai \n xin Nhập theo định dạng NV12345");
         }
         if (hoten.isBlank()) {
-            DialogHelper.alert(this, "Họ tên Không được để trống ! ");
-            return null;
-        }
-        if (mand.isBlank()) {
-            DialogHelper.alert(this, "Mã Người dùng Không được để trống ! ");
-            return null;
+           return sb.append("\n Họ tên không được để trống!");
         }
         if (sdt.isBlank()) {
-            DialogHelper.alert(this, "SĐT Không được để trống ! ");
-            return null;
+            return sb.append("\n SĐT không được để trống !");
+        }
+        if(sdt.matches(resdt)){
+          return sb.append("\n SĐT phải bắt đầu bằng số 0 và có độ dài là 10 số ! \"");
         }
         if (email.isBlank()) {
-            DialogHelper.alert(this, "Email Không được để trống ! ");
-            return null;
+            return sb.append(" \n Email Không được để trống ! ");
         }
         if (diachi.isBlank()) {
-            DialogHelper.alert(this, "Địa chỉ Không được để trống ! ");
-            return null;
+           return sb.append(" \n Địa chỉ Không được để trống ! ");
         }
         if (matkhau.isBlank()) {
-            DialogHelper.alert(this, "Mật khẩu Không được để trống ! ");
-            return null;
+            return sb.append("\n mật khẩu không được để trống !");
         }
         if (vitien.isBlank()) {
-            DialogHelper.alert(this, "Ví tiền Không được để trống ! ");
-            return null;
+            return sb.append("\n Ví tiền Không được để trống ! ");
         }
         return sb;}
 
     @Override
     public NguoiDung getModel() {
    if (validateForm().length() > 0) {
-            DialogHelper.alert(this, "");
+            DialogHelper.alert(this, validateForm().toString());
             return null;
         }
         String mand = txtMand.getText();
