@@ -6,7 +6,7 @@
 package com.xpoly.DAO.QLnhansu;
 
 import com.xpoly.DAO.LsgdDAO;
-import com.xpoly.DAO.NguoiDungDao;
+import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
@@ -22,7 +22,7 @@ import java.util.Date;
 public class NapTien extends javax.swing.JFrame implements IService<NguoiDung> {
 
     String keyword = "";
-    NguoiDungDao nguoidungDAO = new NguoiDungDao();
+    NhanVienDao nguoidungDAO = new NhanVienDao();
     LsgdDAO lsgd = new LsgdDAO();
 int i;
     /**

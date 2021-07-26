@@ -106,7 +106,7 @@ public class EzHelper extends javax.swing.JFrame {
         return new ImageIcon(path.getAbsolutePath());
     }
 
-    public void selectImage(JLabel lbl_image) {
+    public  void selectImage(JLabel lbl_image) {
         try {
             JFileChooser fc = new JFileChooser("images\\");
             if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {

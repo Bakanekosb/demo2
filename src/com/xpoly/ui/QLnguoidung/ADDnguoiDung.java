@@ -3,50 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.DAO.QLnhansu;
+package com.xpoly.ui.QLnguoidung;
 
-import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
-import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
-import java.io.File;
-import java.util.Date;
-import java.util.Random;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Admin
  */
-public class AddNhanSu extends javax.swing.JFrame implements IService<NguoiDung>{
-     String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
-    DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
-String keyword = "";
-    JFileChooser chooser =new JFileChooser();; 
-    File f = null;
-    NhanVienDao nguoidungDAO = new NhanVienDao();
-    NguoiDung nguoidung = new NguoiDung();
-    double vitien;
-    int trangthai = 0;
-    String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
-    String resdt = "0[0-9]{9}";
-    private static final String alpha = "abcdefghijklmnopqrstuvwxyz"; // a-z
-    private static final String alphaUpperCase = alpha.toUpperCase(); // A-Z
-    private static final String digits = "0123456789"; // 0-9
-    private static final String specials = "~=+%^*/()[]{}/!@#$?|";
-    private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
-        private static Random generator = new Random();
-        int numberOfCharactor = 8;
+public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDung>{
+    EzHelper ez = new EzHelper();
     /**
-     * Creates new form AddNhanSu
+     * Creates new form ADDnguoiDung
      */
-    public AddNhanSu() {
+    public ADDnguoiDung() {
         initComponents();
-        init();
     }
 
     /**
@@ -59,7 +32,6 @@ String keyword = "";
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         txtMand = new javax.swing.JTextField();
@@ -81,15 +53,15 @@ String keyword = "";
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         combovaitro = new javax.swing.JComboBox<>();
-        btnimg = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
+        lblIMG = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông Tin"));
 
@@ -109,10 +81,8 @@ String keyword = "";
 
         jLabel31.setText("Giới Tính");
 
-        buttonGroup1.add(rdbnam);
         rdbnam.setText("Nam");
 
-        buttonGroup1.add(rdbNu);
         rdbNu.setText("Nữ");
 
         jLabel32.setText("Ví Tiền");
@@ -126,14 +96,9 @@ String keyword = "";
             }
         });
 
-        btnimg.setText("Tải lên");
-        btnimg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnimgActionPerformed(evt);
-            }
-        });
-
         jLabel35.setText("Ảnh");
+
+        lblIMG.setText("Click vào để tải ảnh");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -177,15 +142,20 @@ String keyword = "";
                                 .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnimg)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(txtdiachi, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
-                                .addGap(1, 1, 1))
-                            .addComponent(txtghichu)
-                            .addComponent(txtEmail)
-                            .addComponent(txtsdt))))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(txtdiachi, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                                        .addGap(1, 1, 1))
+                                    .addComponent(txtghichu)
+                                    .addComponent(txtEmail)
+                                    .addComponent(txtsdt)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(lblIMG, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 368, Short.MAX_VALUE)))))
                 .addGap(25, 25, 25))
         );
         jPanel3Layout.setVerticalGroup(
@@ -228,13 +198,13 @@ String keyword = "";
                             .addComponent(jLabel27))
                         .addGap(18, 18, 18)
                         .addComponent(txtvitien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
                     .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnimg)
-                    .addComponent(jLabel35))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(jLabel35)
+                    .addComponent(lblIMG))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
@@ -282,50 +252,39 @@ String keyword = "";
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(162, 162, 162)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+            .addGap(0, 1181, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addGap(0, 213, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 214, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(407, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+            .addGap(0, 532, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(86, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(120, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(169, Short.MAX_VALUE)))
+                    .addGap(0, 253, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 253, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnimgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimgActionPerformed
+    private void combovaitroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combovaitroActionPerformed
         // TODO add your handling code here:
-
-        selectImage(btnimg);
-               
-//                FileNameExtensionFilter filter = new FileNameExtensionFilter(
-//                            "JPG & GIF Images", "jpg", "gif");
-//                chooser.setFileFilter(filter);
-//                chooser.setMultiSelectionEnabled(false);
-//                int x = chooser.showDialog(this, "chọn file");
-//                if (x == chooser.APPROVE_OPTION) {
-//                      File  f = (File)chooser.getSelectedFile();
-//                        DialogHelper.alert(this, "tải thành công !");
-//                        System.out.println(f + " file ảnh");
-//                        System.out.println("chooser" + chooser);
-//                        
-//                    }
-    }//GEN-LAST:event_btnimgActionPerformed
+    }//GEN-LAST:event_combovaitroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -333,14 +292,10 @@ String keyword = "";
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         // TODO add your handling code here:
-         clear();
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void combovaitroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combovaitroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_combovaitroActionPerformed
+        clear();
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -364,27 +319,25 @@ String keyword = "";
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddNhanSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ADDnguoiDung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddNhanSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ADDnguoiDung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddNhanSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ADDnguoiDung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddNhanSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ADDnguoiDung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddNhanSu().setVisible(true);
+                new ADDnguoiDung().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnimg;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> combovaitro;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
@@ -403,6 +356,7 @@ String keyword = "";
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private com.toedter.calendar.JDateChooser jdatengaysinh;
+    private javax.swing.JLabel lblIMG;
     private javax.swing.JRadioButton rdbNu;
     private javax.swing.JRadioButton rdbnam;
     private javax.swing.JTextField txtEmail;
@@ -416,29 +370,18 @@ String keyword = "";
 
     @Override
     public void init() {
-     setLocationRelativeTo(this);      
-        combovaitro.setModel((DefaultComboBoxModel) combo);
-        
-        pack();
-                }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public void loadTable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void insert() {
-         try {
-            if(nguoidung != null){
-        nguoidungDAO.insert(getModel());
-        DialogHelper.alert(this, "Thêm Thành Công!");
-        }
-        } catch (Exception e) {
-            DialogHelper.alert(this, "Thêm thất bại !");
-            e.printStackTrace();
-            return;
-        }
-   }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public void update() {
@@ -452,134 +395,21 @@ String keyword = "";
 
     @Override
     public void clear() {
-    txtEmail.setText("");
-    txtMand.setText("");
-    txtdiachi.setText("");
-    txtghichu.setText("");
-    txthoten.setText("");
-    
-    txtsdt.setText("");
-    txtvitien.setText("");
-    rdbnam.setSelected(true);
-    combovaitro.setSelectedIndex(1);
-    btnimg.setText("Tải lên");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public StringBuilder validateForm() {
-     StringBuilder sb = new StringBuilder();
-     
-        String mand = txtMand.getText();
-        
-        String hoten = txthoten.getText();
-        Date ngaysinh = jdatengaysinh.getDate();
-        boolean gioitinh = rdbnam.isSelected() ? true : false;
-        String sdt = txtsdt.getText();
-        String email = txtEmail.getText();
-        String diachi = txtdiachi.getText();
-//    String vaitro = txtMand.getText();
-        String ghichu = txtghichu.getText();
-        String matkhau = randomString(numberOfCharactor);
-        Double vitien = EzHelper.isDouble(txtvitien, "Ví tiền", this);
-        String vitien2 = txtvitien.getText();
-        if (mand.isBlank()) {
-            
-           
-            return sb.append("Mã Nhân viên không được để trống !");
-        }
-        if(!mand.matches(reMaNV)){
-       return sb.append(" \n Bạn nhập định dạng mã nhân viên sai \n xin Nhập theo định dạng NV12345");
-        }
-        if (hoten.isBlank()) {
-           return sb.append("\n Họ tên không được để trống!");
-        }
-        if (sdt.isBlank()) {
-            return sb.append("\n SĐT không được để trống !");
-        }
-        if(!sdt.matches(resdt)){
-          return sb.append("\n SĐT phải bắt đầu bằng số 0 và có độ dài là 10 số ! \"");
-        }
-        if (email.isBlank()) {
-            return sb.append(" \n Email Không được để trống ! ");
-        }
-        if (diachi.isBlank()) {
-           return sb.append(" \n Địa chỉ Không được để trống ! ");
-        }
-        if (matkhau.isBlank()) {
-            return sb.append("\n mật khẩu không được để trống !");
-        }
-        if (vitien2.isBlank()) {
-            return sb.append("\n Ví tiền Không được để trống ! ");
-        }
-        if(vitien < 50000 && vitien/1000 ==0){
-        return sb.append("Số tiền phải lớn hơn 50.000 và phải chia hết cho 1000");
-        }
-        return sb;}
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public NguoiDung getModel() {
-   if (validateForm().length() > 0) {
-            DialogHelper.alert(this, validateForm().toString());
-            return null;
-        }
-        String mand = txtMand.getText().toUpperCase();
-        String hoten = txthoten.getText();
-        Date ngaysinh = jdatengaysinh.getDate();
-        boolean gioitinh = rdbnam.isSelected() ? true : false;
-        String sdt = txtsdt.getText();
-        String email = txtEmail.getText();
-        String diachi = txtdiachi.getText();
-//    String vaitro = txtMand.getText();
-        String ghichu = txtghichu.getText();
-        String matkhau = randomString(numberOfCharactor);
-        vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
-        String anh = btnimg.getToolTipText();
-    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, "",trangthai);
-        }
-  public int selectrole() {
-        if (combovaitro.getSelectedIndex() == 1) {
-            return 1;
-        }
-        if (combovaitro.getSelectedIndex() == 2) {
-            return 2;
-        }
-        if (combovaitro.getSelectedIndex() == 3) {
-            return 3;
-        }
-        return 0;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void setModel(NguoiDung model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-       public void selectImage(JButton btn) {
-        EzHelper ez = new EzHelper();
-        try {
-            JFileChooser fc = new JFileChooser("images\\");
-            if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                if (ez.saveImg(file)) {
-                    btnimg.setIcon(ez.readImg(file.getName()));
-                    btnimg.setToolTipText(file.getName());
-                }
-            }
-        } catch (Exception e) {
-            DialogHelper.alert(this, "Lỗi save ảnh");
-        }
-
-    }
-        public String randomString(int numberOfCharactor) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < numberOfCharactor; i++) {
-            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
-            char ch = ALPHA_NUMERIC.charAt(number);
-            sb.append(ch);
-        }
-        return sb.toString();
-    }
-       public static int randomNumber(int min, int max) {
-        return generator.nextInt((max - min) + 1) + min;
-    }
-       
 }

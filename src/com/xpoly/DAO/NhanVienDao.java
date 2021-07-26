@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Admin
  */
-public class NguoiDungDao implements IDAO<NguoiDung, String> {
+public class NhanVienDao implements IDAO<NguoiDung, String> {
 
     @Override
     public void insert(NguoiDung model) {
@@ -41,10 +41,10 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
                 ,model.getVaiTro(),model.getGhiChu(),model.getMatKhau(),model.getMaND()
         );
     }
-public  void updatevitien(NguoiDung model){
-String sql = "update nguoidung set vitien = ? where mand = ? ";
-JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
-}
+    public void updatevitien(NguoiDung model) {
+        String sql = "update nguoidung set vitien = ? where mand = ? ";
+        JdbcHelper.executeUpdate(sql, model.getViTien(), model.getMaND());
+    }
     @Override
     public void delete(String id) {
                 String sql = "update nguoidung set trangthai = 1 where mand = ?";
@@ -93,7 +93,8 @@ public List<NguoiDung> getvitien(String mand){
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        return lst;}
+        return lst;
+    }
 
     @Override
     public NguoiDung readFromResultSet(ResultSet rs) throws SQLException {

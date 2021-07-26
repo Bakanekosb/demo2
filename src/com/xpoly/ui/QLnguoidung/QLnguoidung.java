@@ -3,50 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.DAO.QLnhansu;
+package com.xpoly.ui.QLnguoidung;
 
-import java.lang.Object;
 import com.xpoly.DAO.NhanVienDao;
+import com.xpoly.DAO.QLnhansu.NapTien;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
-import java.awt.Button;
-import java.awt.MenuContainer;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.Serializable;
 import java.util.Date;
-import javax.accessibility.Accessible;
+import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Admin
  */
-public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>, Accessible, Serializable, MenuContainer, ImageObserver {
-
-    String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền","Ảnh"};
+public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDung>{
+String keyword = "";
+EzHelper ez = new EzHelper();
+String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền","Ảnh"};
     DefaultTableModel model = new DefaultTableModel(head, 0);
     String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
     DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
     NhanVienDao nguoidungDAO = new NhanVienDao();
-    String keyword = "";
-    JFileChooser chooser ; 
-    File f = null;
-    NguoiDung nguoidung = new NguoiDung();
+        NguoiDung nguoidung = new NguoiDung();
     double vitien;
     int trangthai = 0;
-
+    String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
+    String resdt = "0[0-9]{9}";
+    private static final String alpha = "abcdefghijklmnopqrstuvwxyz"; // a-z
+    private static final String alphaUpperCase = alpha.toUpperCase(); // A-Z
+    private static final String digits = "0123456789"; // 0-9
+    private static final String specials = "~=+%^*/()[]{}/!@#$?|";
+    private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
+        private static Random generator = new Random();
+        int numberOfCharactor = 8;
     /**
-     * Creates new form QLNhansu
+     * Creates new form QLnguoidung
      */
-    public QLNhansu() {
+    public QLnguoidung() {
         initComponents();
         init();
     }
@@ -61,8 +58,9 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
+        txtseach = new javax.swing.JTextField();
+        btnseach = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableList = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -88,23 +86,28 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         jLabel12 = new javax.swing.JLabel();
         combovaitro = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        btnimg = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
+        lblImg = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnadd = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        txtseach = new javax.swing.JTextField();
-        btnseach = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Quản Lý Nhân Sự");
+        jLabel1.setText("Quản Lý Bạn Đọc");
+
+        btnseach.setText("Tìm Kiếm");
+        btnseach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnseachActionPerformed(evt);
+            }
+        });
 
         TableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,10 +145,8 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
 
         jLabel9.setText("Giới Tính");
 
-        buttonGroup1.add(rdbnam);
         rdbnam.setText("Nam");
 
-        buttonGroup1.add(rdbNu);
         rdbNu.setText("Nữ");
 
         txtmatkhau.setText("jPasswordField1");
@@ -158,14 +159,14 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
 
         jLabel10.setText("Mật Khẩu");
 
-        btnimg.setText("Tải lên");
-        btnimg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnimgActionPerformed(evt);
+        jLabel13.setText("Ảnh");
+
+        lblImg.setText("Click vào để tải ảnh");
+        lblImg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImgMouseClicked(evt);
             }
         });
-
-        jLabel13.setText("Ảnh");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -212,15 +213,15 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnimg)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtdiachi)
                                 .addGap(1, 1, 1))
                             .addComponent(txtghichu)
                             .addComponent(txtEmail)
                             .addComponent(txtsdt)
-                            .addComponent(txtmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))))
+                            .addComponent(txtmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
@@ -273,16 +274,16 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
-                            .addComponent(btnimg))))
-                .addContainerGap(106, Short.MAX_VALUE))
+                            .addComponent(lblImg))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnadd.setText("Add");
+        btnadd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnaddActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -290,7 +291,7 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 222, 0, 0);
-        jPanel2.add(jButton1, gridBagConstraints);
+        jPanel2.add(btnadd, gridBagConstraints);
 
         btnupdate.setText("update");
         btnupdate.addActionListener(new java.awt.event.ActionListener() {
@@ -344,13 +345,6 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 223);
         jPanel2.add(jButton5, gridBagConstraints);
 
-        btnseach.setText("Tìm Kiếm");
-        btnseach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnseachActionPerformed(evt);
-            }
-        });
-
         jButton6.setText("Nạp Tiền");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -373,12 +367,12 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 308, Short.MAX_VALUE))
+                                .addGap(0, 245, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton6)
-                                .addGap(69, 69, 69)
+                                .addGap(27, 27, 27)
                                 .addComponent(txtseach, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnseach))))
@@ -414,30 +408,6 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         keyword = txtseach.getText();
         loadTable();
     }//GEN-LAST:event_btnseachActionPerformed
-    AddNhanSu add = new AddNhanSu();
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        add.setVisible(true);
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnimgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimgActionPerformed
-        // TODO add your handling code here:
-        
-        selectImage(btnimg);
-//        chooser = new JFileChooser();
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-//                "JPG & GIF Images", "jpg", "gif");
-//        chooser.setFileFilter(filter);
-//        chooser.setMultiSelectionEnabled(false);
-//        int x = chooser.showDialog(this, "chọn file");
-//        if (x == chooser.APPROVE_OPTION) {
-//          File  f = (File)chooser.getSelectedFile();
-//            DialogHelper.alert(this, "tải thành công !");
-//            System.out.println(f + " file ảnh");
-//            System.out.println("chooser" + chooser);
-//        }
-    }//GEN-LAST:event_btnimgActionPerformed
 
     private void TableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableListMouseClicked
         // TODO add your handling code here:
@@ -448,9 +418,9 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             txthoten.setText(TableList.getValueAt(i, 2).toString());
             jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
             if(TableList.getValueAt(i, 4)== "Nam"){
-            rdbnam.setSelected(true);
+                rdbnam.setSelected(true);
             }else {
-            rdbNu.setSelected(true);
+                rdbNu.setSelected(true);
             }
             txtsdt.setText(TableList.getValueAt(i, 5).toString());
             txtEmail.setText(TableList.getValueAt(i, 6).toString());
@@ -460,11 +430,20 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
             txtvitien.setText(TableList.getValueAt(i, 11).toString());
             txtvitien.setEditable(false);
-            
-            
-        
+
         }
     }//GEN-LAST:event_TableListMouseClicked
+
+    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
+        // TODO add your handling code here:
+//        add.setVisible(true);
+    }//GEN-LAST:event_btnaddActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+        // TODO add your handling code here:
+        update();
+        loadTable();
+    }//GEN-LAST:event_btnupdateActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -476,39 +455,22 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         // TODO add your handling code here:
         loadTable();
     }//GEN-LAST:event_jButton4ActionPerformed
-NapTien nt = new NapTien();
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        nt.setVisible(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+    private void lblImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgMouseClicked
         // TODO add your handling code here:
-        update();
-        loadTable();
-    }//GEN-LAST:event_btnupdateActionPerformed
+        ez.selectImage(lblImg);
+    }//GEN-LAST:event_lblImgMouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
-    public void selectImage(JButton btn) {
-        EzHelper ez = new EzHelper();
-        try {
-            JFileChooser fc = new JFileChooser("images\\");
-            if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                if (ez.saveImg(file)) {
-                    btnimg.setIcon(ez.readImg(file.getName()));
-                    btnimg.setToolTipText(file.getName());
-                }
-            }
-        } catch (Exception e) {
-            DialogHelper.alert(this, "Lỗi save ảnh");
-        }
+    NapTien nt = new NapTien();
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        nt.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -526,32 +488,30 @@ NapTien nt = new NapTien();
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLNhansu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLNhansu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLNhansu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLNhansu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QLNhansu().setVisible(true);
+                new QLnguoidung().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableList;
-    private javax.swing.JButton btnimg;
+    private javax.swing.JButton btnadd;
     private javax.swing.JButton btnseach;
     private javax.swing.JButton btnupdate;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> combovaitro;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -573,6 +533,7 @@ NapTien nt = new NapTien();
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdatengaysinh;
+    private javax.swing.JLabel lblImg;
     private javax.swing.JRadioButton rdbNu;
     private javax.swing.JRadioButton rdbnam;
     private javax.swing.JTextField txtEmail;
@@ -588,17 +549,15 @@ NapTien nt = new NapTien();
 
     @Override
     public void init() {
-
-        setLocationRelativeTo(this);
+    setLocationRelativeTo(this);
         TableList.setModel(model);
         combovaitro.setModel((DefaultComboBoxModel) combo);
         loadTable();
-        pack();
-    }
+        pack(); }
 
     @Override
     public void loadTable() {
-        model.setRowCount(0);
+         model.setRowCount(0);
         int i = 0;
         for (NguoiDung x : nguoidungDAO.selectAll()) {
             model.addRow(new Object[]{
@@ -606,25 +565,6 @@ NapTien nt = new NapTien();
                  vaitro(x.getVaiTro()), x.getGhiChu(), x.getMatKhau(), x.getViTien(),x.getAnh()
             });
         }
-    }
-
-    public String gioitinh(boolean i) {
-        String gt;
-        if (i == true) {
-            return gt = "nam";
-        }
-        return gt = "nữ";
-    }
-
-    public String vaitro(int i) {
-        String gt;
-        if (i == 0) {
-            return gt = "ADMIN";
-        }
-        if (i == 1) {
-            return gt = "Thủ Thư";
-        }
-        return gt = "Bạn Đọc";
     }
 
     @Override
@@ -643,7 +583,7 @@ NapTien nt = new NapTien();
 
     @Override
     public void update() {
-        try {
+      try {
             if(nguoidung != null){
             nguoidungDAO.update(getModel());
              DialogHelper.alert(this, "Sửa Thành Công!");
@@ -652,12 +592,11 @@ NapTien nt = new NapTien();
             e.printStackTrace();
              DialogHelper.alert(this, "sửa thất bại !");
              return;
-        }
-    }
+        }}
 
     @Override
     public void delete() {
-        try {
+     try {
             if(nguoidung != null){
             nguoidungDAO.delete(txtMand.getText());
 //            TableList.remove(TableList.getSelectedRow());
@@ -671,7 +610,7 @@ NapTien nt = new NapTien();
 
     @Override
     public void clear() {
-         txtEmail.setText("");
+       txtEmail.setText("");
     txtMand.setText("");
     txtdiachi.setText("");
     txtghichu.setText("");
@@ -681,12 +620,11 @@ NapTien nt = new NapTien();
     txtvitien.setText("");
     rdbnam.setSelected(true);
     combovaitro.setSelectedIndex(1);
-    btnimg.setText("Tải lên");
-    }
+    lblImg.setText("Tải lên");}
 
     @Override
     public StringBuilder validateForm() {
-        StringBuilder sb = new StringBuilder();
+     StringBuilder sb = new StringBuilder();
         String mand = txtMand.getText();
         String hoten = txthoten.getText();
         Date ngaysinh = jdatengaysinh.getDate();
@@ -733,7 +671,61 @@ NapTien nt = new NapTien();
         return sb;
     }
 
-    public int selectrole() {
+    @Override
+    public NguoiDung getModel() {
+      if (validateForm().length() > 0) {
+            DialogHelper.alert(this, validateForm().toString());
+            return null;
+        }
+        String mand = txtMand.getText().toUpperCase();
+        String hoten = txthoten.getText();
+        Date ngaysinh = jdatengaysinh.getDate();
+        boolean gioitinh = rdbnam.isSelected() ? true : false;
+        String sdt = txtsdt.getText();
+        String email = txtEmail.getText();
+        String diachi = txtdiachi.getText();
+//    String vaitro = txtMand.getText();
+        String ghichu = txtghichu.getText();
+        String matkhau = randomString(numberOfCharactor);
+        vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
+        String anh = lblImg.getToolTipText();
+    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, "",trangthai);
+       }
+ public String randomString(int numberOfCharactor) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numberOfCharactor; i++) {
+            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
+            char ch = ALPHA_NUMERIC.charAt(number);
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+       public static int randomNumber(int min, int max) {
+        return generator.nextInt((max - min) + 1) + min;
+    }
+    @Override
+    public void setModel(NguoiDung model) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+     public String gioitinh(boolean i) {
+        String gt;
+        if (i == true) {
+            return gt = "nam";
+        }
+        return gt = "nữ";
+    }
+
+    public String vaitro(int i) {
+        String gt;
+        if (i == 0) {
+            return gt = "ADMIN";
+        }
+        if (i == 1) {
+            return gt = "Thủ Thư";
+        }
+        return gt = "Bạn Đọc";
+    }
+       public int selectrole() {
         if (combovaitro.getSelectedIndex() == 1) {
             return 1;
         }
@@ -744,32 +736,5 @@ NapTien nt = new NapTien();
             return 3;
         }
         return 0;
-    }
-
-    @Override
-    public NguoiDung getModel() {
-        if (validateForm().length() > 0) {
-            DialogHelper.alert(this, "");
-            return null;
-        }
-        String mand = txtMand.getText();
-        String hoten = txthoten.getText();
-        Date ngaysinh = jdatengaysinh.getDate();
-        boolean gioitinh = rdbnam.isSelected() ? true : false;
-        String sdt = txtsdt.getText();
-        String email = txtEmail.getText();
-        String diachi = txtdiachi.getText();
-//    String vaitro = txtMand.getText();
-        String ghichu = txtghichu.getText();
-        String matkhau = txtmatkhau.getText();
-        vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", jPanel1);
-        String anh = chooser.getName(f);
-    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien,"",trangthai);
-        
-    }
-
-    @Override
-    public void setModel(NguoiDung model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
