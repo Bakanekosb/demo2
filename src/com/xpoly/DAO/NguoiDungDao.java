@@ -41,7 +41,10 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
                 ,model.getVaiTro(),model.getGhiChu(),model.getMatKhau(),model.getMaND()
         );
     }
-
+public  void updatevitien(NguoiDung model){
+String sql = "update nguoidung set vitien = ? where mand = ? ";
+JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
+}
     @Override
     public void delete(String id) {
                 String sql = "update nguoidung set trangthai = 1 where mand = ?";
@@ -52,9 +55,22 @@ public class NguoiDungDao implements IDAO<NguoiDung, String> {
     public NguoiDung selectById(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+public List<NguoiDung> selectMand(String mand){
+
+   String sql = "select * from nguoidung where mand = ?";
+        
+        return selectBySql(sql, mand);
+}
+public List<NguoiDung> getvitien(String mand){
+
+   String sql = "select vitien from nguoidung where mand = ?";
+        
+        return selectBySql(sql, mand);
+}
 
     @Override
     public List<NguoiDung> selectAll() {
+       
         String sql = "select * from nguoidung where (vaitro  =  0 or vaitro = 1) and trangthai = 0";
         return selectBySql(sql);
     }

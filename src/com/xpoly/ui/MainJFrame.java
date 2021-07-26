@@ -5,6 +5,7 @@
  */
 package com.xpoly.ui;
 
+import com.xpoly.addTacGia.QLTacGia;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
@@ -43,6 +44,7 @@ public class MainJFrame extends javax.swing.JFrame {
         ImageIcon iconNguoiDung = new ImageIcon("icon\\icon.png");
         ImageIcon iconPhieuMuon = new ImageIcon("icon\\icon.png");
         ImageIcon iconPhieuTra = new ImageIcon("icon\\icon.png");
+        ImageIcon iconTacGia = new ImageIcon("icon\\icon.png");
         ImageIcon iconSubMenu = new ImageIcon("icon\\subMenu.png");
         ImageIcon iconItem = new ImageIcon("icon\\item.png");
 
@@ -77,10 +79,19 @@ public class MainJFrame extends javax.swing.JFrame {
 
         MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_uaThich, menuSach_datSach);
 
+        MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả",new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                QLTacGia frame = new QLTacGia();
+                frame.setVisible(true);
+//                panel_body.repaint();
+//                panel_body.revalidate();
+            }
+        });
         MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan);
         MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null);
         MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null);
-        addMenu(menuSach, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
+        addMenu(menuSach, menuTacGia, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
     }
 
     private void addMenu(MenuItem... menu) {

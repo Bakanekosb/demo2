@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.ui.QLSach;
+package com.xpoly.DAO.QLnhansu;
 
 import java.lang.Object;
 import com.xpoly.DAO.NguoiDungDao;
@@ -93,12 +93,13 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnupdate = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         txtseach = new javax.swing.JTextField();
         btnseach = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,12 +174,13 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -193,30 +195,32 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                             .addComponent(txthoten, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtMand, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jdatengaysinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtdiachi)
-                                .addGap(1, 1, 1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnimg)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(txtghichu)
-                                    .addComponent(txtEmail)
-                                    .addComponent(txtsdt)
-                                    .addComponent(txtmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))))))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnimg)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtdiachi)
+                                .addGap(1, 1, 1))
+                            .addComponent(txtghichu)
+                            .addComponent(txtEmail)
+                            .addComponent(txtsdt)
+                            .addComponent(txtmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))))
                 .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
@@ -250,9 +254,6 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                             .addComponent(rdbNu)
                             .addComponent(rdbnam)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel11))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtghichu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,7 +262,8 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtmatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
-                            .addComponent(txtvitien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtvitien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
@@ -270,9 +272,9 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnimg)
-                            .addComponent(jLabel13))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel13)
+                            .addComponent(btnimg))))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
@@ -290,13 +292,18 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         gridBagConstraints.insets = new java.awt.Insets(5, 222, 0, 0);
         jPanel2.add(jButton1, gridBagConstraints);
 
-        jButton2.setText("update");
+        btnupdate.setText("update");
+        btnupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnupdateActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel2.add(jButton2, gridBagConstraints);
+        jPanel2.add(btnupdate, gridBagConstraints);
 
         jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -339,6 +346,13 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             }
         });
 
+        jButton6.setText("Nạp Tiền");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -358,6 +372,8 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton6)
+                                .addGap(69, 69, 69)
                                 .addComponent(txtseach, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnseach))))
@@ -374,7 +390,8 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtseach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnseach)))
+                        .addComponent(btnseach)
+                        .addComponent(jButton6)))
                 .addGap(3, 3, 3)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -392,10 +409,10 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         keyword = txtseach.getText();
         loadTable();
     }//GEN-LAST:event_btnseachActionPerformed
-
+    AddNhanSu add = new AddNhanSu();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        insert();
+        add.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -422,6 +439,7 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         int i = TableList.getSelectedRow();
         if(i>=0){
             txtMand.setText(TableList.getValueAt(i, 1).toString());
+            txtMand.setEditable(false);
             txthoten.setText(TableList.getValueAt(i, 2).toString());
             jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
             if(TableList.getValueAt(i, 4)== "Nam"){
@@ -436,6 +454,7 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
             txtghichu.setText(TableList.getValueAt(i, 9).toString());
             txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
             txtvitien.setText(TableList.getValueAt(i, 11).toString());
+            txtvitien.setEditable(false);
             
             
         
@@ -452,6 +471,17 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         // TODO add your handling code here:
         loadTable();
     }//GEN-LAST:event_jButton4ActionPerformed
+NapTien nt = new NapTien();
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        nt.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+        // TODO add your handling code here:
+        update();
+        loadTable();
+    }//GEN-LAST:event_btnupdateActionPerformed
     public void selectImage(JButton btn) {
         EzHelper ez = new EzHelper();
         try {
@@ -508,13 +538,14 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
     private javax.swing.JTable TableList;
     private javax.swing.JButton btnimg;
     private javax.swing.JButton btnseach;
+    private javax.swing.JButton btnupdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> combovaitro;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -630,7 +661,17 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         txtEmail.setText("");
+    txtMand.setText("");
+    txtdiachi.setText("");
+    txtghichu.setText("");
+    txthoten.setText("");
+    txtmatkhau.setText("");
+    txtsdt.setText("");
+    txtvitien.setText("");
+    rdbnam.setSelected(true);
+    combovaitro.setSelectedIndex(1);
+    btnimg.setText("Tải lên");
     }
 
     @Override
@@ -713,7 +754,7 @@ public class QLNhansu extends javax.swing.JFrame implements IService<NguoiDung>,
         String matkhau = txtmatkhau.getText();
         vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", jPanel1);
         String anh = chooser.getName(f);
-    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, anh,trangthai);
+    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien,"",trangthai);
         
     }
 

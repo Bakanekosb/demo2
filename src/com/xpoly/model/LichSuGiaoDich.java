@@ -31,6 +31,15 @@ public class LichSuGiaoDich {
         this.nguoiTaoGiaoDich = nguoiTaoGiaoDich;
     }
 
+    public LichSuGiaoDich(int magd, String mand, Date ngayGiaoDich, double soTien, String nguoiTaoGiaoDich) {
+        this.magd = magd;
+        this.mand = mand;
+        this.ngayGiaoDich = ngayGiaoDich;
+        this.soTien = soTien;
+        this.nguoiTaoGiaoDich = nguoiTaoGiaoDich;
+    }
+
+   
     public int getMagd() {
         return magd;
     }

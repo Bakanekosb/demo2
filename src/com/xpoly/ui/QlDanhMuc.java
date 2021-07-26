@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.ui.QLSach;
+package com.xpoly.ui;
 
 import com.xpoly.DAO.DanhMucDAO;
 import com.xpoly.Interface.IService;
