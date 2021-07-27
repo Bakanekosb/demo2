@@ -84,6 +84,7 @@ String keyword = "";
         btnimg = new javax.swing.JButton();
         jLabel35 = new javax.swing.JLabel();
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
+        lblIMG = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -135,6 +136,13 @@ String keyword = "";
 
         jLabel35.setText("Ảnh");
 
+        lblIMG.setText("Tải ảnh");
+        lblIMG.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIMGMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -179,7 +187,11 @@ String keyword = "";
                                 .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnimg)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnimg)
+                                .addGap(86, 86, 86)
+                                .addComponent(lblIMG, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 242, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(txtdiachi, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
                                 .addGap(1, 1, 1))
@@ -233,7 +245,8 @@ String keyword = "";
                     .addComponent(jLabel33)
                     .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnimg)
-                    .addComponent(jLabel35))
+                    .addComponent(jLabel35)
+                    .addComponent(lblIMG, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -329,7 +342,12 @@ String keyword = "";
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        insert();
+        try {
+            insert();
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Mã Nhân viên đã tồn tại !");
+        }
+        
        nhanvienDAO.SendMail(txtEmail.getText(), "Đăng kí tài Khoản thành công !", "Mật khẩu của bạn là : " +randomString(numberOfCharactor)+ "\n Số tiền bạn nạp lần đầu là : "+ txtvitien.getText()
        + "\n bạn hãy đổi mật khẩu khi đọc được Email này để đảm bảo tính bảo mật cho tài khoản của bạn !");
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -348,6 +366,11 @@ String keyword = "";
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void lblIMGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIMGMouseClicked
+        // TODO add your handling code here:
+        nhanvienDAO.selectIMG(lblIMG);
+    }//GEN-LAST:event_lblIMGMouseClicked
 
     /**
      * @param args the command line arguments
@@ -405,6 +428,7 @@ String keyword = "";
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private com.toedter.calendar.JDateChooser jdatengaysinh;
+    private javax.swing.JLabel lblIMG;
     private javax.swing.JRadioButton rdbNu;
     private javax.swing.JRadioButton rdbnam;
     private javax.swing.JTextField txtEmail;
@@ -535,7 +559,7 @@ String keyword = "";
         String ghichu = txtghichu.getText();
         String matkhau = randomString(numberOfCharactor);
         vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
-        String anh = btnimg.getToolTipText();
+        String anh = nhanvienDAO.selectIMG(lblIMG);
     return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, "",trangthai);
         }
   public int selectrole() {

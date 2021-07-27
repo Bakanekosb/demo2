@@ -121,7 +121,12 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnimg" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="btnimg" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                                  <Component id="lblIMG" min="-2" pref="99" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="242" max="32767" attributes="0"/>
+                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="txtdiachi" pref="489" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
@@ -193,6 +198,7 @@
                       <Component id="combovaitro" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnimg" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblIMG" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="38" max="32767" attributes="0"/>
               </Group>
@@ -312,6 +318,14 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jdatengaysinh">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblIMG">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="T&#x1ea3;i &#x1ea3;nh"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIMGMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

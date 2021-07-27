@@ -10,11 +10,14 @@ import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.DatSach;
 import com.xpoly.model.NguoiDung;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import javax.imageio.ImageIO;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -22,6 +25,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
 /**
  *
@@ -165,5 +171,25 @@ public class NhanVienDao implements IDAO<NguoiDung, String> {
         } catch (MessagingException e) {
         }
     }
-
+public String selectIMG(JLabel lblImg){
+   JFileChooser jf = new JFileChooser();
+   String  partFile = null;
+        jf.setFileSelectionMode(jf.FILES_ONLY); // chỉ hiển thị file
+        int returnValue = jf.showOpenDialog(null);
+        if( returnValue == jf.APPROVE_OPTION){
+        File file = jf.getSelectedFile();
+        // lấy đường dẫn file để lưu vào 1 trường trong csdl 
+        partFile = file.getAbsolutePath();
+//         partFile1 = file.getAbsolutePath().replace("//", "--");
+            BufferedImage b ;
+            try {
+                b = ImageIO.read(file);
+                lblImg.setIcon(new ImageIcon(b) {                 
+                });
+            } catch (Exception e) {
+            }
+           
+        }
+        return partFile;
+}
 }
