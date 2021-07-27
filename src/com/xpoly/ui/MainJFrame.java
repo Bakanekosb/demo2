@@ -5,6 +5,7 @@
  */
 package com.xpoly.ui;
 
+import com.xpoly.DAO.QLnhansu.QLNhansu;
 import com.xpoly.addTacGia.QLTacGia;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
@@ -74,7 +75,15 @@ public class MainJFrame extends javax.swing.JFrame {
 //        
 //         //create submenu NguoiDung
         MenuItem menuNguoiDung_banDoc = new MenuItem(iconSubMenu, "Bạn đọc", null, menuBanDoc_danhSach, menuBanDoc_them);
-        MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", null);
+        MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                QLNhansu frame = new QLNhansu();
+                frame.setVisible(true);
+//                panel_body.repaint();
+//                panel_body.revalidate();
+            }
+        });
         MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null);
 
         MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_uaThich, menuSach_datSach);
