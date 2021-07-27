@@ -5,16 +5,39 @@
  */
 package com.xpoly.ui.QLnguoidung;
 
+import com.xpoly.DAO.NguoiDungDAO;
+import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
+import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
+import java.util.Date;
+import java.util.Random;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
  * @author Admin
  */
-public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDung>{
+public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDung> {
+
     EzHelper ez = new EzHelper();
+    NhanVienDao nhanvienDAO = new NhanVienDao();
+    String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
+    String resdt = "0[0-9]{9}";
+    private static final String alpha = "abcdefghijklmnopqrstuvwxyz"; // a-z
+    private static final String alphaUpperCase = alpha.toUpperCase(); // A-Z
+    private static final String digits = "0123456789"; // 0-9
+    private static final String specials = "~=+%^*/()[]{}/!@#$?|";
+    private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
+    private static Random generator = new Random();
+    int numberOfCharactor = 8;
+    String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
+    DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
+    String keyword = "";
+    int trangthai = 0;
+    NguoiDung nguoidung = new NguoiDung();
+
     /**
      * Creates new form ADDnguoiDung
      */
@@ -57,9 +80,9 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
         lblIMG = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,10 +232,10 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -220,12 +243,12 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 222, 0, 0);
-        jPanel4.add(jButton1, gridBagConstraints);
+        jPanel4.add(btnAdd, gridBagConstraints);
 
-        jButton4.setText("refersh");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setText("refersh");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -233,12 +256,12 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel4.add(jButton4, gridBagConstraints);
+        jPanel4.add(btnClear, gridBagConstraints);
 
-        jButton5.setText("Exit");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -246,37 +269,28 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 223);
-        jPanel4.add(jButton5, gridBagConstraints);
+        jPanel4.add(btnExit, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1181, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 213, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 214, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(206, 206, 206))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 532, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(86, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(120, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 253, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 253, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         pack();
@@ -286,21 +300,23 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
         // TODO add your handling code here:
     }//GEN-LAST:event_combovaitroActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         insert();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        nhanvienDAO.SendMail(txtEmail.getText(), "Đăng kí tài Khoản thành công !", "Mật khẩu của bạn là : " + randomString(numberOfCharactor) + "\n Số tiền bạn nạp lần đầu là : " + txtvitien.getText()
+                + "\n bạn hãy đổi mật khẩu khi đọc được Email này để đảm bảo tính bảo mật cho tài khoản của bạn !");
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
         clear();
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnClearActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,10 +354,10 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnExit;
     private javax.swing.JComboBox<String> combovaitro;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -370,7 +386,10 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
 
     @Override
     public void init() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setLocationRelativeTo(this);
+        combovaitro.setModel((DefaultComboBoxModel) combo);
+
+        pack();
     }
 
     @Override
@@ -380,7 +399,16 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
 
     @Override
     public void insert() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     try {
+            if(nguoidung != null){
+        nhanvienDAO.insert(getModel());
+        DialogHelper.alert(this, "Thêm Thành Công!");
+        }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Thêm thất bại !");
+            e.printStackTrace();
+            return;
+        }
     }
 
     @Override
@@ -390,8 +418,17 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
 
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+       txtEmail.setText("");
+    txtMand.setText("");
+    txtdiachi.setText("");
+    txtghichu.setText("");
+    txthoten.setText("");
+    
+    txtsdt.setText("");
+    txtvitien.setText("");
+    rdbnam.setSelected(true);
+    combovaitro.setSelectedIndex(1);
+    lblIMG.setText("Tải lên");}
 
     @Override
     public void clear() {
@@ -400,16 +437,106 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
 
     @Override
     public StringBuilder validateForm() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        StringBuilder sb = new StringBuilder();
+
+        String mand = txtMand.getText();
+
+        String hoten = txthoten.getText();
+        Date ngaysinh = jdatengaysinh.getDate();
+        boolean gioitinh = rdbnam.isSelected() ? true : false;
+        String sdt = txtsdt.getText();
+        String email = txtEmail.getText();
+        String diachi = txtdiachi.getText();
+//    String vaitro = txtMand.getText();
+        String ghichu = txtghichu.getText();
+        String matkhau = randomString(numberOfCharactor);
+        Double vitien = EzHelper.isDouble(txtvitien, "Ví tiền", this);
+        String vitien2 = txtvitien.getText();
+        if (mand.isBlank()) {
+
+            return sb.append("Mã Nhân viên không được để trống !");
+        }
+        if (!mand.matches(reMaNV)) {
+            return sb.append(" \n Bạn nhập định dạng mã nhân viên sai \n xin Nhập theo định dạng NV12345");
+        }
+        if (hoten.isBlank()) {
+            return sb.append("\n Họ tên không được để trống!");
+        }
+        if (sdt.isBlank()) {
+            return sb.append("\n SĐT không được để trống !");
+        }
+        if (!sdt.matches(resdt)) {
+            return sb.append("\n SĐT phải bắt đầu bằng số 0 và có độ dài là 10 số ! \"");
+        }
+        if (email.isBlank()) {
+            return sb.append(" \n Email Không được để trống ! ");
+        }
+        if (diachi.isBlank()) {
+            return sb.append(" \n Địa chỉ Không được để trống ! ");
+        }
+        if (matkhau.isBlank()) {
+            return sb.append("\n mật khẩu không được để trống !");
+        }
+        if (vitien2.isBlank()) {
+            return sb.append("\n Ví tiền Không được để trống ! ");
+        }
+        if (vitien < 50000 && vitien / 1000 == 0) {
+            return sb.append("Số tiền phải lớn hơn 50.000 và phải chia hết cho 1000");
+        }
+        return sb;
     }
 
     @Override
     public NguoiDung getModel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (validateForm().length() > 0) {
+            DialogHelper.alert(this, validateForm().toString());
+            return null;
+        }
+        String mand = txtMand.getText().toUpperCase();
+        String hoten = txthoten.getText();
+        Date ngaysinh = jdatengaysinh.getDate();
+        boolean gioitinh = rdbnam.isSelected() ? true : false;
+        String sdt = txtsdt.getText();
+        String email = txtEmail.getText();
+        String diachi = txtdiachi.getText();
+//    String vaitro = txtMand.getText();
+        String ghichu = txtghichu.getText();
+        String matkhau = randomString(numberOfCharactor);
+        Double vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
+        String anh = lblIMG.getToolTipText();
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+
+    }
+
+    public int selectrole() {
+        if (combovaitro.getSelectedIndex() == 1) {
+            return 1;
+        }
+        if (combovaitro.getSelectedIndex() == 2) {
+            return 2;
+        }
+        if (combovaitro.getSelectedIndex() == 3) {
+            return 3;
+        }
+        return 0;
     }
 
     @Override
     public void setModel(NguoiDung model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String randomString(int numberOfCharactor) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numberOfCharactor; i++) {
+            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
+            char ch = ALPHA_NUMERIC.charAt(number);
+            sb.append(ch);
+        }
+        return sb.toString();
+    }
+
+    public static int randomNumber(int min, int max) {
+        return generator.nextInt((max - min) + 1) + min;
     }
 }

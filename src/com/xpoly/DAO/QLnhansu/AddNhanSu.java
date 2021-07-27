@@ -28,7 +28,7 @@ public class AddNhanSu extends javax.swing.JFrame implements IService<NguoiDung>
 String keyword = "";
     JFileChooser chooser =new JFileChooser();; 
     File f = null;
-    NhanVienDao nguoidungDAO = new NhanVienDao();
+    NhanVienDao nhanvienDAO = new NhanVienDao();
     NguoiDung nguoidung = new NguoiDung();
     double vitien;
     int trangthai = 0;
@@ -330,6 +330,8 @@ String keyword = "";
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         insert();
+       nhanvienDAO.SendMail(txtEmail.getText(), "Đăng kí tài Khoản thành công !", "Mật khẩu của bạn là : " +randomString(numberOfCharactor)+ "\n Số tiền bạn nạp lần đầu là : "+ txtvitien.getText()
+       + "\n bạn hãy đổi mật khẩu khi đọc được Email này để đảm bảo tính bảo mật cho tài khoản của bạn !");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -430,7 +432,7 @@ String keyword = "";
     public void insert() {
          try {
             if(nguoidung != null){
-        nguoidungDAO.insert(getModel());
+        nhanvienDAO.insert(getModel());
         DialogHelper.alert(this, "Thêm Thành Công!");
         }
         } catch (Exception e) {
