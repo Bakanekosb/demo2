@@ -88,7 +88,6 @@ public class NhanVienDao implements IDAO<NguoiDung, String> {
 
     @Override
     public List<NguoiDung> selectAll() {
-
         String sql = "select * from nguoidung where (vaitro  =  0 or vaitro = 1) and trangthai = 0";
         return selectBySql(sql);
     }

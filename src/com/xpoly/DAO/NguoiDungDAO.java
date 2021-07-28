@@ -34,6 +34,13 @@ public List<NguoiDung> selectMand(String mand){
         
         return selectBySql(sql, mand);
 }
+public ResultSet selecthoten(String mand){
+
+   String sql = "select hoten from nguoidung where mand = ?";
+        
+        return JdbcHelper.executeQuery(sql, mand);
+       
+}
     @Override
     public void update(NguoiDung model) {
         String sql = "update nguoidung set hoten = ? ,ngaysinh = ? ,gioitinh = ? ,sdt = ?, email = ? ,diachi = ?"

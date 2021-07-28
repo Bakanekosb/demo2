@@ -47,7 +47,7 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtmand" max="32767" attributes="0"/>
-                          <Component id="txttennd" max="32767" attributes="0"/>
+                          <Component id="lblTenNd" max="32767" attributes="0"/>
                           <Component id="txtMoney" pref="198" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -72,7 +72,7 @@
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txttennd" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="lblTenNd" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -110,7 +110,7 @@
         <Property name="text" type="java.lang.String" value="T&#xea;n Ng&#x1b0;&#x1edd;i D&#xf9;ng"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="txttennd">
+    <Component class="javax.swing.JLabel" name="lblTenNd">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>

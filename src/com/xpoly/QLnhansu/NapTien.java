@@ -46,7 +46,7 @@ int i;
         txtmand = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txttennd = new javax.swing.JLabel();
+        lblTenNd = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtMoney = new javax.swing.JTextField();
         btnNap = new javax.swing.JButton();
@@ -109,7 +109,7 @@ int i;
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtmand)
-                            .addComponent(txttennd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTenNd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtMoney, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btncheck)))
@@ -128,7 +128,7 @@ int i;
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txttennd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTenNd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -152,20 +152,23 @@ int i;
         // TODO add your handling code here:
         keyword = txtmand.getText();
         loadTable();
-        if("".equals(txttennd.getText())){
+        if("".equals(lblTenNd.getText())){
             DialogHelper.alert(this, "Không tìm thấy Người dùng !");
         }
     }//GEN-LAST:event_btncheckActionPerformed
 
     private void btnNapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNapActionPerformed
         // TODO add your handling code here:
-        if("".equals(txttennd.getText())){
+        if("".equals(lblTenNd.getText())){
             DialogHelper.alert(this, "Không tìm thấy Người dùng !");
             System.out.println("thất bại !");
         }else{
            update();
            lsgd.insert(lsgdgetmodel());
             System.out.println("thành công ");
+            txtMoney.setText("");
+            txtmand.setText("");
+            lblTenNd.setText("");
         if(i == 0){
             this.dispose(); 
         }
@@ -216,9 +219,9 @@ int i;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblTenNd;
     private javax.swing.JTextField txtMoney;
     private javax.swing.JTextField txtmand;
-    private javax.swing.JLabel txttennd;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -230,9 +233,9 @@ int i;
     @Override
     public void loadTable() {
         for (NguoiDung x : nguoidungDAO.selectMand(keyword)) {
-            txttennd.setText(x.getHoTen());
+            lblTenNd.setText(x.getHoTen());
             vitien = x.getViTien();
-            if (txttennd.getText() == "") {
+            if (lblTenNd.getText() == "") {
                 DialogHelper.alert(this, "không tìm thấy tên người dùng !");
                 return;
             }
