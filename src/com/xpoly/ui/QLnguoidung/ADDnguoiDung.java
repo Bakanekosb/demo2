@@ -519,7 +519,7 @@ public class ADDnguoiDung extends javax.swing.JFrame implements IService<NguoiDu
         String matkhau = randomString(numberOfCharactor);
         Double vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
         String anh = lblIMG.getToolTipText();
-        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, anh, trangthai);
 
     }
 

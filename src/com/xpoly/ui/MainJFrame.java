@@ -5,7 +5,7 @@
  */
 package com.xpoly.ui;
 
-import com.xpoly.DAO.QLnhansu.QLNhansu;
+import com.xpoly.QLnhansu.QLNhansu;
 import com.xpoly.addTacGia.QLTacGia;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;

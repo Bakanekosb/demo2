@@ -6,7 +6,7 @@
 package com.xpoly.ui.QLnguoidung;
 
 import com.xpoly.DAO.NhanVienDao;
-import com.xpoly.DAO.QLnhansu.NapTien;
+import com.xpoly.QLnhansu.NapTien;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
@@ -40,6 +40,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
     private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
         private static Random generator = new Random();
         int numberOfCharactor = 8;
+        ADDnguoiDung add = new ADDnguoiDung();
     /**
      * Creates new form QLnguoidung
      */
@@ -436,7 +437,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
         // TODO add your handling code here:
-//        add.setVisible(true);
+        add.setVisible(true);
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
