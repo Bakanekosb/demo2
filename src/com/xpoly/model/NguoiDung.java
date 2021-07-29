@@ -29,9 +29,11 @@ public class NguoiDung {
     public NguoiDung() {
     }
 
-    public NguoiDung(String maND) {
-        this.maND = maND;
-    }   
+    public NguoiDung(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+     
 
     public NguoiDung(String maND, double viTien) {
         this.maND = maND;

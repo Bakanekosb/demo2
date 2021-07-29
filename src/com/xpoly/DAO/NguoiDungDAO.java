@@ -8,6 +8,7 @@ package com.xpoly.DAO;
 import com.xpoly.Interface.IDAO;
 import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.NguoiDung;
+import com.xpoly.model.TuaSach;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,13 +35,6 @@ public List<NguoiDung> selectMand(String mand){
         
         return selectBySql(sql, mand);
 }
-public ResultSet selecthoten(String mand){
-
-   String sql = "select hoten from nguoidung where mand = ?";
-        
-        return JdbcHelper.executeQuery(sql, mand);
-       
-}
     @Override
     public void update(NguoiDung model) {
         String sql = "update nguoidung set hoten = ? ,ngaysinh = ? ,gioitinh = ? ,sdt = ?, email = ? ,diachi = ?"
@@ -61,7 +55,9 @@ JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
 
     @Override
     public NguoiDung selectById(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String sql = "select * from nguoidung where mand = ?";        
+        List<NguoiDung> lst = selectBySql(sql, id);
+        return lst.isEmpty() ? null : lst.get(0);
     }
 
     @Override

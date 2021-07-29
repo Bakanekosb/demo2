@@ -724,7 +724,11 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
         if (i == 1) {
             return gt = "Thủ Thư";
         }
-        return gt = "Bạn Đọc";
+        if(i==2){
+         return gt = "Bạn Đọc";
+        }
+    return null;
+       
     }
        public int selectrole() {
         if (combovaitro.getSelectedIndex() == 1) {

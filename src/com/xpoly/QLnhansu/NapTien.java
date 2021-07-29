@@ -11,6 +11,7 @@ import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.LichSuGiaoDich;
 import com.xpoly.model.NguoiDung;
 import java.util.Date;
@@ -309,7 +310,7 @@ public LichSuGiaoDich lsgdgetmodel(){
     String mand = txtmand.getText();
     Date ngayDG = EzHelper.now();
     double sotien = EzHelper.isDouble(txtMoney, "số tiền", this);
-    String nguoitaogd = "ND001";
+    String nguoitaogd =LoginHelper.USER.getMaND();
     
         return new LichSuGiaoDich(i++, mand, ngayDG, sotien, "Nạp Tiền", nguoitaogd);
 
