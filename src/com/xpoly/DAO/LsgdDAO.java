@@ -37,14 +37,21 @@ public class LsgdDAO implements IDAO<LichSuGiaoDich, String> {
         String sql = "select * from lichsugiaodich";
         return selectBySql(sql);
     }
-
+ public List<LichSuGiaoDich> selectTT(int vaitro) {
+        String sql = "SELECT magd,lichsugiaodich.mand,ngaygiaodich,sotien,noidung,nguoitaogiaodich\n" +
+"FROM lichsugiaodich \n" +
+"INNER JOIN nguoidung\n" +
+"ON lichsugiaodich.mand = nguoidung.mand\n" +
+"where vaitro = ?";
+        return selectBySql(sql,vaitro);
+    }
 
 
     @Override
     public List<LichSuGiaoDich> selectBySql(String sql, Object... args) {
         List<LichSuGiaoDich> lst = new ArrayList<>();
         try {
-            System.out.println("select");
+            
             ResultSet rs = null;
             try {
                 rs = JdbcHelper.executeQuery(sql, args);
@@ -60,7 +67,7 @@ public class LsgdDAO implements IDAO<LichSuGiaoDich, String> {
         }
         return lst;
     }
-
+   
     @Override
     public LichSuGiaoDich readFromResultSet(ResultSet rs) throws SQLException {
         LichSuGiaoDich model = new LichSuGiaoDich();

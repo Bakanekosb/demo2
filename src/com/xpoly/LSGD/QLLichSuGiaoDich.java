@@ -145,10 +145,16 @@ public class QLLichSuGiaoDich extends javax.swing.JFrame implements IService<Lic
 
     private void ComboroleItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ComboroleItemStateChanged
         // TODO add your handling code here:
-        System.out.println(selectrole());
-        if(selectrole() ==2){
+      modelTable.setRowCount(0);
         
+           for (LichSuGiaoDich x : ls.selectTT(selectrole())) {
+            
+            modelTable.addRow(new Object[]{x.getMagd(),x.getMand(),nguoidungDAO.selectById(x.getMand()).getHoTen(),
+                x.getNgayGiaoDich(),x.getSoTien(),x.getNoiDung(),x.getNguoiTaoGiaoDich(),nguoidungDAO.selectById(x.getNguoiTaoGiaoDich()).getHoTen()});
+            
         }
+        
+        
     }//GEN-LAST:event_ComboroleItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -197,12 +203,12 @@ public class QLLichSuGiaoDich extends javax.swing.JFrame implements IService<Lic
     Comborole.setModel((DefaultComboBoxModel)combo);
     TableList.setModel(modelTable);
     loadTable();
-        
-       
+
     }
 LsgdDAO ls = new LsgdDAO();
     @Override
     public void loadTable() {
+        modelTable.setRowCount(0);
         for (LichSuGiaoDich x : ls.selectAll()) {
             
             modelTable.addRow(new Object[]{x.getMagd(),x.getMand(),nguoidungDAO.selectById(x.getMand()).getHoTen(),
@@ -211,7 +217,6 @@ LsgdDAO ls = new LsgdDAO();
         }
         
     }
-
     @Override
     public void insert() {
         
