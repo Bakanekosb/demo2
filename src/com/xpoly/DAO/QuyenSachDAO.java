@@ -31,19 +31,28 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
                 + "VALUES(?,?,?,?)";
         JdbcHelper.executeUpdate(insert_sql, model.getViTri(), model.isDuocMuonVe(),
                 model.getGhiChu(), model.getMaTuaSach());
+        int maTuaSach = model.getMaTuaSach();
+        int soLuongQuyenSach = getSoLuongQuyenSach(maTuaSach);
+        String update_sl = "update tuasach set soluong = ? where matuasach = ?";
+        JdbcHelper.executeUpdate(update_sl, soLuongQuyenSach, maTuaSach);
     }
 
     @Override
     public void update(QuyenSach model) {
         String update_sql = "update quyensach set vitri = ?, duocmuonve = ?, tinhtrang = ?, trangthai = ?, ghichu = ? where maquyensach = ?";
         JdbcHelper.executeUpdate(update_sql, model.getViTri(), model.isDuocMuonVe(),
-                model.getTinhTrang(),model.getTrangThai(),
+                model.getTinhTrang(), model.getTrangThai(),
                 model.getGhiChu(), model.getMaQuyenSach());
     }
 
     @Override
     public void delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int maTuaSach = selectById(id).getMaTuaSach();
+        String delete_sql = "delete from quyensach where maquyensach = ?";
+        JdbcHelper.executeUpdate(delete_sql, id);
+        int soLuongQuyenSach = getSoLuongQuyenSach(maTuaSach);
+        String update_sl = "update tuasach set soluong = ? where matuasach = ?";
+        JdbcHelper.executeUpdate(update_sl, soLuongQuyenSach, maTuaSach);
     }
 
     @Override
@@ -56,6 +65,19 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
     @Override
     public List<QuyenSach> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int getSoLuongQuyenSach(int id) {
+        String sql = "select count(*) from quyensach where matuasach = ?";
+        int soLuongQuyenSach = 0;
+        try {
+            ResultSet rs = JdbcHelper.executeQuery(sql, id);
+            while (rs.next()) {
+                soLuongQuyenSach = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return soLuongQuyenSach;
     }
 
     public List<QuyenSach> selectAllByMaTuaSach(Integer id) {

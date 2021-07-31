@@ -8,6 +8,7 @@ package com.xpoly.ui.QLSach;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
+import com.xpoly.helper.DialogHelper;
 import com.xpoly.model.QuyenSach;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
 //trangthai int default 0  not null, -- (sansanchomuon = 0, dangmuon = 1, duocdat = 2 )
     int maTuaSach;
     int rowIndex = 0;
-    
+
     DefaultTableModel tblModel = new DefaultTableModel(new String[]{"Mã", "Vị trí", "Được mượn về", "Tình trạng", "Trạng thái", "Ghi chú"}, 0) {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -74,6 +75,7 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         rdo_mat = new javax.swing.JRadioButton();
         jButton3 = new javax.swing.JButton();
         lbl_tuaSach = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -189,6 +191,13 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
 
         lbl_tuaSach.setText("jLabel4");
 
+        jButton1.setText("Delete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,15 +205,15 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_quit, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -223,7 +232,8 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_quit)
-                            .addComponent(jButton3)))
+                            .addComponent(jButton3)
+                            .addComponent(jButton1)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
@@ -246,6 +256,12 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btn_quitActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        rowIndex = tbl_qSach.getSelectedRow();
+        delete();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +302,7 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
     private javax.swing.JButton btn_quit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chk_duocmuonve;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -308,50 +325,62 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         tbl_qSach.setModel(tblModel);
         loadTable();
     }
-    
+
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
     QuyenSach quyenSach;
     List<QuyenSach> lst_quyenSach = new ArrayList<>();
-    
+
     public void loadTable() {
         tblModel.setRowCount(0);
         try {
             lst_quyenSach = quyenSachDAO.selectAllByMaTuaSach(maTuaSach);
             for (QuyenSach x : lst_quyenSach) {
-                tblModel.addRow(new Object[]{x.getMaQuyenSach(), x.getViTri(), x.isDuocMuonVe() ? "Được mượn về" : "Đọc tại chỗ", 
+                tblModel.addRow(new Object[]{x.getMaQuyenSach(), x.getViTri(), x.isDuocMuonVe() ? "Được mượn về" : "Đọc tại chỗ",
                     setTinhTrang(x.getTinhTrang()), setTrangThai(x.getTrangThai()), x.getGhiChu()});
             }
         } catch (Exception e) {
         }
     }
-    
+
     @Override
     public void insert() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
+
     }
-    
+
     @Override
     public void update() {
-        quyenSachDAO.update(getModel());
-        loadTable();
+        try {
+            quyenSachDAO.update(getModel());
+            loadTable();
+        } catch (Exception e) {
+            DialogHelper.alert(jPanel1, "Updadte không thành công");
+        }
     }
-    
+
     @Override
     public void delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            int id = (int) tblModel.getValueAt(rowIndex, 0);
+            System.out.println(id);
+            quyenSachDAO.delete(id);
+            loadTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+            DialogHelper.alert(jPanel1, "Không xóa được");
+        }
     }
-    
+
     @Override
     public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public StringBuilder validateForm() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public QuyenSach getModel() {
         int maQuyenSach = lst_quyenSach.get(rowIndex).getMaQuyenSach();
@@ -360,12 +389,12 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         boolean duocMuonVe = chk_duocmuonve.isSelected();
         int tinhTrang = rdo_phucvu.isSelected() ? 0 : rdo_mat.isSelected() ? 2 : 3;
         int trangThai = lst_quyenSach.get(rowIndex).getTrangThai();
-        if(tinhTrang != 0 && trangThai != 1){            
-                trangThai = 3;
+        if (tinhTrang != 0 && trangThai != 1) {
+            trangThai = 3;
         }
-        return new QuyenSach(maQuyenSach,vitri, duocMuonVe, tinhTrang, trangThai, ghiChu);
+        return new QuyenSach(maQuyenSach, vitri, duocMuonVe, tinhTrang, trangThai, ghiChu);
     }
-    
+
     @Override
     public void setModel(QuyenSach model) {
         int trangThai = lst_quyenSach.get(rowIndex).getTrangThai();
@@ -374,34 +403,41 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         setrdoTinhTrang(model.getTinhTrang());
         chk_duocmuonve.setSelected(model.isDuocMuonVe());
     }
-    
-    private void setrdoTinhTrang(int tinhTrang){
-        if(tinhTrang == 0){
+
+    private void setrdoTinhTrang(int tinhTrang) {
+        if (tinhTrang == 0) {
             rdo_phucvu.isSelected();
-        }
-        else if (tinhTrang == 1){
+        } else if (tinhTrang == 1) {
             rdo_mat.isSelected();
+        } else {
+            rdo_ngungphucvu.isSelected();
         }
-        else rdo_ngungphucvu.isSelected();
     }
-    
-        
-    private String setTinhTrang(int tinhTrang){
-        switch(tinhTrang){
-            case 0: return "Đang phục vụ";
-            case 1: return "Hỏng";
-            case 2: return "Mất";
-            case 3: return "Ngừng phục vụ";
+
+    private String setTinhTrang(int tinhTrang) {
+        switch (tinhTrang) {
+            case 0:
+                return "Đang phục vụ";
+            case 1:
+                return "Hỏng";
+            case 2:
+                return "Mất";
+            case 3:
+                return "Ngừng phục vụ";
         }
         return null;
     }
-    
-    private String setTrangThai(int tinhTrang){
-        switch(tinhTrang){
-            case 0: return "Sẵn sàng cho mượn";
-            case 1: return "Đang mượn";
-            case 2: return "Được đặt";
-            case 3: return "Ngừng phục vụ";
+
+    private String setTrangThai(int tinhTrang) {
+        switch (tinhTrang) {
+            case 0:
+                return "Sẵn sàng cho mượn";
+            case 1:
+                return "Đang mượn";
+            case 2:
+                return "Được đặt";
+            case 3:
+                return "Ngừng phục vụ";
         }
         return null;
     }

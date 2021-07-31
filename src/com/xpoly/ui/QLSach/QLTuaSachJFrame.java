@@ -81,7 +81,12 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     DatSachDAO datSachDAO = new DatSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
 
+    String madm = "";
+
     public QLTuaSachJFrame() {
+        LoginHelper.USER = new NguoiDung("ND001");
+        lst_sachUaThich = sachUaThichDAO.selectMaTuaSachFromSachUaThichByMaND(LoginHelper.USER.getMaND());
+        lst_datSach = datSachDAO.selectByMand(LoginHelper.USER.getMaND());
         initComponents();
         init();
     }
@@ -98,30 +103,26 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Panel_list = new javax.swing.JPanel();
-        btn_first = new javax.swing.JButton();
-        btn_prev = new javax.swing.JButton();
-        btn_next = new javax.swing.JButton();
-        btn_last = new javax.swing.JButton();
         panel_chk = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        btn_themSL = new javax.swing.JButton();
+        btn_like = new javax.swing.JButton();
+        btn_datSach = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_tuaSach = new javax.swing.JTable();
+        btn_last1 = new javax.swing.JButton();
+        btn_next1 = new javax.swing.JButton();
+        btn_prev1 = new javax.swing.JButton();
+        btn_first1 = new javax.swing.JButton();
         Panel_grid = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_timKiem = new javax.swing.JTextField();
         btn_search = new javax.swing.JButton();
-        btn_first1 = new javax.swing.JButton();
-        btn_prev1 = new javax.swing.JButton();
-        btn_next1 = new javax.swing.JButton();
-        btn_last1 = new javax.swing.JButton();
         cbo_danhMuc = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        btn_datSach = new javax.swing.JButton();
-        btn_like = new javax.swing.JButton();
         btn_reload = new javax.swing.JButton();
-        btn_themSL = new javax.swing.JButton();
         btn_chiTiet = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -133,46 +134,39 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
         jPanel2.setLayout(new java.awt.CardLayout());
 
-        btn_first.setText("|<");
-        btn_first.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_firstActionPerformed(evt);
-            }
-        });
-
-        btn_prev.setText("<<");
-        btn_prev.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_prevActionPerformed(evt);
-            }
-        });
-
-        btn_next.setText(">>");
-        btn_next.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_nextActionPerformed(evt);
-            }
-        });
-
-        btn_last.setText(">|");
-        btn_last.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_lastActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panel_chkLayout = new javax.swing.GroupLayout(panel_chk);
         panel_chk.setLayout(panel_chkLayout);
         panel_chkLayout.setHorizontalGroup(
             panel_chkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 928, Short.MAX_VALUE)
+            .addGap(0, 948, Short.MAX_VALUE)
         );
         panel_chkLayout.setVerticalGroup(
             panel_chkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
+            .addGap(0, 42, Short.MAX_VALUE)
         );
 
         jLabel3.setText("Ẩn/Hiện cột:");
+
+        btn_themSL.setText("Thêm SL");
+        btn_themSL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themSLActionPerformed(evt);
+            }
+        });
+
+        btn_like.setText("Like");
+        btn_like.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_likeActionPerformed(evt);
+            }
+        });
+
+        btn_datSach.setText("Đặt sách");
+        btn_datSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_datSachActionPerformed(evt);
+            }
+        });
 
         tbl_tuaSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -193,47 +187,85 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         });
         jScrollPane2.setViewportView(tbl_tuaSach);
 
+        btn_last1.setText(">|");
+        btn_last1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_last1ActionPerformed(evt);
+            }
+        });
+
+        btn_next1.setText(">>");
+        btn_next1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_next1ActionPerformed(evt);
+            }
+        });
+
+        btn_prev1.setText("<<");
+        btn_prev1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_prev1ActionPerformed(evt);
+            }
+        });
+
+        btn_first1.setText("|<");
+        btn_first1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_first1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Panel_listLayout = new javax.swing.GroupLayout(Panel_list);
         Panel_list.setLayout(Panel_listLayout);
         Panel_listLayout.setHorizontalGroup(
             Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Panel_listLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_listLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_listLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Panel_listLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panel_chk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 25, Short.MAX_VALUE)))
+                        .addComponent(panel_chk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(Panel_listLayout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(btn_first1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_prev1)
+                        .addGap(38, 38, 38)
+                        .addComponent(btn_next1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_last1)
+                        .addGap(91, 91, 91)
+                        .addComponent(btn_themSL)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_datSach)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_like)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_listLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_first)
-                .addGap(18, 18, 18)
-                .addComponent(btn_prev)
-                .addGap(38, 38, 38)
-                .addComponent(btn_next)
-                .addGap(18, 18, 18)
-                .addComponent(btn_last)
-                .addGap(375, 375, 375))
         );
         Panel_listLayout.setVerticalGroup(
             Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Panel_listLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_chk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel3)
+                    .addComponent(panel_chk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(229, 229, 229)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_first, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_prev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_next, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_last, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_first1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_prev1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_next1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(Panel_listLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_datSach)
+                            .addComponent(btn_like)
+                            .addComponent(btn_themSL))
+                        .addComponent(btn_last1)))
+                .addGap(21, 21, 21))
         );
 
         jPanel2.add(Panel_list, "card3");
@@ -268,34 +300,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
             }
         });
 
-        btn_first1.setText("|<");
-        btn_first1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_first1ActionPerformed(evt);
-            }
-        });
-
-        btn_prev1.setText("<<");
-        btn_prev1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_prev1ActionPerformed(evt);
-            }
-        });
-
-        btn_next1.setText(">>");
-        btn_next1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_next1ActionPerformed(evt);
-            }
-        });
-
-        btn_last1.setText(">|");
-        btn_last1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_last1ActionPerformed(evt);
-            }
-        });
-
         cbo_danhMuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbo_danhMucActionPerformed(evt);
@@ -304,31 +308,10 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
         jLabel8.setText("Danh mục:");
 
-        btn_datSach.setText("Đặt sách");
-        btn_datSach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_datSachActionPerformed(evt);
-            }
-        });
-
-        btn_like.setText("Like");
-        btn_like.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_likeActionPerformed(evt);
-            }
-        });
-
         btn_reload.setText("Reload");
         btn_reload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_reloadActionPerformed(evt);
-            }
-        });
-
-        btn_themSL.setText("Thêm SL");
-        btn_themSL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_themSLActionPerformed(evt);
             }
         });
 
@@ -358,30 +341,14 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                 .addComponent(btn_search)
                 .addGap(68, 68, 68))
             .addGroup(layout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_chiTiet)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_themSL)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_reload)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_first1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_prev1)
-                        .addGap(38, 38, 38)
-                        .addComponent(btn_next1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_last1)
-                        .addGap(373, 373, 373)
-                        .addComponent(btn_datSach)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_like)))
+                .addGap(648, 648, 648)
+                .addComponent(btn_chiTiet)
+                .addGap(18, 18, 18)
+                .addComponent(btn_reload)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -399,22 +366,11 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                         .addComponent(btn_search)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_first1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_prev1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_next1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_datSach)
-                            .addComponent(btn_like))
-                        .addComponent(btn_last1)))
-                .addGap(18, 18, 18)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(btn_reload)
-                    .addComponent(btn_themSL)
                     .addComponent(btn_chiTiet))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -431,30 +387,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         keyword = txt_timKiem.getText();
         loadTable();
     }//GEN-LAST:event_btn_searchActionPerformed
-
-    private void btn_firstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_firstActionPerformed
-        pageNumber = 1;
-        loadTable();
-        buttonEnabled();
-    }//GEN-LAST:event_btn_firstActionPerformed
-
-    private void btn_prevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prevActionPerformed
-        pageNumber--;
-        loadTable();
-        buttonEnabled();
-    }//GEN-LAST:event_btn_prevActionPerformed
-
-    private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
-        pageNumber++;
-        loadTable();
-        buttonEnabled();
-    }//GEN-LAST:event_btn_nextActionPerformed
-
-    private void btn_lastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lastActionPerformed
-        pageNumber = totalPage;
-        loadTable();
-        buttonEnabled();
-    }//GEN-LAST:event_btn_lastActionPerformed
 
     private void btn_first1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_first1ActionPerformed
         pageNumber = 1;
@@ -485,6 +417,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         try {
             if (cbo_danhMuc.getSelectedIndex() >= 0) {
                 danhMuc = (DanhMuc) cboModel.getSelectedItem();
+                loadTable();
             }
         } catch (Exception e) {
         }
@@ -495,29 +428,48 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         rowIndex = tbl_tuaSach.getSelectedRow();
         System.out.println(rowIndex);
         if (tblModel.getValueAt(rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex()).toString().equals("Like")) {
-            btn_like.setEnabled(false);
+            btn_like.setText("Unlike");
         } else {
-            btn_like.setEnabled(true);
+            btn_like.setText("Like");
         }
-        if(datSachDAO.datDuocKhong(LoginHelper.USER.getMaND(), (Integer) tblModel.getValueAt(rowIndex, 0))){
+        if (datSachDAO.datDuocKhong(LoginHelper.USER.getMaND(), (Integer) tblModel.getValueAt(rowIndex, 0))) {
             btn_datSach.setEnabled(true);
-        }
-        else{
+        } else {
             btn_datSach.setEnabled(false);
         }
     }//GEN-LAST:event_tbl_tuaSachMouseClicked
 
     private void btn_likeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_likeActionPerformed
-        // TODO add your handling code here:
-        try {
-            int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
-            sachUaThichDAO.insert(new SachUaThich(LoginHelper.USER.getMaND(), maTuaSach));
-            tblModel.setValueAt("Like", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
-            btn_like.setEnabled(false);
-        } catch (Exception e) {
+        // TODO add your handling code here:        
+        int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
+        int soLuongLike = 0;
+        if (btn_like.getText().equals("Like")) {
+            try {
+                sachUaThichDAO.insert(new SachUaThich(LoginHelper.USER.getMaND(), maTuaSach));
+                tblModel.setValueAt("Like", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
+                tblModel.setValueAt(sachUaThichDAO.getSoLuongLike(maTuaSach), rowIndex, tbl_tuaSach.getColumn("Số lượng thích").getModelIndex());
+                btn_like.setText("Unlike");
+                soLuongLike = sachUaThichDAO.getSoLuongLike(maTuaSach);
+                tuaSachDAO.updateSoLuongLike(soLuongLike, maTuaSach);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                sachUaThichDAO.deleteByND(maTuaSach, LoginHelper.USER.getMaND());
+                tblModel.setValueAt("", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
+                tblModel.setValueAt(sachUaThichDAO.getSoLuongLike(maTuaSach), rowIndex, tbl_tuaSach.getColumn("Số lượng thích").getModelIndex());
+                btn_like.setText("Like");
+                soLuongLike = sachUaThichDAO.getSoLuongLike(maTuaSach);
+                tuaSachDAO.updateSoLuongLike(soLuongLike, maTuaSach);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btn_likeActionPerformed
-
+//trangthai int default 0  not null, -- (sansangchomuon = 0, dangmuon = 1, duocdat = 2 )
+//    trangthai int not null, --(dangdat = 0, cholaysach = 1, huydat = 2 )
     private void btn_datSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_datSachActionPerformed
         // TODO add your handling code here:
         try {
@@ -527,15 +479,13 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
             lst_quyenSach = quyenSachDAO.selectSachSanSangChoMuonByTuaSach(maTuaSach);
             if (!lst_quyenSach.isEmpty()) {
                 trangThai = 1;
-                ngayHen = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
-////                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-////                String formattedDate = formatter.format(ngayHen);
-//                System.out.println(formattedDate);
+                ngayHen = Date.from(Instant.now().plus(2, ChronoUnit.DAYS));
+                
             }
+
             datSachDAO.insert(new DatSach(maTuaSach, trangThai, LoginHelper.USER.getMaND(), EzHelper.now(), ngayHen));
             JOptionPane.showMessageDialog(this, "dat sach thanh cong");
-            tblModel.setValueAt("Like", rowIndex, tbl_tuaSach.getColumn("Like").getModelIndex());
-            btn_like.setEnabled(false);
+            tblModel.setValueAt(ngayHen == null ? "Đang đặt" : ngayHen, rowIndex, tbl_tuaSach.getColumn("Đặt sách").getModelIndex());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -543,7 +493,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -551,7 +501,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
         int soSachDocTaiCho = quyenSachDAO.soSachDocTaiCho(maTuaSach);
         String tacGia = (String) tblModel.getValueAt(rowIndex, 2);
-        
+
         new UpdateSach(tuaSachDAO.selectById(maTuaSach), tacGia, soSachDocTaiCho).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -563,7 +513,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private void btn_themSLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themSLActionPerformed
         // TODO add your handling code here:
         nhapThemSoLuongSach();
-       
+
     }//GEN-LAST:event_btn_themSLActionPerformed
 
     private void btn_chiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chiTietActionPerformed
@@ -613,16 +563,12 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private javax.swing.JPanel Panel_list;
     private javax.swing.JButton btn_chiTiet;
     private javax.swing.JButton btn_datSach;
-    private javax.swing.JButton btn_first;
     private javax.swing.JButton btn_first1;
-    private javax.swing.JButton btn_last;
     private javax.swing.JButton btn_last1;
     private javax.swing.JButton btn_like;
-    private javax.swing.JButton btn_next;
     private javax.swing.JButton btn_next1;
-    private javax.swing.JButton btn_prev;
     private javax.swing.JButton btn_prev1;
-    private javax.swing.JButton btn_reload;
+    public static javax.swing.JButton btn_reload;
     private javax.swing.JButton btn_search;
     private javax.swing.JButton btn_themSL;
     private javax.swing.JComboBox<String> cbo_danhMuc;
@@ -641,6 +587,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
     @Override
     public void init() {
+
         for (int i = 0; i < 10; i++) {
             JPanel jpanel = new JPanel();
             jpanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -687,8 +634,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         }
         panel_chk.setLayout(new GridLayout(1, 10));
 
-        LoginHelper.USER = new NguoiDung("ND001");
-        lst_sachUaThich = sachUaThichDAO.selectMaTuaSachFromSachUaThichByMaND(LoginHelper.USER.getMaND());
         lst_datSach = datSachDAO.selectByMand(LoginHelper.USER.getMaND());
 
         loadTable();
@@ -700,30 +645,32 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     public void loadTable() {
         tblModel.setRowCount(0);
         try {
-            int total = (int) Math.ceil((float) tuaSachDAO.getTotalRows(keyword) / rowsOfPage);
+            int total = (int) Math.ceil((float) tuaSachDAO.getTotalRows(keyword, 0, danhMuc.getMaDanhMuc()) / rowsOfPage);
             totalPage = total > 0 ? total : 1;
             pageNumber = pageNumber > totalPage ? 1 : pageNumber;
-            lst_tuaSach = tuaSachDAO.selectByKeyword(keyword, pageNumber, rowsOfPage);
+            lst_tuaSach = tuaSachDAO.selectByKeyword(keyword, pageNumber, rowsOfPage, 0, danhMuc.getMaDanhMuc());
             int i = 0;
             if (!lst_tuaSach.isEmpty()) {
                 for (TuaSach x : lst_tuaSach) {
-                    
+
                     String like = lst_sachUaThich.contains(x.getMaTuaSach()) ? "Like" : "";
+                    btn_like.setText(like.equals("Like") ? "Like" : "Unlike");
                     String datSach = "";
                     String tacGia = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
-                                    
+
                     for (DatSach y : lst_datSach) {
                         if (y.getMaTuaSach() == x.getMaTuaSach()) {
                             if (y.getTrangThai() == 0) {
                                 datSach = "Đang đặt";
                             } else if (y.getTrangThai() == 1) {
-                                datSach = "Hẹn mượn sách";
+                                datSach = EzHelper.toString(y.getNgayHenLaySach());
                             } else {
                                 datSach = "Đã hủy";
                             }
                         }
-                    }                    
-                    
+                    }
+                    x.setSoLuotThich(sachUaThichDAO.getSoLuongLike(x.getMaTuaSach()));
+                    System.out.println("so luong thich = " + x.getSoLuotThich() + " matuasach = " + x.getMaTuaSach());
                     tblModel.addRow(new Object[]{
                         x.getMaTuaSach(), x.getTenTuaSach(), tacGia, x.getNxb(), x.getNamxb(),
                         x.getSoTrang(), x.getGiaTien(), x.getMoTa(), x.getGhiChu(), x.getSoLuong(),
@@ -731,6 +678,8 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
                 }
             }
+            System.out.println(pageNumber);
+            buttonEnabled();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("loi loadtable");
@@ -773,13 +722,15 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     }
 
     void buttonEnabled() {
-        btn_first.setEnabled(pageNumber > 1);
-        btn_prev.setEnabled(pageNumber > 1);
-        btn_last.setEnabled(pageNumber < totalPage);
-        btn_next.setEnabled(pageNumber < totalPage);
+        System.out.println(pageNumber + " in button enabled");
+        btn_first1.setEnabled(pageNumber > 1);
+        btn_prev1.setEnabled(pageNumber > 1);
+        btn_last1.setEnabled(pageNumber < totalPage);
+        btn_next1.setEnabled(pageNumber < totalPage);
     }
 
     private void loadComboboxDanhMuc() {
+        cboModel.addElement(new DanhMuc("", "All"));
         for (DanhMuc x : danhMucDAO.selectAll()) {
             cboModel.addElement(x);
         }
@@ -788,19 +739,19 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     private void nhapThemSoLuongSach() {
         int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
         TuaSach model = tuaSachDAO.selectById(maTuaSach);
-         try {
+        try {
             int slthem = Integer.parseInt(JOptionPane.showInputDialog(this, "Nhập thêm số lượng sách"));
             int soLuong = model.getSoLuong();
             soLuong += slthem;
             tuaSachDAO.updateSL(maTuaSach, soLuong);
             for (int i = 0; i < slthem; i++) {
-                    quyenSachDAO.insert(new QuyenSach("", true, model.getGhiChu(), maTuaSach));
-                    System.out.println("something"); 
-                           
-                }
+                quyenSachDAO.insert(new QuyenSach("", true, model.getGhiChu(), maTuaSach));
+                System.out.println("something");
+
+            }
             loadTable();
         } catch (Exception e) {
-             DialogHelper.alert(jPanel2, "Error");
+            DialogHelper.alert(jPanel2, "Error");
         }
     }
 }

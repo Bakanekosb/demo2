@@ -355,7 +355,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
     private void btn_chonTgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chonTgActionPerformed
         // TODO add your handling code here:
-        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame();
+        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame(1);
         chonTG.setVisible(true);
     }//GEN-LAST:event_btn_chonTgActionPerformed
 

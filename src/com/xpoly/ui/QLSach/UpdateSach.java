@@ -373,7 +373,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
 
     private void btn_chonTgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chonTgActionPerformed
         // TODO add your handling code here:
-        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame();
+        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame(0);
         chonTG.setVisible(true);
         chonTacGia = true;
     }//GEN-LAST:event_btn_chonTgActionPerformed
@@ -399,11 +399,11 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
     }//GEN-LAST:event_btn_cancelActionPerformed
 
     public static void hienThiTG(List<TacGia> lst) {
-        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList()); 
+        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList());
         String s = String.join(";", namesList);
-       
+
         txt_tgupdate.setText(s);
-        
+
     }
 
     /**
@@ -516,7 +516,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
                 }
                 if (soLuong > tuaSachUpdate.getSoLuong()) {
                     for (int i = 0; i < soLuong - tuaSachUpdate.getSoLuong(); i++) {
-                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())), 
+                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())),
                                 tuaSachUpdate.getGhiChu(), tuaSachUpdate.getMaTuaSach());
                         quyenSachDAO.insert(quyenSach);
                     }
@@ -621,7 +621,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
 
         namxb = isAD ? namxb : namxb * (-1);
 
-        return new TuaSach(tuaSachUpdate.getMaTuaSach(),tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
+        return new TuaSach(tuaSachUpdate.getMaTuaSach(), tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
 // public TuaSach(String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm) 
 
     }
@@ -646,8 +646,11 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         txt_gia.setText(model.getGiaTien() + "");
         txt_soLuong.setText(model.getSoLuong() + "");
         txt_docTaiCho.setText(soSachDocTaiCho + "");
-        lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
-
+        if (model.getAnh() != null) {
+            lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
+        }else{
+            lbl_cover.setIcon(EzHelper.readImg("2.png"));
+        }
     }
 
     @Override

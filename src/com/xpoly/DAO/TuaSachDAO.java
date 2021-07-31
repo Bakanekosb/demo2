@@ -13,24 +13,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author Dell
  */
-public class TuaSachDAO implements IDAO<TuaSach, Integer>{
+public class TuaSachDAO implements IDAO<TuaSach, Integer> {
 
     @Override
     public void insert(TuaSach model) {
         String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxuatban,sotrang,giatien,mota,ghichu,soluong,madm,anh) "
                 + "VALUES(?,?,?,?,?,?,?,?,?,?)";
         JdbcHelper.executeUpdate(insert_sql, model.getTenTuaSach(),
-                model.getNxb(),model.getNamxb(),
-                model.getSoTrang(),model.getGiaTien(),
-                model.getMoTa(),model.getGhiChu(),
-                model.getSoLuong(),model.getMadm(), model.getAnh()
+                model.getNxb(), model.getNamxb(),
+                model.getSoTrang(), model.getGiaTien(),
+                model.getMoTa(), model.getGhiChu(),
+                model.getSoLuong(), model.getMadm(), model.getAnh()
         );
     }
-    
+       
+
 //    public int insertCheckExist(TuaSach model) {
 //        String insert_sql = "INSERT INTO TUASACH (tentuasach,nxb,namxb,sotrang,giatien,mota,ghichu,soluong,anh,madm) "
 //                + "VALUES(?,?,?,?,?,?,?,?,?)";
@@ -41,42 +43,46 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
 //                model.getSoLuong(),model.getAnh(),model.getMadm()        
 //        );
 //    }
-    
     @Override
     public void update(TuaSach model) {
         String update_sql = "update TUASACH set tentuasach = ?, nxb = ?, namxuatban = ?, sotrang = ?, "
-                + "giatien = ?, mota = ?,ghichu = ?,soluong = ?,madm = ?,anh = ? where matuasach = ? "
-                ;
+                + "giatien = ?, mota = ?,ghichu = ?,soluong = ?,madm = ?,anh = ? where matuasach = ? ";
         JdbcHelper.executeUpdate(update_sql, model.getTenTuaSach(),
-                model.getNxb(),model.getNamxb(),
-                model.getSoTrang(),model.getGiaTien(),
-                model.getMoTa(),model.getGhiChu(),
-                model.getSoLuong(),model.getMadm(), 
+                model.getNxb(), model.getNamxb(),
+                model.getSoTrang(), model.getGiaTien(),
+                model.getMoTa(), model.getGhiChu(),
+                model.getSoLuong(), model.getMadm(),
                 model.getAnh(), model.getMaTuaSach()
         );
     }
     
+     public void updateSoLuongLike(int like, int matuasach) {
+        String update_sql = "update TUASACH set soluongthich = ? where matuasach = ? ";
+        JdbcHelper.executeUpdate(update_sql,like, matuasach);
+    }
+
     public void updateSL(int matuasach, int soluong) {
-        String update_sql = "update TUASACH set soluong = ? where matuasach = ? "
-                ;
+        String update_sql = "update TUASACH set soluong = ? where matuasach = ? ";
         JdbcHelper.executeUpdate(update_sql, soluong, matuasach);
     }
-    
 
     @Override
     public List<TuaSach> selectAll() {
-        String selectAll_sql = "SELECT * FROM TUASACH";
+        String selectAll_sql = "SELECT * FROM TUASACH where trangthai = 0";
         return selectBySql(selectAll_sql);
     }
-    
 
-    
-     public List<TuaSach> selectByKeyword(String keyword, int pageNumber, int rowsOfPage) throws SQLException {
-        String sql = "{call SP_SELECTTUASACH (?,?,?)}";
+    public List<TuaSach> selectAllLuuTru() {
+        String selectAll_sql = "SELECT * FROM TUASACH where trangthai = 1";
+        return selectBySql(selectAll_sql);
+    }
+
+    public List<TuaSach> selectByKeyword(String keyword, int pageNumber, int rowsOfPage, int trangthai, String madm) throws SQLException {
+        String sql = "{call SP_SELECTTUASACH (?,?,?,?,?)}";
         List<TuaSach> lst = new ArrayList<>();
         ResultSet rs = null;
         try {
-            rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%", pageNumber, rowsOfPage);
+            rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%", pageNumber, rowsOfPage, trangthai, "%" + madm + "%");
             while (rs.next()) {
                 lst.add(readFromResultSet(rs));
             }
@@ -85,14 +91,14 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
         }
         return lst;
     }
-     
-     public int getTotalRows(String keyword){
+
+    public int getTotalRows(String keyword, int trangthai, String madm) {
         int total = 0;
         try {
             ResultSet rs = null;
             try {
-                String sql = "{call SP_TuaSachTOTALROWS (?)}";
-                rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%");
+                String sql = "{call SP_TuaSachTOTALROWS (?,?,?)}";
+                rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%", trangthai, "%" + madm + "%");
                 while (rs.next()) {
                     total = rs.getInt("Total");
                 }
@@ -136,13 +142,12 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
         List<TuaSach> lst = selectBySql(selectById_sql, id);
         return lst.isEmpty() ? null : lst.get(0);
     }
-    
-    public TuaSach selectLastItem(){
+
+    public TuaSach selectLastItem() {
         String selectById_sql = "SELECT * FROM TUASACH where matuasach = (select max(matuasach) from tuasach)";
         List<TuaSach> lst = selectBySql(selectById_sql);
         return lst.isEmpty() ? null : lst.get(0);
     }
-    
 
     @Override
     public TuaSach readFromResultSet(ResultSet rs) throws SQLException {
@@ -158,7 +163,7 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer>{
         model.setGhiChu(rs.getString("GHICHU"));
         model.setSoLuong(rs.getInt("soluong"));
         model.setAnh(rs.getString("anh"));
-        model.setMadm(rs.getString("madm"));        
+        model.setMadm(rs.getString("madm"));
         return model;
     }
 //    
