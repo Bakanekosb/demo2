@@ -32,8 +32,7 @@ public class NguoiDungDAO implements IDAO<NguoiDung, String>{
 public List<NguoiDung> selectMand(String mand){
 
    String sql = "select * from nguoidung where mand = ?";
-        
-        return selectBySql(sql, mand);
+       return selectBySql(sql, mand);
 }
     @Override
     public void update(NguoiDung model) {
@@ -101,5 +100,9 @@ JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
         model.setViTien(rs.getDouble(11));
         model.setAnh(rs.getString(12));
         return model;}
+    public List<NguoiDung> thongke(){
+    String sql = "SELECT mand, COUNT(*) as so_luong FROM nguoidung GROUP BY mand ";
+    return  selectBySql(sql);
+    }
     
 }
