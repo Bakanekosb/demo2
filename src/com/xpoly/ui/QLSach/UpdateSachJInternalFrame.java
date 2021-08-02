@@ -372,7 +372,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
 
     private void btn_chonTgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chonTgActionPerformed
         // TODO add your handling code here:
-        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame();
+        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame(0);
         chonTG.setVisible(true);
         chonTacGia = true;
     }//GEN-LAST:event_btn_chonTgActionPerformed

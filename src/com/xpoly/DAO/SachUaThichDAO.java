@@ -24,6 +24,9 @@ public class SachUaThichDAO implements IDAO<SachUaThich, String> {
         String insert_sql = "INSERT INTO Sachuathich (matuasach, mand) "
                 + "VALUES (?,?)";
         JdbcHelper.executeUpdate(insert_sql, model.getMaTuaSach(), model.getMand());
+        int soLuongLike = getSoLuongLike(model.getMaTuaSach());
+        String update_sl = "update tuasach set soluongthich = ? where matuasach = ?";
+        JdbcHelper.executeUpdate(update_sl, soLuongLike, model.getMaTuaSach());
     }
 
     @Override
@@ -36,23 +39,44 @@ public class SachUaThichDAO implements IDAO<SachUaThich, String> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public SachUaThich selectById(String id) {
-       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public List<SachUaThich> selectAllById(String id){
-        String selectById_sql = "SELECT * FROM sachuathich WHERE mand = ?";
-        return selectBySql(selectById_sql,id);
+    public void deleteByND(int maTuaSach, String mand) {
+        String delete = "delete from Sachuathich where maTuaSach = ? and mand = ?";
+        JdbcHelper.executeUpdate(delete, maTuaSach, mand);
+        int soLuongLike = getSoLuongLike(maTuaSach);
+        String update_sl = "update tuasach set soluongthich = ? where matuasach = ?";
+        JdbcHelper.executeUpdate(update_sl, soLuongLike, maTuaSach);
     }
 
-    public List<Integer> selectMaTuaSachFromSachUaThichByMaND(String id){
+    @Override
+    public SachUaThich selectById(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<SachUaThich> selectAllById(String id) {
+        String selectById_sql = "SELECT * FROM sachuathich WHERE mand = ?";
+        return selectBySql(selectById_sql, id);
+    }
+
+    public int getSoLuongLike(int id) {
+        String sql = "select count(*) from sachuathich where matuasach = ?";
+        int soLuongLike = 0;
+        try {
+            ResultSet rs = JdbcHelper.executeQuery(sql, id);
+            while (rs.next()) {
+                soLuongLike = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return soLuongLike;
+    }
+
+    public List<Integer> selectMaTuaSachFromSachUaThichByMaND(String id) {
         String sql = "SELECT * FROM sachuathich WHERE mand = ?";
         List<Integer> lst = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
-                rs = JdbcHelper.executeQuery(sql,id);
+                rs = JdbcHelper.executeQuery(sql, id);
                 while (rs.next()) {
                     SachUaThich model = readFromResultSet(rs);
                     lst.add(model.getMaTuaSach());
@@ -65,7 +89,7 @@ public class SachUaThichDAO implements IDAO<SachUaThich, String> {
         }
         return lst;
     }
-    
+
     @Override
     public List<SachUaThich> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

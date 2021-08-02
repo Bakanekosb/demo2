@@ -8,13 +8,17 @@ package com.xpoly.ui;
 import com.xpoly.QLnhansu.QLNhansu;
 import com.xpoly.addTacGia.QLTacGia;
 import com.xpoly.helper.DialogHelper;
+import com.xpoly.helper.MyTask;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -35,6 +39,7 @@ public class MainJFrame extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         execute();
+        init();
 
     }
 
@@ -245,4 +250,19 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panel_header;
     private javax.swing.JPanel panel_menu;
     // End of variables declaration//GEN-END:variables
+
+    private void init() {
+        MyTask myTask = new MyTask();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 5);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date dateSchedule = calendar.getTime();
+        long period = 24 * 60 * 60 * 1000;
+
+        Timer timer = new Timer();
+        timer.schedule(myTask, dateSchedule, period);
+    }
 }

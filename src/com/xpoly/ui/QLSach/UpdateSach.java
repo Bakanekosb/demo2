@@ -6,13 +6,16 @@
 package com.xpoly.ui.QLSach;
 
 import com.xpoly.DAO.DanhMucDAO;
+import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.Sach_TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.DanhMuc;
+import com.xpoly.model.NguoiDung;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
@@ -56,6 +59,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
      * Creates new form ThemSach
      */
     public UpdateSach(TuaSach model, String tacGia, int soSachDocTaiCho) {
+        LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
         initComponents();
         tuaSachUpdate = model;
         init();
@@ -373,7 +377,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
 
     private void btn_chonTgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chonTgActionPerformed
         // TODO add your handling code here:
-        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame();
+        ChonTacGiaJFrame chonTG = new ChonTacGiaJFrame(0);
         chonTG.setVisible(true);
         chonTacGia = true;
     }//GEN-LAST:event_btn_chonTgActionPerformed
@@ -399,11 +403,11 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
     }//GEN-LAST:event_btn_cancelActionPerformed
 
     public static void hienThiTG(List<TacGia> lst) {
-        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList()); 
+        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList());
         String s = String.join(";", namesList);
-       
+
         txt_tgupdate.setText(s);
-        
+
     }
 
     /**
@@ -485,6 +489,19 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         loadComboboxDanhMuc();
         lst_tSach = tuaSachDAO.selectAll();
         cbo_namxb.setModel(cboModelNam);
+        cbo_danhMuc.setEnabled(LoginHelper.quyenQuanTri());
+        txt_tenSach.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_namxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_soTrang.setEditable(LoginHelper.quyenQuanTri());
+        txt_gia.setEditable(LoginHelper.quyenQuanTri());
+        txt_moTa.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        btn_chonTg.setVisible(LoginHelper.quyenQuanTri());
+        btn_clear.setVisible(LoginHelper.quyenQuanTri());
+        btn_save.setVisible(LoginHelper.quyenQuanTri());
+        lbl_cover.setEnabled(LoginHelper.quyenQuanTri());
     }
 
     @Override
@@ -516,7 +533,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
                 }
                 if (soLuong > tuaSachUpdate.getSoLuong()) {
                     for (int i = 0; i < soLuong - tuaSachUpdate.getSoLuong(); i++) {
-                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())), 
+                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())),
                                 tuaSachUpdate.getGhiChu(), tuaSachUpdate.getMaTuaSach());
                         quyenSachDAO.insert(quyenSach);
                     }
@@ -621,7 +638,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
 
         namxb = isAD ? namxb : namxb * (-1);
 
-        return new TuaSach(tuaSachUpdate.getMaTuaSach(),tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
+        return new TuaSach(tuaSachUpdate.getMaTuaSach(), tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
 // public TuaSach(String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm) 
 
     }
@@ -646,8 +663,11 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         txt_gia.setText(model.getGiaTien() + "");
         txt_soLuong.setText(model.getSoLuong() + "");
         txt_docTaiCho.setText(soSachDocTaiCho + "");
-        lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
-
+        if (model.getAnh() != null) {
+            lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
+        }else{
+            lbl_cover.setIcon(EzHelper.readImg("2.png"));
+        }
     }
 
     @Override
