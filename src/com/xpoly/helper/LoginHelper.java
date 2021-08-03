@@ -21,4 +21,12 @@ public class LoginHelper {
     public static boolean authenticated() {
         return LoginHelper.USER != null;
     }
+    
+    public static int phanQuyen(){
+        return LoginHelper.USER.getVaiTro(); // 0: thu thu, 1: admin, 2: ban doc
+    }
+    
+    public static boolean quyenQuanTri(){
+        return LoginHelper.USER.getVaiTro() < 2; // 0: thu thu, 1: admin, 2: ban doc
+    }
 }

@@ -29,8 +29,8 @@ public class NguoiDung {
     public NguoiDung() {
     }
 
-    public NguoiDung(String hoTen) {
-        this.hoTen = hoTen;
+    public NguoiDung(String maND) {
+        this.maND = maND;
     }
 
      

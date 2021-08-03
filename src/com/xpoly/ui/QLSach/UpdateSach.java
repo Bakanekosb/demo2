@@ -6,13 +6,16 @@
 package com.xpoly.ui.QLSach;
 
 import com.xpoly.DAO.DanhMucDAO;
+import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.Sach_TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.DanhMuc;
+import com.xpoly.model.NguoiDung;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
@@ -56,6 +59,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
      * Creates new form ThemSach
      */
     public UpdateSach(TuaSach model, String tacGia, int soSachDocTaiCho) {
+        LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
         initComponents();
         tuaSachUpdate = model;
         init();
@@ -485,6 +489,19 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         loadComboboxDanhMuc();
         lst_tSach = tuaSachDAO.selectAll();
         cbo_namxb.setModel(cboModelNam);
+        cbo_danhMuc.setEnabled(LoginHelper.quyenQuanTri());
+        txt_tenSach.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_namxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_soTrang.setEditable(LoginHelper.quyenQuanTri());
+        txt_gia.setEditable(LoginHelper.quyenQuanTri());
+        txt_moTa.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        btn_chonTg.setVisible(LoginHelper.quyenQuanTri());
+        btn_clear.setVisible(LoginHelper.quyenQuanTri());
+        btn_save.setVisible(LoginHelper.quyenQuanTri());
+        lbl_cover.setEnabled(LoginHelper.quyenQuanTri());
     }
 
     @Override

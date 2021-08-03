@@ -6,11 +6,13 @@
 package com.xpoly.DAO;
 
 import com.xpoly.Interface.IDAO;
+import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.DatSach;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +34,11 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void updateTrangThaiDatSach(int trangthai, int madatsach) {
+        String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
+        JdbcHelper.executeUpdate(update_sql, trangthai, madatsach);
+    }
+
     @Override
     public void delete(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -51,8 +58,38 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
         String selectByMand = "SELECT * FROM DatSach WHERE mand = ?";
         return selectBySql(selectByMand, id);
     }
-    
-    public boolean datDuocKhong(String mand, int maTuaSach){
+
+    public List<List<Object>> selectByKeyword(String keyword, int trangthai1, int trangthai2, String mand) throws SQLException {
+        String sql = "{call sp_selecttuasachfromdatsach (?,?,?,?)}";
+        List<List<Object>> lst = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            rs = JdbcHelper.executeQuery(sql, "%" + keyword + "%", trangthai1, trangthai2, "%" + mand + "%");
+            while (rs.next()) {
+                List<Object> temp = new ArrayList();
+                Date d = rs.getDate("ngayhenlaysach");
+                
+                if (d!= null && d.before(EzHelper.now()) && rs.getInt(5) != 3) {
+                    updateTrangThaiDatSach(3, rs.getInt("madatsach"));
+                } else {
+                     
+                    temp.add(rs.getInt(3));
+                    temp.add(rs.getString("tentuasach"));
+                    temp.add(rs.getDate("ngaydat"));
+                    temp.add(rs.getDate("ngayhenlaysach"));
+                    temp.add(rs.getInt(5));
+                    temp.add(rs.getInt("madatsach"));
+                        System.out.println("trang thai dat saach = " + rs.getInt(5));
+                    lst.add(temp);
+                }
+            }
+        } finally {
+            rs.getStatement().getConnection().close();
+        }
+        return lst;
+    }
+
+    public boolean datDuocKhong(String mand, int maTuaSach) {
         String sql = "SELECT * FROM DatSach WHERE mand = ? and matuasach = ? and (trangthai = 0 or trangthai = 1)";
         return selectBySql(sql, mand, maTuaSach).isEmpty();
     }

@@ -664,8 +664,14 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                                 datSach = "Đang đặt";
                             } else if (y.getTrangThai() == 1) {
                                 datSach = EzHelper.toString(y.getNgayHenLaySach());
-                            } else {
+                            } else if (y.getTrangThai() == 2){
                                 datSach = "Đã hủy";
+                            } else if (y.getTrangThai() == 3){
+                                datSach = "Quá hạn không lấy";
+                            } else if (y.getTrangThai() == 4{
+                                datSach = "Đang mượn";
+                            } else{
+                                datSach = "";
                             }
                         }
                     }
