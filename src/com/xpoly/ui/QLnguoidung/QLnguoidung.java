@@ -13,6 +13,7 @@ import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -25,16 +26,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDung>{
-String keyword = "";
-EzHelper ez = new EzHelper();
-String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền","Ảnh"};
+public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDung> {
+
+    String keyword = "";
+    EzHelper ez = new EzHelper();
+    String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền", "Ảnh"};
     DefaultTableModel model = new DefaultTableModel(head, 0);
     String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
     DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
     NhanVienDao nhanvienDAO = new NhanVienDao();
-        NguoiDung nguoidung = new NguoiDung();
-        NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
+    NguoiDung nguoidung = new NguoiDung();
+    NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
     double vitien;
     int trangthai = 0;
     String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
@@ -44,11 +46,12 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
     private static final String digits = "0123456789"; // 0-9
     private static final String specials = "~=+%^*/()[]{}/!@#$?|";
     private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
-        private static Random generator = new Random();
-        int numberOfCharactor = 8;
-        ADDnguoiDung add = new ADDnguoiDung();
-          int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
-   
+    private static Random generator = new Random();
+    int numberOfCharactor = 8;
+    ADDnguoiDung add = new ADDnguoiDung();
+//        UPDATEnguoidung update = new UPDATEnguoidung();
+    int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
+
     int totalPage;
 
     /**
@@ -470,27 +473,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
 
     private void TableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableListMouseClicked
         // TODO add your handling code here:
-        int i = TableList.getSelectedRow();
-        if(i>=0){
-            txtMand.setText(TableList.getValueAt(i, 1).toString());
-            txtMand.setEditable(false);
-            txthoten.setText(TableList.getValueAt(i, 2).toString());
-            jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
-            if(TableList.getValueAt(i, 4)== "Nam"){
-                rdbnam.setSelected(true);
-            }else {
-                rdbNu.setSelected(true);
-            }
-            txtsdt.setText(TableList.getValueAt(i, 5).toString());
-            txtEmail.setText(TableList.getValueAt(i, 6).toString());
-            txtdiachi.setText(TableList.getValueAt(i, 7).toString());
-            combovaitro.setSelectedItem(TableList.getValueAt(i, 8).toString());
-            txtghichu.setText(TableList.getValueAt(i, 9).toString());
-            txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
-            txtvitien.setText(TableList.getValueAt(i, 11).toString());
-            txtvitien.setEditable(false);
-
-        }
+        mouseCLick();
     }//GEN-LAST:event_TableListMouseClicked
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
@@ -500,6 +483,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
         // TODO add your handling code here:
+//      update.setVisible(true);
         update();
         loadTable();
     }//GEN-LAST:event_btnupdateActionPerformed
@@ -636,28 +620,30 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
 
     @Override
     public void init() {
-    setLocationRelativeTo(this);
+        setLocationRelativeTo(this);
         TableList.setModel(model);
         combovaitro.setModel((DefaultComboBoxModel) combo);
         loadTable();
-        pack(); }
-List<NguoiDung>  lst_tg = null;
+        pack();
+    }
+    List<NguoiDung> lst_tg = null;
+
     @Override
     public void loadTable() {
-         model.setRowCount(0);
-          int total = (int) Math.ceil((float) nguoidungDAO.getTotalRows(keyword) / rowsOfPage);
-            totalPage = total > 0 ? total : 1;
-            pageNumber = pageNumber > totalPage ? 1 : pageNumber;
-    try {
-         lst_tg = nguoidungDAO.selectByKeyword(keyword, pageNumber, rowsOfPage);
-    } catch (SQLException ex) {
-        Logger.getLogger(QLnguoidung.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        model.setRowCount(0);
+        int total = (int) Math.ceil((float) nguoidungDAO.getTotalRows(keyword) / rowsOfPage);
+        totalPage = total > 0 ? total : 1;
+        pageNumber = pageNumber > totalPage ? 1 : pageNumber;
+        try {
+            lst_tg = nguoidungDAO.selectByKeyword(keyword, pageNumber, rowsOfPage);
+        } catch (SQLException ex) {
+            Logger.getLogger(QLnguoidung.class.getName()).log(Level.SEVERE, null, ex);
+        }
         int i = 0;
         for (NguoiDung x : lst_tg) {
             model.addRow(new Object[]{
                 i++, x.getMaND(), x.getHoTen(), x.getNgaySinh(), gioitinh(x.isGioiTinh()), x.getSdt(), x.getEmail(), x.getDiaChi(),
-                 vaitro(x.getVaiTro()), x.getGhiChu(), x.getMatKhau(), x.getViTien(),x.getAnh()
+                vaitro(x.getVaiTro()), x.getGhiChu(), x.getMatKhau(), x.getViTien(), x.getAnh()
             });
         }
     }
@@ -665,10 +651,10 @@ List<NguoiDung>  lst_tg = null;
     @Override
     public void insert() {
         try {
-            if(nguoidung != null){
-        nhanvienDAO.insert(getModel());
-        DialogHelper.alert(this, "Thêm Thành Công!");
-        }
+            if (nguoidung != null) {
+                nhanvienDAO.insert(getModel());
+                DialogHelper.alert(this, "Thêm Thành Công!");
+            }
         } catch (Exception e) {
             DialogHelper.alert(this, "Thêm thất bại !");
             e.printStackTrace();
@@ -678,25 +664,26 @@ List<NguoiDung>  lst_tg = null;
 
     @Override
     public void update() {
-      try {
-            if(nguoidung != null){
-            nhanvienDAO.update(getModel());
-             DialogHelper.alert(this, "Sửa Thành Công!");
+        try {
+            if (nguoidung != null) {
+                nhanvienDAO.update(getModel());
+                DialogHelper.alert(this, "Sửa Thành Công!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-             DialogHelper.alert(this, "sửa thất bại !");
-             return;
-        }}
+            DialogHelper.alert(this, "sửa thất bại !");
+            return;
+        }
+    }
 
     @Override
     public void delete() {
-     try {
-            if(nguoidung != null){
-            nhanvienDAO.delete(txtMand.getText());
+        try {
+            if (nguoidung != null) {
+                nhanvienDAO.delete(txtMand.getText());
 //            TableList.remove(TableList.getSelectedRow());
-            DialogHelper.alert(this, "xóa Thành Công!");
-                }
+                DialogHelper.alert(this, "xóa Thành Công!");
+            }
         } catch (Exception e) {
             DialogHelper.alert(this, "Xóa Thất bại!");
             e.printStackTrace();
@@ -705,21 +692,22 @@ List<NguoiDung>  lst_tg = null;
 
     @Override
     public void clear() {
-       txtEmail.setText("");
-    txtMand.setText("");
-    txtdiachi.setText("");
-    txtghichu.setText("");
-    txthoten.setText("");
-    txtmatkhau.setText("");
-    txtsdt.setText("");
-    txtvitien.setText("");
-    rdbnam.setSelected(true);
-    combovaitro.setSelectedIndex(1);
-    lblImg.setText("Tải lên");}
+        txtEmail.setText("");
+        txtMand.setText("");
+        txtdiachi.setText("");
+        txtghichu.setText("");
+        txthoten.setText("");
+        txtmatkhau.setText("");
+        txtsdt.setText("");
+        txtvitien.setText("");
+        rdbnam.setSelected(true);
+        combovaitro.setSelectedIndex(1);
+        lblImg.setText("Tải lên");
+    }
 
     @Override
     public StringBuilder validateForm() {
-     StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         String mand = txtMand.getText();
         String hoten = txthoten.getText();
         Date ngaysinh = jdatengaysinh.getDate();
@@ -768,7 +756,7 @@ List<NguoiDung>  lst_tg = null;
 
     @Override
     public NguoiDung getModel() {
-      if (validateForm().length() > 0) {
+        if (validateForm().length() > 0) {
             DialogHelper.alert(this, validateForm().toString());
             return null;
         }
@@ -784,9 +772,10 @@ List<NguoiDung>  lst_tg = null;
         String matkhau = randomString(numberOfCharactor);
         vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
         String anh = lblImg.getToolTipText();
-    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, "",trangthai);
-       }
- public String randomString(int numberOfCharactor) {
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+    }
+
+    public String randomString(int numberOfCharactor) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < numberOfCharactor; i++) {
             int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
@@ -795,19 +784,30 @@ List<NguoiDung>  lst_tg = null;
         }
         return sb.toString();
     }
-       public static int randomNumber(int min, int max) {
+
+    public static int randomNumber(int min, int max) {
         return generator.nextInt((max - min) + 1) + min;
     }
+
     @Override
     public void setModel(NguoiDung model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-     public String gioitinh(boolean i) {
+
+    public String gioitinh(boolean i) {
         String gt;
         if (i == true) {
             return gt = "nam";
         }
         return gt = "nữ";
+    }
+
+    public boolean gioitinhbo(String i) {
+        boolean gt;
+        if (i.equals("nam")) {
+            return gt = true;
+        }
+        return gt = false;
     }
 
     public String vaitro(int i) {
@@ -818,13 +818,14 @@ List<NguoiDung>  lst_tg = null;
         if (i == 1) {
             return gt = "Thủ Thư";
         }
-        if(i==2){
-         return gt = "Bạn Đọc";
+        if (i == 2) {
+            return gt = "Bạn Đọc";
         }
-    return null;
-       
+        return null;
+
     }
-       public int selectrole() {
+
+    public int selectrole() {
         if (combovaitro.getSelectedIndex() == 1) {
             return 1;
         }
@@ -836,7 +837,34 @@ List<NguoiDung>  lst_tg = null;
         }
         return 0;
     }
-        void buttonEnabled() {
+
+    public void mouseCLick() {
+        List<NguoiDung> lst = new ArrayList<>();
+        int i = TableList.getSelectedRow();
+        if (i >= 0) {
+            txtMand.setText(TableList.getValueAt(i, 1).toString());
+            txtMand.setEditable(false);
+            txthoten.setText(TableList.getValueAt(i, 2).toString());
+            jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
+            if (TableList.getValueAt(i, 4) == "Nam") {
+                rdbnam.setSelected(true);
+            } else {
+                rdbNu.setSelected(true);
+            }
+            txtsdt.setText(TableList.getValueAt(i, 5).toString());
+            txtEmail.setText(TableList.getValueAt(i, 6).toString());
+            txtdiachi.setText(TableList.getValueAt(i, 7).toString());
+            combovaitro.setSelectedItem(TableList.getValueAt(i, 8).toString());
+            txtghichu.setText(TableList.getValueAt(i, 9).toString());
+            txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
+            txtvitien.setText(TableList.getValueAt(i, 11).toString());
+            txtvitien.setEditable(false);
+            combovaitro.setSelectedItem(TableList.getValueAt(i, (9)));
+
+        }
+    }
+
+    void buttonEnabled() {
         System.out.println(pageNumber + " in button enabled");
         btn_first1.setEnabled(pageNumber > 1);
         btn_prev1.setEnabled(pageNumber > 1);
