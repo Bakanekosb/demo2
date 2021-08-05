@@ -34,9 +34,15 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void updateTrangThaiDatSach(int trangthai, int madatsach) {
-        String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
-        JdbcHelper.executeUpdate(update_sql, trangthai, madatsach);
+    public void updateTrangThaiDatSach(int trangthai, int madatsach, Date ngayHen) {
+        if (trangthai != 1) {
+            String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
+            JdbcHelper.executeUpdate(update_sql, trangthai, madatsach);
+        } else {
+            System.out.println(trangthai + " " + ngayHen);
+            String sql = "update Datsach set trangthai = ?, ngayhenlaysach = ? where madatsach = ? ";
+            JdbcHelper.executeUpdate(sql, trangthai, ngayHen, madatsach);
+        }
     }
 
     @Override
@@ -68,18 +74,18 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
             while (rs.next()) {
                 List<Object> temp = new ArrayList();
                 Date d = rs.getDate("ngayhenlaysach");
-                
-                if (d!= null && d.before(EzHelper.now()) && rs.getInt(5) != 3) {
-                    updateTrangThaiDatSach(3, rs.getInt("madatsach"));
+
+                if (d != null && d.before(EzHelper.now()) && rs.getInt(5) != 3) {
+                    updateTrangThaiDatSach(3, rs.getInt("madatsach"),EzHelper.now());
                 } else {
-                     
+
                     temp.add(rs.getInt(3));
                     temp.add(rs.getString("tentuasach"));
                     temp.add(rs.getDate("ngaydat"));
                     temp.add(rs.getDate("ngayhenlaysach"));
                     temp.add(rs.getInt(5));
                     temp.add(rs.getInt("madatsach"));
-                        System.out.println("trang thai dat saach = " + rs.getInt(5));
+                    System.out.println("trang thai dat saach = " + rs.getInt(5));
                     lst.add(temp);
                 }
             }
@@ -92,6 +98,11 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     public boolean datDuocKhong(String mand, int maTuaSach) {
         String sql = "SELECT * FROM DatSach WHERE mand = ? and matuasach = ? and (trangthai = 0 or trangthai = 1)";
         return selectBySql(sql, mand, maTuaSach).isEmpty();
+    }
+
+    public List<DatSach> danhSachDenLuotMuon(int matuasach, int soluongsach) {
+        String sql = "{call sp_danhSachDenLuotMuon (?,?)}";
+        return selectBySql(sql, matuasach, soluongsach);
     }
 
     @Override

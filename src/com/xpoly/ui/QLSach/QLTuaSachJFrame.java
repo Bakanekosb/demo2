@@ -84,7 +84,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
     String madm = "";
 
     public QLTuaSachJFrame() {
-        LoginHelper.USER = new NguoiDung("ND001");
+        LoginHelper.USER = new NguoiDung("ND002");
         lst_sachUaThich = sachUaThichDAO.selectMaTuaSachFromSachUaThichByMaND(LoginHelper.USER.getMaND());
         lst_datSach = datSachDAO.selectByMand(LoginHelper.USER.getMaND());
         initComponents();
