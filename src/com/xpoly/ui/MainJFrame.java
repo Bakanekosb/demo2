@@ -7,7 +7,10 @@ package com.xpoly.ui;
 
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
+import com.xpoly.LSGD.QLLichSuGiaoDichJInternalFrame;
+import com.xpoly.QLnhansu.QLNhanVienJInternalFrame;
 import com.xpoly.QLnhansu.QLNhansu;
+import com.xpoly.QLnhansu.ThemNhanVienJInternalFrame;
 import com.xpoly.addTacGia.QLTacGia;
 import com.xpoly.addTacGia.QLTacGiaJInternalFrame;
 import com.xpoly.helper.DialogHelper;
@@ -16,6 +19,8 @@ import com.xpoly.helper.MyTask;
 import com.xpoly.model.NguoiDung;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
+import com.xpoly.ui.QLnguoidung.QLBanDocJInternalFrame;
+import com.xpoly.ui.QLnguoidung.ThemBanDocJInternalFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -77,10 +82,34 @@ public class MainJFrame extends javax.swing.JFrame {
         MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách", null);
 
 //        // create submenu bandoc
-        MenuItem menuBanDoc_danhSach = new MenuItem(iconItem, "Danh sách", null);
-        MenuItem menuBanDoc_them = new MenuItem(iconItem, "Thêm bạn đọc", null);
+        MenuItem menuBanDoc_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLBanDocJInternalFrame());
+            }
+        });
+        MenuItem menuBanDoc_them = new MenuItem(iconItem, "Thêm bạn đọc", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new ThemBanDocJInternalFrame());
+            }
+        });
         
-        //        // create submenu bandoc
+          // create submenu nhanvien
+        MenuItem menuNhanVien_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLNhanVienJInternalFrame());
+            }
+        });
+        MenuItem menuNhanVien_them = new MenuItem(iconItem, "Thêm nhân viên", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new ThemNhanVienJInternalFrame());
+            }
+        });
+        
+        //        // create submenu tacgia
         MenuItem menuTacGia_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -91,21 +120,23 @@ public class MainJFrame extends javax.swing.JFrame {
 //        
 //         //create submenu NguoiDung
         MenuItem menuNguoiDung_banDoc = new MenuItem(iconSubMenu, "Bạn đọc", null, menuBanDoc_danhSach, menuBanDoc_them);
-        MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", new ActionListener() {
+        MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", null, menuNhanVien_danhSach, menuNhanVien_them);
+        MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null);
+        MenuItem menuNguoiDung_LSGD = new MenuItem(iconSubMenu, "Lịch sử giao dịch", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                QLNhansu frame = new QLNhansu();
-                frame.setVisible(true);
+                showChucNang(new QLLichSuGiaoDichJInternalFrame());
             }
         });
-        MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null);
 
         MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_uaThich, menuSach_datSach);
 
         MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả", null, menuTacGia_danhSach, menuTacGia_them);
         
         
-        MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan);
+        MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan,
+                                                                                menuNguoiDung_LSGD
+        );
         MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null);
         MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null);
         addMenu(menuSach, menuTacGia, menuNguoiDung, menuPhieuMuon, menuPhieuTra);

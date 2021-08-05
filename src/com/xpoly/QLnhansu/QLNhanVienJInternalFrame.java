@@ -3,61 +3,64 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xpoly.ui.QLnguoidung;
+package com.xpoly.QLnhansu;
 
-import com.xpoly.DAO.NguoiDungDAO;
+import java.lang.Object;
 import com.xpoly.DAO.NhanVienDao;
-import com.xpoly.QLnhansu.NapTien;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
+import static com.xpoly.ui.MainJFrame.showChucNang;
+import com.xpoly.ui.QLnguoidung.QLnguoidung;
+import java.awt.Button;
+import java.awt.MenuContainer;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.accessibility.Accessible;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JRootPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
- * @author Admin
+ * @author Dell
  */
-public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDung> {
+public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame implements IService<NguoiDung>, Accessible, Serializable, MenuContainer, ImageObserver {
 
-    String keyword = "";
-    EzHelper ez = new EzHelper();
     String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền", "Ảnh"};
     DefaultTableModel model = new DefaultTableModel(head, 0);
     String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
     DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
-    NhanVienDao nhanvienDAO = new NhanVienDao();
+    NhanVienDao nguoidungDAO = new NhanVienDao();
+    String keyword = "";
+    JFileChooser chooser;
+    File f = null;
     NguoiDung nguoidung = new NguoiDung();
-    NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
+    NhanVienDao nhanvienDAO = new NhanVienDao();
     double vitien;
     int trangthai = 0;
-    String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
-    String resdt = "0[0-9]{9}";
-    private static final String alpha = "abcdefghijklmnopqrstuvwxyz"; // a-z
-    private static final String alphaUpperCase = alpha.toUpperCase(); // A-Z
-    private static final String digits = "0123456789"; // 0-9
-    private static final String specials = "~=+%^*/()[]{}/!@#$?|";
-    private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
-    private static Random generator = new Random();
-    int numberOfCharactor = 8;
-    ADDnguoiDung add = new ADDnguoiDung();
-//        UPDATEnguoidung update = new UPDATEnguoidung();
     int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
 
     int totalPage;
+    NapTien nt = new NapTien();
+    AddNhanSu add = new AddNhanSu();
 
     /**
-     * Creates new form QLnguoidung
+     * Creates new form QLNhanVienJInternalFrame
      */
-    public QLnguoidung() {
+    public QLNhanVienJInternalFrame() {
         initComponents();
         init();
     }
@@ -73,8 +76,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
-        txtseach = new javax.swing.JTextField();
-        btnseach = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TableList = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -100,32 +101,25 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         jLabel12 = new javax.swing.JLabel();
         combovaitro = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        btnimg = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
-        lblImg = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnadd = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
+        btnRefersh = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
+        txtseach = new javax.swing.JTextField();
+        btnseach = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         btn_first1 = new javax.swing.JButton();
-        btn_prev1 = new javax.swing.JButton();
         btn_next1 = new javax.swing.JButton();
         btn_last1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        btn_prev1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Quản Lý Bạn Đọc");
-
-        btnseach.setText("Tìm Kiếm");
-        btnseach.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnseachActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Quản Lý Nhân Sự");
 
         TableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -177,14 +171,14 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
 
         jLabel10.setText("Mật Khẩu");
 
-        jLabel13.setText("Ảnh");
-
-        lblImg.setText("Click vào để tải ảnh");
-        lblImg.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImgMouseClicked(evt);
+        btnimg.setText("Tải lên");
+        btnimg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnimgActionPerformed(evt);
             }
         });
+
+        jLabel13.setText("Ảnh");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -231,15 +225,15 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnimg)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtdiachi)
                                 .addGap(1, 1, 1))
                             .addComponent(txtghichu)
                             .addComponent(txtEmail)
                             .addComponent(txtsdt)
-                            .addComponent(txtmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(txtmatkhau))))
                 .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
@@ -292,16 +286,16 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
-                            .addComponent(lblImg))))
+                            .addComponent(btnimg))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        btnadd.setText("Add");
-        btnadd.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Add       ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnaddActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -309,9 +303,9 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 222, 0, 0);
-        jPanel2.add(btnadd, gridBagConstraints);
+        jPanel2.add(jButton1, gridBagConstraints);
 
-        btnupdate.setText("update");
+        btnupdate.setText("update   ");
         btnupdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnupdateActionPerformed(evt);
@@ -324,10 +318,10 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         jPanel2.add(btnupdate, gridBagConstraints);
 
-        jButton3.setText("Delete");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btndelete.setText("Delete    ");
+        btndelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btndeleteActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -335,12 +329,12 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel2.add(jButton3, gridBagConstraints);
+        jPanel2.add(btndelete, gridBagConstraints);
 
-        jButton4.setText("refersh");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnRefersh.setText("refersh   ");
+        btnRefersh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnRefershActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -348,12 +342,12 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        jPanel2.add(jButton4, gridBagConstraints);
+        jPanel2.add(btnRefersh, gridBagConstraints);
 
-        jButton5.setText("Exit");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setText("Exit      ");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -361,7 +355,14 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 223);
-        jPanel2.add(jButton5, gridBagConstraints);
+        jPanel2.add(btnExit, gridBagConstraints);
+
+        btnseach.setText("Tìm Kiếm");
+        btnseach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnseachActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Nạp Tiền");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -374,13 +375,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         btn_first1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_first1ActionPerformed(evt);
-            }
-        });
-
-        btn_prev1.setText("<<");
-        btn_prev1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_prev1ActionPerformed(evt);
             }
         });
 
@@ -398,6 +392,13 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
             }
         });
 
+        btn_prev1.setText("<<");
+        btn_prev1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_prev1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -411,59 +412,141 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 245, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton6)
-                                .addGap(27, 27, 27)
+                                .addGap(69, 69, 69)
                                 .addComponent(txtseach, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnseach))))
+                                .addComponent(btnseach))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(123, 123, 123)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(302, 302, 302)
+                .addGap(332, 332, 332)
                 .addComponent(btn_first1)
-                .addGap(26, 26, 26)
+                .addGap(35, 35, 35)
                 .addComponent(btn_prev1)
-                .addGap(31, 31, 31)
+                .addGap(56, 56, 56)
                 .addComponent(btn_next1)
-                .addGap(36, 36, 36)
+                .addGap(47, 47, 47)
                 .addComponent(btn_last1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtseach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnseach)
                         .addComponent(jButton6)))
-                .addGap(3, 3, 3)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_first1)
-                    .addComponent(btn_prev1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_prev1)
                     .addComponent(btn_next1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_last1))
-                .addGap(36, 36, 36))
+                .addGap(33, 33, 33))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableListMouseClicked
+        // TODO add your handling code here:
+        int i = TableList.getSelectedRow();
+        if (i >= 0) {
+            txtMand.setText(TableList.getValueAt(i, 1).toString());
+            txtMand.setEditable(false);
+            txthoten.setText(TableList.getValueAt(i, 2).toString());
+            jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
+            if (TableList.getValueAt(i, 4) == "Nam") {
+                rdbnam.setSelected(true);
+            } else {
+                rdbNu.setSelected(true);
+            }
+            txtsdt.setText(TableList.getValueAt(i, 5).toString());
+            txtEmail.setText(TableList.getValueAt(i, 6).toString());
+            txtdiachi.setText(TableList.getValueAt(i, 7).toString());
+            combovaitro.setSelectedItem(TableList.getValueAt(i, 8).toString());
+            txtghichu.setText(TableList.getValueAt(i, 9).toString());
+            txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
+            txtvitien.setText(TableList.getValueAt(i, 11).toString());
+            txtvitien.setEditable(false);
+
+        }
+    }//GEN-LAST:event_TableListMouseClicked
+
+    private void btnimgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimgActionPerformed
+        // TODO add your handling code here:
+
+        selectImage(btnimg);
+        //        chooser = new JFileChooser();
+        //        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        //                "JPG & GIF Images", "jpg", "gif");
+        //        chooser.setFileFilter(filter);
+        //        chooser.setMultiSelectionEnabled(false);
+        //        int x = chooser.showDialog(this, "chọn file");
+        //        if (x == chooser.APPROVE_OPTION) {
+        //          File  f = (File)chooser.getSelectedFile();
+        //            DialogHelper.alert(this, "tải thành công !");
+        //            System.out.println(f + " file ảnh");
+        //            System.out.println("chooser" + chooser);
+        //        }
+    }//GEN-LAST:event_btnimgActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+//        add.setVisible(true);
+        showChucNang(new ThemNhanVienJInternalFrame());
+        loadTable();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+        // TODO add your handling code here:
+        update();
+        loadTable();
+    }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+        // TODO add your handling code here:
+        delete();
+        loadTable();
+    }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void btnRefershActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefershActionPerformed
+        // TODO add your handling code here:
+        loadTable();
+        try {
+            lst_tg = nguoidungDAO.selectByKeyword(keyword, pageNumber, rowsOfPage);
+        } catch (SQLException ex) {
+            Logger.getLogger(QLnguoidung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int i = 0;
+        for (NguoiDung x : lst_tg) {
+            model.addRow(new Object[]{
+                i++, x.getMaND(), x.getHoTen(), x.getNgaySinh(), gioitinh(x.isGioiTinh()), x.getSdt(), x.getEmail(), x.getDiaChi(),
+                vaitro(x.getVaiTro()), x.getGhiChu(), x.getMatKhau(), x.getViTien(), x.getAnh()
+            });
+        }
+    }//GEN-LAST:event_btnRefershActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnseachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnseachActionPerformed
         // TODO add your handling code here:
@@ -471,44 +554,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         loadTable();
     }//GEN-LAST:event_btnseachActionPerformed
 
-    private void TableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableListMouseClicked
-        // TODO add your handling code here:
-        mouseCLick();
-    }//GEN-LAST:event_TableListMouseClicked
-
-    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-        // TODO add your handling code here:
-        add.setVisible(true);
-    }//GEN-LAST:event_btnaddActionPerformed
-
-    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
-        // TODO add your handling code here:
-//      update.setVisible(true);
-        update();
-        loadTable();
-    }//GEN-LAST:event_btnupdateActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        delete();
-        loadTable();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        loadTable();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void lblImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgMouseClicked
-        // TODO add your handling code here:
-        ez.selectImage(lblImg);
-    }//GEN-LAST:event_lblImgMouseClicked
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
-    NapTien nt = new NapTien();
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         nt.setVisible(true);
@@ -519,12 +564,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         loadTable();
         buttonEnabled();
     }//GEN-LAST:event_btn_first1ActionPerformed
-
-    private void btn_prev1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prev1ActionPerformed
-        pageNumber--;
-        loadTable();
-        buttonEnabled();
-    }//GEN-LAST:event_btn_prev1ActionPerformed
 
     private void btn_next1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next1ActionPerformed
         pageNumber++;
@@ -538,54 +577,27 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         buttonEnabled();
     }//GEN-LAST:event_btn_last1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btn_prev1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prev1ActionPerformed
+        pageNumber--;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_prev1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QLnguoidung().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableList;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnRefersh;
     private javax.swing.JButton btn_first1;
     private javax.swing.JButton btn_last1;
     private javax.swing.JButton btn_next1;
     private javax.swing.JButton btn_prev1;
-    private javax.swing.JButton btnadd;
+    private javax.swing.JButton btndelete;
+    private javax.swing.JButton btnimg;
     private javax.swing.JButton btnseach;
     private javax.swing.JButton btnupdate;
     private javax.swing.JComboBox<String> combovaitro;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -604,7 +616,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdatengaysinh;
-    private javax.swing.JLabel lblImg;
     private javax.swing.JRadioButton rdbNu;
     private javax.swing.JRadioButton rdbnam;
     private javax.swing.JTextField txtEmail;
@@ -618,9 +629,32 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     private javax.swing.JTextField txtvitien;
     // End of variables declaration//GEN-END:variables
 
+    public void selectImage(JButton btn) {
+        EzHelper ez = new EzHelper();
+        try {
+            JFileChooser fc = new JFileChooser("images\\");
+            if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                if (ez.saveImg(file)) {
+                    btnimg.setIcon(ez.readImg(file.getName()));
+                    btnimg.setToolTipText(file.getName());
+                }
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi save ảnh");
+        }
+
+    }
+
     @Override
     public void init() {
-        setLocationRelativeTo(this);
+
+//        setLocationRelativeTo(this);
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
+
         TableList.setModel(model);
         combovaitro.setModel((DefaultComboBoxModel) combo);
         loadTable();
@@ -631,7 +665,9 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     @Override
     public void loadTable() {
         model.setRowCount(0);
-        int total = (int) Math.ceil((float) nguoidungDAO.getTotalRows(keyword) / rowsOfPage);
+        int i = 0;
+        model.setRowCount(0);
+        int total = (int) Math.ceil((float) nhanvienDAO.getTotalRows(keyword) / rowsOfPage);
         totalPage = total > 0 ? total : 1;
         pageNumber = pageNumber > totalPage ? 1 : pageNumber;
         try {
@@ -639,7 +675,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         } catch (SQLException ex) {
             Logger.getLogger(QLnguoidung.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int i = 0;
         for (NguoiDung x : lst_tg) {
             model.addRow(new Object[]{
                 i++, x.getMaND(), x.getHoTen(), x.getNgaySinh(), gioitinh(x.isGioiTinh()), x.getSdt(), x.getEmail(), x.getDiaChi(),
@@ -648,11 +683,30 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         }
     }
 
+    public String gioitinh(boolean i) {
+        String gt;
+        if (i == true) {
+            return gt = "nam";
+        }
+        return gt = "nữ";
+    }
+
+    public String vaitro(int i) {
+        String gt;
+        if (i == 0) {
+            return gt = "ADMIN";
+        }
+        if (i == 1) {
+            return gt = "Thủ Thư";
+        }
+        return gt = "Bạn Đọc";
+    }
+
     @Override
     public void insert() {
         try {
             if (nguoidung != null) {
-                nhanvienDAO.insert(getModel());
+                nguoidungDAO.insert(getModel());
                 DialogHelper.alert(this, "Thêm Thành Công!");
             }
         } catch (Exception e) {
@@ -666,7 +720,7 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     public void update() {
         try {
             if (nguoidung != null) {
-                nhanvienDAO.update(getModel());
+                nguoidungDAO.update(getModel());
                 DialogHelper.alert(this, "Sửa Thành Công!");
             }
         } catch (Exception e) {
@@ -680,7 +734,7 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     public void delete() {
         try {
             if (nguoidung != null) {
-                nhanvienDAO.delete(txtMand.getText());
+                nguoidungDAO.delete(txtMand.getText());
 //            TableList.remove(TableList.getSelectedRow());
                 DialogHelper.alert(this, "xóa Thành Công!");
             }
@@ -702,7 +756,7 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         txtvitien.setText("");
         rdbnam.setSelected(true);
         combovaitro.setSelectedIndex(1);
-        lblImg.setText("Tải lên");
+        btnimg.setText("Tải lên");
     }
 
     @Override
@@ -754,77 +808,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         return sb;
     }
 
-    @Override
-    public NguoiDung getModel() {
-        if (validateForm().length() > 0) {
-            DialogHelper.alert(this, validateForm().toString());
-            return null;
-        }
-        String mand = txtMand.getText().toUpperCase();
-        String hoten = txthoten.getText();
-        Date ngaysinh = jdatengaysinh.getDate();
-        boolean gioitinh = rdbnam.isSelected() ? true : false;
-        String sdt = txtsdt.getText();
-        String email = txtEmail.getText();
-        String diachi = txtdiachi.getText();
-//    String vaitro = txtMand.getText();
-        String ghichu = txtghichu.getText();
-        String matkhau = randomString(numberOfCharactor);
-        vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
-        String anh = lblImg.getToolTipText();
-        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
-    }
-
-    public String randomString(int numberOfCharactor) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < numberOfCharactor; i++) {
-            int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
-            char ch = ALPHA_NUMERIC.charAt(number);
-            sb.append(ch);
-        }
-        return sb.toString();
-    }
-
-    public static int randomNumber(int min, int max) {
-        return generator.nextInt((max - min) + 1) + min;
-    }
-
-    @Override
-    public void setModel(NguoiDung model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String gioitinh(boolean i) {
-        String gt;
-        if (i == true) {
-            return gt = "nam";
-        }
-        return gt = "nữ";
-    }
-
-    public boolean gioitinhbo(String i) {
-        boolean gt;
-        if (i.equals("nam")) {
-            return gt = true;
-        }
-        return gt = false;
-    }
-
-    public String vaitro(int i) {
-        String gt;
-        if (i == 0) {
-            return gt = "ADMIN";
-        }
-        if (i == 1) {
-            return gt = "Thủ Thư";
-        }
-        if (i == 2) {
-            return gt = "Bạn Đọc";
-        }
-        return null;
-
-    }
-
     public int selectrole() {
         if (combovaitro.getSelectedIndex() == 1) {
             return 1;
@@ -838,30 +821,26 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         return 0;
     }
 
-    public void mouseCLick() {
-        List<NguoiDung> lst = new ArrayList<>();
-        int i = TableList.getSelectedRow();
-        if (i >= 0) {
-            txtMand.setText(TableList.getValueAt(i, 1).toString());
-            txtMand.setEditable(false);
-            txthoten.setText(TableList.getValueAt(i, 2).toString());
-            jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
-            if (TableList.getValueAt(i, 4) == "Nam") {
-                rdbnam.setSelected(true);
-            } else {
-                rdbNu.setSelected(true);
-            }
-            txtsdt.setText(TableList.getValueAt(i, 5).toString());
-            txtEmail.setText(TableList.getValueAt(i, 6).toString());
-            txtdiachi.setText(TableList.getValueAt(i, 7).toString());
-            combovaitro.setSelectedItem(TableList.getValueAt(i, 8).toString());
-            txtghichu.setText(TableList.getValueAt(i, 9).toString());
-            txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
-            txtvitien.setText(TableList.getValueAt(i, 11).toString());
-            txtvitien.setEditable(false);
-            combovaitro.setSelectedItem(TableList.getValueAt(i, (9)));
-
+    @Override
+    public NguoiDung getModel() {
+        if (validateForm().length() > 0) {
+            DialogHelper.alert(this, "");
+            return null;
         }
+        String mand = txtMand.getText();
+        String hoten = txthoten.getText();
+        Date ngaysinh = jdatengaysinh.getDate();
+        boolean gioitinh = rdbnam.isSelected() ? true : false;
+        String sdt = txtsdt.getText();
+        String email = txtEmail.getText();
+        String diachi = txtdiachi.getText();
+//    String vaitro = txtMand.getText();
+        String ghichu = txtghichu.getText();
+        String matkhau = txtmatkhau.getText();
+        vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", jPanel1);
+        String anh = chooser.getName(f);
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+
     }
 
     void buttonEnabled() {
@@ -870,5 +849,10 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         btn_prev1.setEnabled(pageNumber > 1);
         btn_last1.setEnabled(pageNumber < totalPage);
         btn_next1.setEnabled(pageNumber < totalPage);
+    }
+
+    @Override
+    public void setModel(NguoiDung model) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

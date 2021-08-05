@@ -5,10 +5,18 @@
  */
 package com.xpoly.ui.QLnguoidung;
 
+
+
+/**
+ *
+ * @author Dell
+ */
+
+
 import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.NhanVienDao;
-import com.xpoly.QLnhansu.NapTien;
 import com.xpoly.Interface.IService;
+import com.xpoly.QLnhansu.NapTien;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
@@ -20,14 +28,15 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRootPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Admin
- */
-public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDung> {
+public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implements IService<NguoiDung>  {
 
+    /**
+     * Creates new form QLBanDocJInternalFrame
+     */
     String keyword = "";
     EzHelper ez = new EzHelper();
     String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền", "Ảnh"};
@@ -53,13 +62,11 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
 
     int totalPage;
-
-    /**
-     * Creates new form QLnguoidung
-     */
-    public QLnguoidung() {
+    NapTien nt = new NapTien();
+    
+    public QLBanDocJInternalFrame() {
         initComponents();
-        init();
+         init();
     }
 
     /**
@@ -114,8 +121,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         btn_prev1 = new javax.swing.JButton();
         btn_next1 = new javax.swing.JButton();
         btn_last1 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Quản Lý Bạn Đọc");
@@ -236,7 +241,7 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
                             .addComponent(txtghichu)
                             .addComponent(txtEmail)
                             .addComponent(txtsdt)
-                            .addComponent(txtmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                            .addComponent(txtmatkhau)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -413,7 +418,7 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 245, Short.MAX_VALUE))
+                                .addGap(0, 20, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -476,6 +481,11 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         mouseCLick();
     }//GEN-LAST:event_TableListMouseClicked
 
+    private void lblImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgMouseClicked
+        // TODO add your handling code here:
+        ez.selectImage(lblImg);
+    }//GEN-LAST:event_lblImgMouseClicked
+
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
         // TODO add your handling code here:
         add.setVisible(true);
@@ -483,7 +493,7 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
 
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
         // TODO add your handling code here:
-//      update.setVisible(true);
+        //      update.setVisible(true);
         update();
         loadTable();
     }//GEN-LAST:event_btnupdateActionPerformed
@@ -499,16 +509,11 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         loadTable();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void lblImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgMouseClicked
-        // TODO add your handling code here:
-        ez.selectImage(lblImg);
-    }//GEN-LAST:event_lblImgMouseClicked
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
-    NapTien nt = new NapTien();
+
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         nt.setVisible(true);
@@ -538,40 +543,6 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
         buttonEnabled();
     }//GEN-LAST:event_btn_last1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLnguoidung.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QLnguoidung().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableList;
@@ -618,9 +589,14 @@ public class QLnguoidung extends javax.swing.JFrame implements IService<NguoiDun
     private javax.swing.JTextField txtvitien;
     // End of variables declaration//GEN-END:variables
 
-    @Override
+ @Override
     public void init() {
-        setLocationRelativeTo(this);
+//        setLocationRelativeTo(this);
+ putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
+
         TableList.setModel(model);
         combovaitro.setModel((DefaultComboBoxModel) combo);
         loadTable();

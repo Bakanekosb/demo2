@@ -5,6 +5,9 @@
  */
 package com.xpoly.QLnhansu;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.xpoly.DAO.LsgdDAO;
 import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
@@ -14,6 +17,7 @@ import com.xpoly.helper.JdbcHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.LichSuGiaoDich;
 import com.xpoly.model.NguoiDung;
+import java.io.FileOutputStream;
 import java.util.Date;
 
 /**
@@ -32,6 +36,7 @@ int i;
     public NapTien() {
         initComponents();
         init();
+        pdf();
     }
 
     /**
@@ -170,6 +175,7 @@ int i;
             txtMoney.setText("");
             txtmand.setText("");
             lblTenNd.setText("");
+            pdf();
         if(i == 0){
             this.dispose(); 
         }
@@ -245,8 +251,7 @@ int i;
 
     @Override
     public void insert() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+     }
 
     @Override
     public void update() {
@@ -315,6 +320,26 @@ public LichSuGiaoDich lsgdgetmodel(){
         return new LichSuGiaoDich(i++, mand, ngayDG, sotien, "Nạp Tiền", nguoitaogd);
 
 }
+ public  void pdf (){
+   
+        try {
+//            com.itextpdf.text.Rectangle rg = new  com.itextpdf.text.Rectangle(600, 800, 10, 10);
+             Document dc = new Document();
+          PdfWriter.getInstance(dc, new FileOutputStream("abc.pdf"));
+          dc.open();
+          dc.add(new Paragraph("Hóa Đơn Nạp Tiền Thư Viện Xpoly \n \n"));
+          dc.add(new Paragraph(EzHelper.now()+""));
+          dc.add(new Paragraph("Hóa đơn số "+ i));
+          dc.add(new Paragraph("Tài Khoản Được Nạp Tiền : "+ txtmand.getText()));
+          dc.add(new Paragraph("Số tiền nạp :  "+ txtMoney.getText()));
+          dc.add(new Paragraph("Người Nạp Tiền  "+ LoginHelper.USER));
+          dc.close();
+            System.out.println("1");
+        } catch (Exception e) {
+        }
+     
+    }
+
     @Override
     public void setModel(NguoiDung model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
