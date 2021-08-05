@@ -37,6 +37,7 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     public void updateTrangThaiDatSach(int trangthai, int madatsach, Date ngayHen) {
         if (trangthai != 1) {
             String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
+            System.out.println("huy dat");
             JdbcHelper.executeUpdate(update_sql, trangthai, madatsach);
         } else {
             System.out.println(trangthai + " " + ngayHen);
@@ -78,7 +79,7 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
                 if (d != null && d.before(EzHelper.now()) && rs.getInt(5) != 3) {
                     updateTrangThaiDatSach(3, rs.getInt("madatsach"),EzHelper.now());
                 } else {
-
+                    
                     temp.add(rs.getInt(3));
                     temp.add(rs.getString("tentuasach"));
                     temp.add(rs.getDate("ngaydat"));

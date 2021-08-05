@@ -36,8 +36,9 @@ public class QLDatSach extends javax.swing.JFrame {
     List<List<Object>> lst = new ArrayList<>();
     DatSachDAO datSachDAO = new DatSachDAO();
     int rowIndex = 0;
+    int madatsach = 0;
 
-    DefaultTableModel tblModel0 = new DefaultTableModel(new String[]{"Mã tựa sách", "Tên tựa sách", "Ngày đặt"}, 0) {
+    DefaultTableModel tblModel0 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt"}, 0) {
 
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -46,7 +47,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel1 = new DefaultTableModel(new String[]{"Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel1 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày hẹn đến lấy"}, 0) {
 
         @Override
@@ -56,8 +57,18 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel23 = new DefaultTableModel(new String[]{"Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel23 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày hẹn đến lấy"}, 0) {
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            //all cells false
+            return false;
+        }
+    };
+
+    DefaultTableModel tblModel4 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+        "Ngày mượn"}, 0) {
 
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -89,9 +100,11 @@ public class QLDatSach extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_dangdat0 = new javax.swing.JTable();
+        btn_huy1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_henngay1 = new javax.swing.JTable();
+        btn_huy2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl_23 = new javax.swing.JTable();
@@ -162,20 +175,33 @@ public class QLDatSach extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbl_dangdat0);
 
+        btn_huy1.setText("Hủy");
+        btn_huy1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_huy1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_huy1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(btn_huy1)
                 .addContainerGap())
         );
 
@@ -194,21 +220,34 @@ public class QLDatSach extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tbl_henngay1);
 
+        btn_huy2.setText("Hủy");
+        btn_huy2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_huy2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_huy2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_huy2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Hẹn đến lấy", jPanel3);
@@ -329,10 +368,27 @@ public class QLDatSach extends javax.swing.JFrame {
     private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
         // TODO add your handling code here:
         rowIndex = tbl_dangdat0.getSelectedRow();
-        int matuasach = (int) tbl_dangdat0.getValueAt(rowIndex, 0);
+        int matuasach = (int) tbl_dangdat0.getValueAt(rowIndex, 1);
         new UpdateSach(new TuaSachDAO().selectById(matuasach), new Sach_TacGiaDAO().selectTacgia(matuasach),
                 new QuyenSachDAO().soSachDocTaiCho(matuasach)).setVisible(true);
     }//GEN-LAST:event_btn_detailActionPerformed
+
+    private void btn_huy1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huy1ActionPerformed
+        // TODO add your handling code here:
+        rowIndex = tbl_dangdat0.getSelectedRow();
+        madatsach = (int) tblModel0.getValueAt(rowIndex, 0);
+        System.out.println(madatsach);
+        huyDat();
+        loadTable0();
+    }//GEN-LAST:event_btn_huy1ActionPerformed
+
+    private void btn_huy2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huy2ActionPerformed
+        // TODO add your handling code here:
+        rowIndex = tbl_henngay1.getSelectedRow();
+        madatsach = (int) tblModel1.getValueAt(rowIndex, 0);
+        huyDat();
+        loadTable1();
+    }//GEN-LAST:event_btn_huy2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,6 +427,8 @@ public class QLDatSach extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_detail;
+    private javax.swing.JButton btn_huy1;
+    private javax.swing.JButton btn_huy2;
     private javax.swing.JButton btn_search;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -392,16 +450,18 @@ public class QLDatSach extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void init() {
-        LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
+        LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
         tbl_dangdat0.setModel(tblModel0);
         tbl_henngay1.setModel(tblModel1);
         tbl_23.setModel(tblModel23);
+        tbl_4.setModel(tblModel4);
 
         loadTable0();
         loadTable1();
 //        Thread th = new Thread(this);
 //        th.start();
-       loadTable23();
+        loadTable23();
+        loadTable4();
     }
 
     private void loadTable0() {
@@ -413,7 +473,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel0.addRow(new Object[]{x.get(0), x.get(1), x.get(2)});
+                tblModel0.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2)});
             }
 
         }
@@ -422,62 +482,57 @@ public class QLDatSach extends javax.swing.JFrame {
     private void loadTable1() {
         tblModel1.setRowCount(0);
         try {
-            lst = datSachDAO.selectByKeyword(keyword, 1, 1, LoginHelper.USER.getMaND());            
+            lst = datSachDAO.selectByKeyword(keyword, 1, 1, LoginHelper.USER.getMaND());
         } catch (SQLException ex) {
             Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
 //                Date date = (Date) x.get(3);
 //                if(date.before(EzHelper.now()))
 //                    System.out.println(date);
-                tblModel1.addRow(new Object[]{x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel1.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }
     }
-    
+
     private void loadTable23() {
         tblModel23.setRowCount(0);
         try {
-            lst = datSachDAO.selectByKeyword(keyword, 2, 3, LoginHelper.USER.getMaND());            
+            lst = datSachDAO.selectByKeyword(keyword, 2, 3, LoginHelper.USER.getMaND());
         } catch (SQLException ex) {
             Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel23.addRow(new Object[]{x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel23.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }
     }
 
-//    @Override
-//    public void run() {
-//        while (true) {
-//            
-//            Date d = new Date();
-//            System.out.println(d);
-//            String day = d.toString().substring(0, 3);
-//            System.out.println(day);
-//            for (;;) {
-//                try {
-//                    Thread.sleep(120000);
-//                    Date date = new Date();
-//                    String currentday = date.toString().substring(0, 3);
-//                    System.out.println(currentday);
-//                    if (day.equals(currentday) == false) {
-//                        break;
-//                    }
-//                } catch (Exception e) {
-//                    System.out.println(e.getMessage());
-//                }
-//                d = new Date();
-//
-//            }
-//                System.out.println(d);
-//        }
-//    }
+    private void loadTable4() {
+        tblModel4.setRowCount(0);
+        try {
+            lst = datSachDAO.selectByKeyword(keyword, 4, 4, LoginHelper.USER.getMaND());
+        } catch (SQLException ex) {
+            Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (!lst.isEmpty()) {
+            for (List<Object> x : lst) {
+                tblModel4.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2), x.get(3)});
+            }
+
+        }
+    }
+
+    private void huyDat() {
+        datSachDAO.updateTrangThaiDatSach(2, madatsach, EzHelper.now());
+        loadTable23();
+    }
+
 }

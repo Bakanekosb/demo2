@@ -19,107 +19,87 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
-          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Component id="cbo_danhMuc" min="-2" pref="252" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="txt_timKiem" min="-2" pref="261" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btn_search" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btn_chiTiet" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_themSL" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_reload" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btn_first1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_prev1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="btn_next1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_last1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
-                      <Component id="btn_datSach" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_like" min="-2" max="-2" attributes="0"/>
-                  </Group>
+          <EmptySpace min="0" pref="1018" max="32767" attributes="0"/>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="cbo_danhMuc" min="-2" pref="252" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txt_timKiem" min="-2" pref="261" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btn_search" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="648" max="-2" attributes="0"/>
+                          <Component id="btn_chiTiet" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btn_reload" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" pref="65" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbo_danhMuc" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="txt_timKiem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn_search" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+          <EmptySpace min="0" pref="633" max="32767" attributes="0"/>
+          <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
+                  <Component id="jPanel2" min="-2" pref="434" max="-2" attributes="0"/>
+                  <EmptySpace pref="101" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" pref="434" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btn_first1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btn_prev1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btn_next1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+          </Group>
+          <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="btn_datSach" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_like" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbo_danhMuc" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="btn_last1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                          <Component id="txt_timKiem" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_search" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
+                  <EmptySpace min="504" pref="504" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_reload" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_chiTiet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_reload" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_themSL" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btn_chiTiet" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="14" style="1"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; S&#xc1;CH"/>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JPanel" name="jPanel2">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
@@ -134,29 +114,34 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="panel_chk" min="-2" max="-2" attributes="0"/>
+                              <Component id="panel_chk" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                              <Component id="btn_first1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btn_prev1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Component id="btn_next1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btn_last1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                              <Component id="btn_themSL" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btn_datSach" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btn_like" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btn_first" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_prev" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="btn_next" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btn_last" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="375" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -165,67 +150,42 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="panel_chk" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="panel_chk" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="253" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
+                      <EmptySpace pref="66" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btn_first" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btn_prev" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btn_next" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btn_last" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_first1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btn_prev1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btn_next1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="btn_datSach" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btn_like" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btn_themSL" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="btn_last1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btn_first">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="|&lt;"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_firstActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btn_prev">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_prevActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btn_next">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_nextActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btn_last">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&gt;|"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_lastActionPerformed"/>
-              </Events>
-            </Component>
             <Container class="javax.swing.JPanel" name="panel_chk">
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="928" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="908" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="47" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="42" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -234,6 +194,30 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x1ea8;n/Hi&#x1ec7;n c&#x1ed9;t:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_themSL">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Th&#xea;m SL"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_themSLActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_like">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Like"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_likeActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_datSach">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t s&#xe1;ch"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_datSachActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>
@@ -260,6 +244,38 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="btn_last1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&gt;|"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_last1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_next1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_next1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_prev1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_prev1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_first1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="|&lt;"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_first1ActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="Panel_grid">
@@ -278,31 +294,10 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Update"/>
+        <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel10">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="14" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_timKiem">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="12" style="0"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_timKiemKeyReleased"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_search">
       <Properties>
@@ -315,36 +310,22 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_searchActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_first1">
+    <Component class="javax.swing.JTextField" name="txt_timKiem">
       <Properties>
-        <Property name="text" type="java.lang.String" value="|&lt;"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="12" style="0"/>
+        </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_first1ActionPerformed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_timKiemKeyReleased"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_prev1">
+    <Component class="javax.swing.JButton" name="btn_chiTiet">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+        <Property name="text" type="java.lang.String" value="Chi ti&#x1ebf;t"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_prev1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_next1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_next1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_last1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&gt;|"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_last1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_chiTietActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="cbo_danhMuc">
@@ -365,22 +346,6 @@
         <Property name="text" type="java.lang.String" value="Danh m&#x1ee5;c:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_datSach">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t s&#xe1;ch"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_datSachActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btn_like">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Like"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_likeActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btn_reload">
       <Properties>
         <Property name="text" type="java.lang.String" value="Reload"/>
@@ -388,22 +353,37 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_reloadActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_themSL">
+    <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Th&#xea;m SL"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Update"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_themSLActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btn_chiTiet">
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Chi ti&#x1ebf;t"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="QU&#x1ea2;N L&#xdd; S&#xc1;CH"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_chiTietActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

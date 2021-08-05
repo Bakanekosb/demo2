@@ -109,6 +109,25 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
         List<QuyenSach> lst = selectBySql(selectAllByTuaSach_sql, id);
         return lst;
     }
+    
+     public int getTotalQSach() {
+        int total = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "select count(*) from quyensach";
+                rs = JdbcHelper.executeQuery(sql);
+                while (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return total;
+    }
 
     @Override
     public List<QuyenSach> selectBySql(String sql, Object... args) {

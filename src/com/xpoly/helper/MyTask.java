@@ -7,7 +7,9 @@ package com.xpoly.helper;
 
 import com.xpoly.DAO.DatSachDAO;
 import com.xpoly.DAO.NguoiDungDAO;
+import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.model.DatSach;
+import com.xpoly.model.TuaSach;
 import java.sql.ResultSet;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -30,9 +32,8 @@ public class MyTask extends TimerTask {
 
     @Override
     public void run() {
-        Map<Integer, Integer> map = cacTuaSachSanSangChoMuonThem();
-        if (map != null) {
-            map.forEach((k, v)
+        if (cacTuaSachSanSangChoMuonThem() != null) {
+            cacTuaSachSanSangChoMuonThem().forEach((k, v)
                     -> lst_datSach.addAll(datSachDao.danhSachDenLuotMuon(k, v))
             );
         }
@@ -62,7 +63,10 @@ public class MyTask extends TimerTask {
         for (DatSach x : lst_datSach) {
             datSachDao.updateTrangThaiDatSach(1, x.getMaDatSach(), ngayHen);
             String email = nguoiDungDAO.selectById(x.getMand()).getEmail();
-
+            TuaSach tuaSach = new TuaSachDAO().selectById(x.getMaTuaSach());
+            String mess = "Tựa sách " + tuaSach.getTenTuaSach() + " bạn đặt vào ngày " + x.getNgayDat() +
+                    " đã sẵn sàng cho mượn.\n Tựa sách sẽ được giữ trong 2 ngày, hạn cuối là : " + ngayHen;
+            HelpSendEmail.SendMail(email, "Sách đã sẵn sàng cho mượn", mess);
         }
     }
 

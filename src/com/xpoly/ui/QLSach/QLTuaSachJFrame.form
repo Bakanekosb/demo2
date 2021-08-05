@@ -98,20 +98,6 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="Panel_grid">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="card2"/>
-            </Constraint>
-          </Constraints>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="5"/>
-            <Property name="horizontalGap" type="int" value="15"/>
-            <Property name="rows" type="int" value="2"/>
-            <Property name="verticalGap" type="int" value="15"/>
-          </Layout>
-        </Container>
         <Container class="javax.swing.JPanel" name="Panel_list">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
@@ -285,6 +271,20 @@
               </Events>
             </Component>
           </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="Panel_grid">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="card2"/>
+            </Constraint>
+          </Constraints>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+            <Property name="columns" type="int" value="5"/>
+            <Property name="horizontalGap" type="int" value="15"/>
+            <Property name="rows" type="int" value="2"/>
+            <Property name="verticalGap" type="int" value="15"/>
+          </Layout>
         </Container>
       </SubComponents>
     </Container>

@@ -6,22 +6,27 @@
 package com.xpoly.ui.QLSach;
 
 import com.xpoly.DAO.DanhMucDAO;
+import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.Sach_TacGiaDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
+import com.xpoly.ui.MainJFrame;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRootPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
@@ -33,7 +38,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
      * Creates new form UpdateSachJInternalFrame
      */
     
-    TuaSachDAO tuaSachDAO = new TuaSachDAO();
+      TuaSachDAO tuaSachDAO = new TuaSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
     DanhMucDAO danhMucDAO = new DanhMucDAO();
     Sach_TacGiaDAO stgDAO = new Sach_TacGiaDAO();
@@ -57,13 +62,11 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     DefaultComboBoxModel<String> cboModelNam = new DefaultComboBoxModel<>(new String[]{"AD", "BC"});
 
     public UpdateSachJInternalFrame(TuaSach model, String tacGia, int soSachDocTaiCho) {
+//           LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
         initComponents();
         tuaSachUpdate = model;
         init();
         setModel(model, tacGia, soSachDocTaiCho);
-        System.out.println(model.toString());
-        System.out.println(tacGia);
-        System.out.println(soSachDocTaiCho);
     }
 
     /**
@@ -338,7 +341,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 4, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -389,12 +392,12 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         // TODO add your handling code here:
         update();
-        this.dispose();
+//        this.dispose();
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        MainJFrame.showChucNang(new QLTuaSachJInternalFrame());
     }//GEN-LAST:event_btn_cancelActionPerformed
 
 
@@ -443,12 +446,30 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
         
     }
     
-     @Override
+    @Override
     public void init() {
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
+        
         cbo_danhMuc.setModel((DefaultComboBoxModel) cboModel);
         loadComboboxDanhMuc();
         lst_tSach = tuaSachDAO.selectAll();
         cbo_namxb.setModel(cboModelNam);
+        cbo_danhMuc.setEnabled(LoginHelper.quyenQuanTri());
+        txt_tenSach.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_namxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_soTrang.setEditable(LoginHelper.quyenQuanTri());
+        txt_gia.setEditable(LoginHelper.quyenQuanTri());
+        txt_moTa.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
+        btn_chonTg.setVisible(LoginHelper.quyenQuanTri());
+        btn_clear.setVisible(LoginHelper.quyenQuanTri());
+        btn_save.setVisible(LoginHelper.quyenQuanTri());
+        lbl_cover.setEnabled(LoginHelper.quyenQuanTri());
     }
 
     @Override
@@ -480,7 +501,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
                 }
                 if (soLuong > tuaSachUpdate.getSoLuong()) {
                     for (int i = 0; i < soLuong - tuaSachUpdate.getSoLuong(); i++) {
-                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())), 
+                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())),
                                 tuaSachUpdate.getGhiChu(), tuaSachUpdate.getMaTuaSach());
                         quyenSachDAO.insert(quyenSach);
                     }
@@ -585,7 +606,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
 
         namxb = isAD ? namxb : namxb * (-1);
 
-        return new TuaSach(tuaSachUpdate.getMaTuaSach(),tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
+        return new TuaSach(tuaSachUpdate.getMaTuaSach(), tenSach, nxb, namxb, soTrang, gia, moTa, ghiChu, soLuong, maDanhMuc, anh);
 // public TuaSach(String tenTuaSach, String nxb, int namxb, int soTrang, double giaTien, String moTa, String ghiChu, int soLuong, String madm) 
 
     }
@@ -610,8 +631,11 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
         txt_gia.setText(model.getGiaTien() + "");
         txt_soLuong.setText(model.getSoLuong() + "");
         txt_docTaiCho.setText(soSachDocTaiCho + "");
-        lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
-
+        if (model.getAnh() != null) {
+            lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
+        }else{
+            lbl_cover.setIcon(EzHelper.readImg("2.png"));
+        }
     }
 
     @Override

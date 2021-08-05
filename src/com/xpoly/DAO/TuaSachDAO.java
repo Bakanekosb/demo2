@@ -110,6 +110,44 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer> {
         }
         return total;
     }
+    
+    public int getTotalTuaSach() {
+        int total = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "select count(*) from tuasach";
+                rs = JdbcHelper.executeQuery(sql);
+                while (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return total;
+    }
+    
+     public int getTotalBanDoc() {
+        int total = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "select count(*) from nguoidung where vaitro = 2";
+                rs = JdbcHelper.executeQuery(sql);
+                while (rs.next()) {
+                    total = rs.getInt(1);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return total;
+    }
 
     @Override
     public List<TuaSach> selectBySql(String sql, Object... args) {
