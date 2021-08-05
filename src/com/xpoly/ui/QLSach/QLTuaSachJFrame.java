@@ -102,6 +102,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
 
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        Panel_grid = new javax.swing.JPanel();
         Panel_list = new javax.swing.JPanel();
         panel_chk = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -114,7 +115,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         btn_next1 = new javax.swing.JButton();
         btn_prev1 = new javax.swing.JButton();
         btn_first1 = new javax.swing.JButton();
-        Panel_grid = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -133,6 +133,9 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         jLabel1.setText("QUẢN LÝ SÁCH");
 
         jPanel2.setLayout(new java.awt.CardLayout());
+
+        Panel_grid.setLayout(new java.awt.GridLayout(2, 5, 15, 15));
+        jPanel2.add(Panel_grid, "card2");
 
         javax.swing.GroupLayout panel_chkLayout = new javax.swing.GroupLayout(panel_chk);
         panel_chk.setLayout(panel_chkLayout);
@@ -269,9 +272,6 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         );
 
         jPanel2.add(Panel_list, "card3");
-
-        Panel_grid.setLayout(new java.awt.GridLayout(2, 5, 15, 15));
-        jPanel2.add(Panel_grid, "card2");
 
         jButton1.setText("Update");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -668,7 +668,7 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
                                 datSach = "Đã hủy";
                             } else if (y.getTrangThai() == 3){
                                 datSach = "Quá hạn không lấy";
-                            } else if (y.getTrangThai() == 4{
+                            } else if (y.getTrangThai() == 4){
                                 datSach = "Đang mượn";
                             } else{
                                 datSach = "";

@@ -5,14 +5,19 @@
  */
 package com.xpoly.ui.QLnguoidung;
 
+import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.QLnhansu.NapTien;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,8 +32,9 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
     DefaultTableModel model = new DefaultTableModel(head, 0);
     String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
     DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
-    NhanVienDao nguoidungDAO = new NhanVienDao();
+    NhanVienDao nhanvienDAO = new NhanVienDao();
         NguoiDung nguoidung = new NguoiDung();
+        NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
     double vitien;
     int trangthai = 0;
     String reMaNV = "[n,N]{1}[v,V]{1}[0-9]{5}";
@@ -41,6 +47,10 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
         private static Random generator = new Random();
         int numberOfCharactor = 8;
         ADDnguoiDung add = new ADDnguoiDung();
+          int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
+   
+    int totalPage;
+
     /**
      * Creates new form QLnguoidung
      */
@@ -97,6 +107,10 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        btn_first1 = new javax.swing.JButton();
+        btn_prev1 = new javax.swing.JButton();
+        btn_next1 = new javax.swing.JButton();
+        btn_last1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -353,6 +367,34 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
             }
         });
 
+        btn_first1.setText("|<");
+        btn_first1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_first1ActionPerformed(evt);
+            }
+        });
+
+        btn_prev1.setText("<<");
+        btn_prev1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_prev1ActionPerformed(evt);
+            }
+        });
+
+        btn_next1.setText(">>");
+        btn_next1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_next1ActionPerformed(evt);
+            }
+        });
+
+        btn_last1.setText(">|");
+        btn_last1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_last1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -381,6 +423,16 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(302, 302, 302)
+                .addComponent(btn_first1)
+                .addGap(26, 26, 26)
+                .addComponent(btn_prev1)
+                .addGap(31, 31, 31)
+                .addComponent(btn_next1)
+                .addGap(36, 36, 36)
+                .addComponent(btn_last1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -398,7 +450,13 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_first1)
+                    .addComponent(btn_prev1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_next1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_last1))
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -472,6 +530,30 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
         nt.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void btn_first1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_first1ActionPerformed
+        pageNumber = 1;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_first1ActionPerformed
+
+    private void btn_prev1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_prev1ActionPerformed
+        pageNumber--;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_prev1ActionPerformed
+
+    private void btn_next1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next1ActionPerformed
+        pageNumber++;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_next1ActionPerformed
+
+    private void btn_last1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_last1ActionPerformed
+        pageNumber = totalPage;
+        loadTable();
+        buttonEnabled();
+    }//GEN-LAST:event_btn_last1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -509,6 +591,10 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableList;
+    private javax.swing.JButton btn_first1;
+    private javax.swing.JButton btn_last1;
+    private javax.swing.JButton btn_next1;
+    private javax.swing.JButton btn_prev1;
     private javax.swing.JButton btnadd;
     private javax.swing.JButton btnseach;
     private javax.swing.JButton btnupdate;
@@ -555,12 +641,20 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
         combovaitro.setModel((DefaultComboBoxModel) combo);
         loadTable();
         pack(); }
-
+List<NguoiDung>  lst_tg = null;
     @Override
     public void loadTable() {
          model.setRowCount(0);
+          int total = (int) Math.ceil((float) nguoidungDAO.getTotalRows(keyword) / rowsOfPage);
+            totalPage = total > 0 ? total : 1;
+            pageNumber = pageNumber > totalPage ? 1 : pageNumber;
+    try {
+         lst_tg = nguoidungDAO.selectByKeyword(keyword, pageNumber, rowsOfPage);
+    } catch (SQLException ex) {
+        Logger.getLogger(QLnguoidung.class.getName()).log(Level.SEVERE, null, ex);
+    }
         int i = 0;
-        for (NguoiDung x : nguoidungDAO.selectAll()) {
+        for (NguoiDung x : lst_tg) {
             model.addRow(new Object[]{
                 i++, x.getMaND(), x.getHoTen(), x.getNgaySinh(), gioitinh(x.isGioiTinh()), x.getSdt(), x.getEmail(), x.getDiaChi(),
                  vaitro(x.getVaiTro()), x.getGhiChu(), x.getMatKhau(), x.getViTien(),x.getAnh()
@@ -572,7 +666,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
     public void insert() {
         try {
             if(nguoidung != null){
-        nguoidungDAO.insert(getModel());
+        nhanvienDAO.insert(getModel());
         DialogHelper.alert(this, "Thêm Thành Công!");
         }
         } catch (Exception e) {
@@ -586,7 +680,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
     public void update() {
       try {
             if(nguoidung != null){
-            nguoidungDAO.update(getModel());
+            nhanvienDAO.update(getModel());
              DialogHelper.alert(this, "Sửa Thành Công!");
             }
         } catch (Exception e) {
@@ -599,7 +693,7 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
     public void delete() {
      try {
             if(nguoidung != null){
-            nguoidungDAO.delete(txtMand.getText());
+            nhanvienDAO.delete(txtMand.getText());
 //            TableList.remove(TableList.getSelectedRow());
             DialogHelper.alert(this, "xóa Thành Công!");
                 }
@@ -741,5 +835,12 @@ String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới
             return 3;
         }
         return 0;
+    }
+        void buttonEnabled() {
+        System.out.println(pageNumber + " in button enabled");
+        btn_first1.setEnabled(pageNumber > 1);
+        btn_prev1.setEnabled(pageNumber > 1);
+        btn_last1.setEnabled(pageNumber < totalPage);
+        btn_next1.setEnabled(pageNumber < totalPage);
     }
 }
