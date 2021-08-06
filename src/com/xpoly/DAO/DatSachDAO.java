@@ -131,7 +131,8 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
                 String sql = "{call SP_coDungNguoiDatSachKhong (?,?)}";
                 rs = JdbcHelper.executeQuery(sql, matuasach,mand);
                 while (rs.next()) {
-                    sachDuocBanDocDatTruoc = rs.getInt(1) == 1;
+                    System.out.println(rs.getInt(1));
+                    sachDuocBanDocDatTruoc = (rs.getInt(1) == 1);
                 }
             } finally {
                 rs.getStatement().getConnection().close();
