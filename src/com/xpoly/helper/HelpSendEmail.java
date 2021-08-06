@@ -29,7 +29,7 @@ public class HelpSendEmail {
  
     public static Random generator = new Random();
     
-        public String randomString(int numberOfCharactor) {
+        public static String randomString(int numberOfCharactor) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < numberOfCharactor; i++) {
             int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);

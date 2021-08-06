@@ -18,55 +18,68 @@ import java.util.List;
  *
  * @author Admin
  */
-public class NguoiDungDAO implements IDAO<NguoiDung, String>{
+public class NguoiDungDAO implements IDAO<NguoiDung, String> {
 
     @Override
     public void insert(NguoiDung model) {
-       String sql = "insert into nguoidung (mand,hoten,ngaysinh,gioitinh,sdt,email,diachi,vaitro,ghichu,matkhau,vitien,anh,trangthai)\n"
+        String sql = "insert into nguoidung (mand,hoten,ngaysinh,gioitinh,sdt,email,diachi,vaitro,ghichu,matkhau,vitien,anh,trangthai)\n"
                 + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         JdbcHelper.executeUpdate(sql, model.getMaND(), model.getHoTen(), model.getNgaySinh(),
                 model.isGioiTinh(), model.getSdt(), model.getEmail(), model.getDiaChi(),
                 model.getVaiTro(), model.getGhiChu(), model.getMatKhau(), model.getViTien(),
-                model.getAnh(),model.getTrangthai());
-}
-public List<NguoiDung> selectMand(String mand){
+                model.getAnh(), model.getTrangthai());
+    }
 
-   String sql = "select * from nguoidung where mand = ?";
-       return selectBySql(sql, mand);
-}
+    public List<NguoiDung> selectMand(String mand) {
+
+        String sql = "select * from nguoidung where mand = ?";
+        return selectBySql(sql, mand);
+    }
+
     @Override
     public void update(NguoiDung model) {
         String sql = "update nguoidung set hoten = ? ,ngaysinh = ? ,gioitinh = ? ,sdt = ?, email = ? ,diachi = ?"
                 + " ,vaitro = ? ,ghichu = ? , matkhau = ? where mand = ?";
-        JdbcHelper.executeUpdate(sql, model.getHoTen(),model.getNgaySinh(),
-                model.isGioiTinh(),model.getSdt(),model.getEmail(),model.getDiaChi()
-                ,model.getVaiTro(),model.getGhiChu(),model.getMatKhau(),model.getMaND()
+        JdbcHelper.executeUpdate(sql, model.getHoTen(), model.getNgaySinh(),
+                model.isGioiTinh(), model.getSdt(), model.getEmail(), model.getDiaChi(),
+                 model.getVaiTro(), model.getGhiChu(), model.getMatKhau(), model.getMaND()
         );
     }
-public  void updatevitien(NguoiDung model){
-String sql = "update nguoidung set vitien = ? where mand = ? ";
-JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
-}
+
+    public void updatevitien(NguoiDung model) {
+        String sql = "update nguoidung set vitien = ? where mand = ? ";
+        JdbcHelper.executeUpdate(sql, model.getViTien(), model.getMaND());
+    }
+
+    public void updateMatKhau(String Email, String Pass) {
+        System.out.println(Email+  Pass);
+        String sql = "update nguoidung set matkhau = ? where email =?";
+        JdbcHelper.executeUpdate(sql, Pass, Email);
+        
+    }
+
     @Override
     public void delete(String id) {
-                    String sql = "update nguoidung set trangthai = 1 where mand = ?";
-                JdbcHelper.executeUpdate(sql,id);}
+        String sql = "update nguoidung set trangthai = 1 where mand = ?";
+        JdbcHelper.executeUpdate(sql, id);
+    }
 
     @Override
     public NguoiDung selectById(String id) {
-    String sql = "select * from nguoidung where mand = ?";        
+        String sql = "select * from nguoidung where mand = ?";
         List<NguoiDung> lst = selectBySql(sql, id);
         return lst.isEmpty() ? null : lst.get(0);
     }
 
     @Override
     public List<NguoiDung> selectAll() {
-    String sql = "select * from nguoidung where vaitro  = 2 and trangthai = 0";
-        return selectBySql(sql);}
+        String sql = "select * from nguoidung where vaitro  = 2 and trangthai = 0";
+        return selectBySql(sql);
+    }
 
     @Override
     public List<NguoiDung> selectBySql(String sql, Object... args) {
-     List<NguoiDung> lst = new ArrayList<>();
+        List<NguoiDung> lst = new ArrayList<>();
         try {
             System.out.println("select");
             ResultSet rs = null;
@@ -82,11 +95,12 @@ JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        return lst;}
+        return lst;
+    }
 
     @Override
     public NguoiDung readFromResultSet(ResultSet rs) throws SQLException {
-      NguoiDung model = new NguoiDung();
+        NguoiDung model = new NguoiDung();
         model.setMaND(rs.getString(1));
         model.setHoTen(rs.getString(2));
         model.setNgaySinh(rs.getDate(3));
@@ -99,11 +113,14 @@ JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
         model.setMatKhau(rs.getString(10));
         model.setViTien(rs.getDouble(11));
         model.setAnh(rs.getString(12));
-        return model;}
-    public List<NguoiDung> thongke(){
-    String sql = "SELECT mand, COUNT(*) as so_luong FROM nguoidung GROUP BY mand ";
-    return  selectBySql(sql);
+        return model;
     }
+
+    public List<NguoiDung> thongke() {
+        String sql = "SELECT mand, COUNT(*) as so_luong FROM nguoidung GROUP BY mand ";
+        return selectBySql(sql);
+    }
+
     public int getTotalRows(String keyword) {
         int total = 0;
         try {
@@ -121,9 +138,9 @@ JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
             throw new RuntimeException(ex);
         }
         return total;
-    } 
-    
-        public List<NguoiDung> selectByKeyword(String keyword, int pageNumber, int rowsOfPage) throws SQLException {
+    }
+
+    public List<NguoiDung> selectByKeyword(String keyword, int pageNumber, int rowsOfPage) throws SQLException {
         String sql = "{call SP_SELECTNGUOIDUNG (?,?,?)}";
         List<NguoiDung> lst = new ArrayList<>();
         ResultSet rs = null;
@@ -137,4 +154,6 @@ JdbcHelper.executeUpdate(sql, model.getViTien(),model.getMaND());
         }
         return lst;
     }
+
+ 
 }

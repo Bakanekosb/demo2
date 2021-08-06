@@ -33,6 +33,11 @@ public class NguoiDung {
         this.maND = maND;
     }
 
+    public NguoiDung(String email, String matKhau) {
+        this.email = email;
+        this.matKhau = matKhau;
+    }
+
      
 
     public NguoiDung(String maND, double viTien) {
