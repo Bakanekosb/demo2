@@ -5,6 +5,12 @@
  */
 package com.xpoly.ui.PhieuMuon;
 
+import com.xpoly.helper.JdbcHelper;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dell
@@ -14,10 +20,34 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
     /**
      * Creates new form QLPhieuMuonJFrame
      */
+    Connection connection = JdbcHelper.ketNoi();
+    DefaultTableModel defaultTableModelA = new DefaultTableModel();
+    DefaultTableModel defaultTableModelB = new DefaultTableModel();
+     int index=0;
     public QLPhieuMuonJFrame() {
         initComponents();
+        defaultTableModelA.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Bạn Đọc","Tên Bạn Đọc", "Ngày Mượn", "Mã Người Tạo Phiếu","Tên Người Tạo Phiếu"});
+        defaultTableModelB.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Quyển Sách", "Tên Tựa Sách", "Ngày Gia Hạn", "Số Lần Gia Hạn","Ghi Chú","Vị Trí Quyển Sách"});
+        tblA.setModel(defaultTableModelA);
+        tblB.setModel(defaultTableModelB);
+        fillToTable();
     }
+public void fillToTable() {
+        
+        defaultTableModelA.setRowCount(0);
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu) \n" +
+"                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0");) {
+           
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+               
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),resultSet.getString(6)});
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR : "+e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,13 +60,13 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblA = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
         txt_timKiem = new javax.swing.JTextField();
         btn_search = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblB = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,7 +75,7 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Phiếu trả"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -56,7 +86,12 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblA);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,7 +130,7 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Phiếu trả chi tiết"));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -106,7 +141,7 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblB);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -174,9 +209,40 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // TODO add your handling code here:
-        keyword = txt_timKiem.getText();
-        loadTable();
+        
+        defaultTableModelA.setRowCount(0);
+defaultTableModelB.setRowCount(0);
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu) \n" +
+"                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0 AND phieumuon.maphieumuon=?");) {
+           preparedStatement.setString(1, txt_timKiem.getText());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+               
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),resultSet.getString(6)});
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR : "+e);
+        }
+        
     }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void tblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAMouseClicked
+        // TODO add your handling code here:
+         index = tblA.getSelectedRow();
+        String maPhieuMuon = (String) (defaultTableModelA.getValueAt(index, 0));
+        defaultTableModelB.setRowCount(0);
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT maphieumuon,pmct.maquyensach,(SELECT tentuasach FROM dbo.tuasach WHERE matuasach=dbo.quyensach.matuasach),ngaygiahan,solangiahan,pmct.ghichu,vitri FROM dbo.pmct INNER JOIN dbo.quyensach ON quyensach.maquyensach = pmct.maquyensach WHERE maphieumuon=?");) {
+            preparedStatement.setString(1, maPhieuMuon);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+               
+                defaultTableModelB.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),  resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),resultSet.getString(7)});
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_tblAMouseClicked
 
     /**
      * @param args the command line arguments
@@ -204,6 +270,7 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(QLPhieuMuonJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -221,8 +288,8 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblA;
+    private javax.swing.JTable tblB;
     private javax.swing.JTextField txt_timKiem;
     // End of variables declaration//GEN-END:variables
 }
