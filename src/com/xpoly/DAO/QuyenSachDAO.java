@@ -110,6 +110,12 @@ public class QuyenSachDAO implements IDAO<QuyenSach, Integer> {
         return lst;
     }
     
+    public boolean selectSachSanSangChoMuonByQuyenSach(int id){
+        String selectAllByTuaSach_sql = "select * from QuyenSach where maquyensach = ? and duocmuonve = 1 and tinhtrang = 0 and trangthai = 0";
+        List<QuyenSach> lst = selectBySql(selectAllByTuaSach_sql, id);
+        return !lst.isEmpty();
+    }
+    
      public int getTotalQSach() {
         int total = 0;
         try {
