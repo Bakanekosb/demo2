@@ -24,30 +24,32 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
     Connection connection = JdbcHelper.ketNoi();
     DefaultTableModel defaultTableModelA = new DefaultTableModel();
     DefaultTableModel defaultTableModelB = new DefaultTableModel();
-     int index=0;
+    int index = 0;
+
     public PhieuMuonDangMuonJInternalFrame() {
         initComponents();
-        
-        defaultTableModelA.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Bạn Đọc","Tên Bạn Đọc", "Ngày Mượn", "Mã Người Tạo Phiếu","Tên Người Tạo Phiếu"});
-        defaultTableModelB.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Quyển Sách", "Tên Tựa Sách", "Ngày Gia Hạn", "Số Lần Gia Hạn","Ghi Chú","Vị Trí Quyển Sách"});
+
+        defaultTableModelA.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Bạn Đọc", "Tên Bạn Đọc", "Ngày Mượn", "Mã Người Tạo Phiếu", "Tên Người Tạo Phiếu"});
+        defaultTableModelB.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Quyển Sách", "Tên Tựa Sách", "Ngày Gia Hạn", "Số Lần Gia Hạn", "Ghi Chú", "Vị Trí Quyển Sách"});
         tblA.setModel(defaultTableModelA);
         tblB.setModel(defaultTableModelB);
         fillToTable();
     }
-public void fillToTable() {
-        
+
+    public void fillToTable() {
+
         defaultTableModelA.setRowCount(0);
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu) \n" +
-"                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0");) {
-           
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu) \n"
+                + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0");) {
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               
-                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),resultSet.getString(6)});
+
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)});
             }
         } catch (Exception e) {
-            System.out.println("ERROR : "+e);
+            System.out.println("ERROR : " + e);
         }
     }
 
@@ -211,19 +213,19 @@ public void fillToTable() {
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
         // TODO add your handling code here:
         defaultTableModelA.setRowCount(0);
-defaultTableModelB.setRowCount(0);
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu) \n" +
-"                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0 AND phieumuon.maphieumuon=?");) {
-           preparedStatement.setString(1, txt_timKiem.getText());
+        defaultTableModelB.setRowCount(0);
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu) \n"
+                + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0 AND phieumuon.maphieumuon=?");) {
+            preparedStatement.setString(1, txt_timKiem.getText());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               
-                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),resultSet.getString(6)});
+
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)});
             }
         } catch (Exception e) {
-            System.out.println("ERROR : "+e);
+            System.out.println("ERROR : " + e);
         }
-        
+
     }//GEN-LAST:event_btn_searchActionPerformed
 
     private void tblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAMouseClicked
@@ -236,8 +238,8 @@ defaultTableModelB.setRowCount(0);
             preparedStatement.setString(1, maPhieuMuon);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               
-                defaultTableModelB.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),  resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),resultSet.getString(7)});
+
+                defaultTableModelB.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getString(7)});
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -245,7 +247,7 @@ defaultTableModelB.setRowCount(0);
     }//GEN-LAST:event_tblAMouseClicked
 
     public static void main(String[] args) {
-       
+
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
 //                new PhieuMuonDangMuonJInternalFrame().setVisible(true);
