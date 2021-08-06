@@ -112,6 +112,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
         btn_clear = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
+        btn_clear1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -316,6 +317,13 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
             }
         });
 
+        btn_clear1.setText("Lưu trữ");
+        btn_clear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clear1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -330,7 +338,8 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btn_cancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                         .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_clear1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
@@ -341,11 +350,13 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 4, Short.MAX_VALUE))
+                        .addGap(0, 8, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_clear1)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_clear)
                         .addGap(18, 18, 18)
                         .addComponent(btn_save)
@@ -400,11 +411,21 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
         MainJFrame.showChucNang(new QLTuaSachJInternalFrame());
     }//GEN-LAST:event_btn_cancelActionPerformed
 
+    private void btn_clear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            tuaSachDAO.updateLuuTru(tuaSachUpdate.getMaTuaSach());
+            DialogHelper.alert(jPanel1, "Sách lưu trữ thành công");
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_clear1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_chonTg;
     private javax.swing.JButton btn_clear;
+    private javax.swing.JButton btn_clear1;
     private javax.swing.JButton btn_save;
     private javax.swing.JComboBox<String> cbo_danhMuc;
     private javax.swing.JComboBox<String> cbo_namxb;
@@ -499,16 +520,16 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
                         stgDAO.insert(new Sach_Tg(tuaSachUpdate.getMaTuaSach(), x.getMaTg()));
                     }
                 }
-                if (soLuong > tuaSachUpdate.getSoLuong()) {
-                    for (int i = 0; i < soLuong - tuaSachUpdate.getSoLuong(); i++) {
-                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())),
-                                tuaSachUpdate.getGhiChu(), tuaSachUpdate.getMaTuaSach());
-                        quyenSachDAO.insert(quyenSach);
-                    }
-                }
-                DialogHelper.alert(jPanel1, "Thêm thành công");
+//                if (soLuong > tuaSachUpdate.getSoLuong()) {
+//                    for (int i = 0; i < soLuong - tuaSachUpdate.getSoLuong(); i++) {
+//                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())),
+//                                tuaSachUpdate.getGhiChu(), tuaSachUpdate.getMaTuaSach());
+//                        quyenSachDAO.insert(quyenSach);
+//                    }
+//                }
+                DialogHelper.alert(jPanel1, "Update thành công");
             } catch (Exception e) {
-                DialogHelper.alert(jPanel1, "Thêm không thành công");
+                DialogHelper.alert(jPanel1, "Update không thành công");
             }
         } else {
             DialogHelper.alert(jPanel1, "Fail");

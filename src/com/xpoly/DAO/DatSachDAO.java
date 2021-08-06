@@ -37,7 +37,17 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     public void updateTrangThaiDatSach(int trangthai, int madatsach, Date ngayHen) {
         if (trangthai != 1) {
             String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
-            System.out.println("huy dat");
+            JdbcHelper.executeUpdate(update_sql, trangthai, madatsach);
+        } else {
+            System.out.println(trangthai + " " + ngayHen);
+            String sql = "update Datsach set trangthai = ?, ngayhenlaysach = ? where madatsach = ? ";
+            JdbcHelper.executeUpdate(sql, trangthai, ngayHen, madatsach);
+        }
+    }
+    
+    public void updateTrangThaiDatSach2(int trangthai, int madatsach, Date ngayHen) {
+        if (trangthai != 1) {
+            String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
             JdbcHelper.executeUpdate(update_sql, trangthai, madatsach);
         } else {
             System.out.println(trangthai + " " + ngayHen);
@@ -59,6 +69,12 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     @Override
     public List<DatSach> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public DatSach selectDatSachDangChoDenLay(String mand, int matuasach) {
+        String sql = "select * from datsach where mand = ? and matuasach = ? and trangthai = 1";
+        List<DatSach> lst = selectBySql(sql, mand,matuasach);
+        return lst.isEmpty() ? null : lst.get(0);
     }
 
     public List<DatSach> selectByMand(String id) {
@@ -86,6 +102,7 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
                     temp.add(rs.getDate("ngayhenlaysach"));
                     temp.add(rs.getInt(5));
                     temp.add(rs.getInt("madatsach"));
+                    temp.add(rs.getString(2));
                     System.out.println("trang thai dat saach = " + rs.getInt(5));
                     lst.add(temp);
                 }
@@ -104,6 +121,25 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     public List<DatSach> danhSachDenLuotMuon(int matuasach, int soluongsach) {
         String sql = "{call sp_danhSachDenLuotMuon (?,?)}";
         return selectBySql(sql, matuasach, soluongsach);
+    }
+    
+     public boolean sachDuocBanDocDatTruocKhong(int matuasach, String mand){
+        boolean sachDuocBanDocDatTruoc = false;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "{call SP_coDungNguoiDatSachKhong (?,?)}";
+                rs = JdbcHelper.executeQuery(sql, matuasach,mand);
+                while (rs.next()) {
+                    sachDuocBanDocDatTruoc = rs.getInt(1) == 1;
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return sachDuocBanDocDatTruoc;
     }
 
     @Override
@@ -125,6 +161,8 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
         }
         return lst;
     }
+    
+   
 
     @Override
     public DatSach readFromResultSet(ResultSet rs) throws SQLException {

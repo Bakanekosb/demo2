@@ -56,6 +56,11 @@ public class TuaSachDAO implements IDAO<TuaSach, Integer> {
         );
     }
     
+    public void updateLuuTru(int matuasach) {
+        String update_sql = "update TUASACH set trangthai = 1 where matuasach = ? ";
+        JdbcHelper.executeUpdate(update_sql,matuasach);
+    }
+    
      public void updateSoLuongLike(int like, int matuasach) {
         String update_sql = "update TUASACH set soluongthich = ? where matuasach = ? ";
         JdbcHelper.executeUpdate(update_sql,like, matuasach);

@@ -37,8 +37,9 @@ public class QLDatSach extends javax.swing.JFrame {
     DatSachDAO datSachDAO = new DatSachDAO();
     int rowIndex = 0;
     int madatsach = 0;
+    String mand = "";
 
-    DefaultTableModel tblModel0 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt"}, 0) {
+    DefaultTableModel tblModel0 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt"}, 0) {
 
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -47,7 +48,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel1 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel1 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày hẹn đến lấy"}, 0) {
 
         @Override
@@ -57,7 +58,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel23 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel23 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày hẹn đến lấy"}, 0) {
 
         @Override
@@ -67,7 +68,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel4 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel4 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày mượn"}, 0) {
 
         @Override
@@ -451,6 +452,13 @@ public class QLDatSach extends javax.swing.JFrame {
 
     private void init() {
         LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
+        if(LoginHelper.quyenQuanTri()){
+            mand = "";
+        }
+        else{
+            mand = LoginHelper.USER.getMaND();
+        }
+        
         tbl_dangdat0.setModel(tblModel0);
         tbl_henngay1.setModel(tblModel1);
         tbl_23.setModel(tblModel23);
@@ -467,13 +475,13 @@ public class QLDatSach extends javax.swing.JFrame {
     private void loadTable0() {
         tblModel0.setRowCount(0);
         try {
-            lst = datSachDAO.selectByKeyword(keyword, 0, 0, LoginHelper.USER.getMaND());
+            lst = datSachDAO.selectByKeyword(keyword, 0, 0, mand);
         } catch (SQLException ex) {
             Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel0.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2)});
+                tblModel0.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2)});
             }
 
         }
@@ -482,7 +490,7 @@ public class QLDatSach extends javax.swing.JFrame {
     private void loadTable1() {
         tblModel1.setRowCount(0);
         try {
-            lst = datSachDAO.selectByKeyword(keyword, 1, 1, LoginHelper.USER.getMaND());
+            lst = datSachDAO.selectByKeyword(keyword, 1, 1, mand);
         } catch (SQLException ex) {
             Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -492,7 +500,7 @@ public class QLDatSach extends javax.swing.JFrame {
 //                Date date = (Date) x.get(3);
 //                if(date.before(EzHelper.now()))
 //                    System.out.println(date);
-                tblModel1.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel1.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }
@@ -501,14 +509,14 @@ public class QLDatSach extends javax.swing.JFrame {
     private void loadTable23() {
         tblModel23.setRowCount(0);
         try {
-            lst = datSachDAO.selectByKeyword(keyword, 2, 3, LoginHelper.USER.getMaND());
+            lst = datSachDAO.selectByKeyword(keyword, 2, 3, mand);
         } catch (SQLException ex) {
             Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel23.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel23.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }
@@ -517,14 +525,14 @@ public class QLDatSach extends javax.swing.JFrame {
     private void loadTable4() {
         tblModel4.setRowCount(0);
         try {
-            lst = datSachDAO.selectByKeyword(keyword, 4, 4, LoginHelper.USER.getMaND());
+            lst = datSachDAO.selectByKeyword(keyword, 4, 4, mand);
         } catch (SQLException ex) {
             Logger.getLogger(QLDatSach.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel4.addRow(new Object[]{x.get(5),x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel4.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }

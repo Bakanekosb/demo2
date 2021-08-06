@@ -437,7 +437,8 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
             if (!lst_quyenSach.isEmpty()) {
                 trangThai = 1;
                 ngayHen = Date.from(Instant.now().plus(2, ChronoUnit.DAYS));
-
+                lst_quyenSach.get(0).setTrangThai(2);
+                quyenSachDAO.update(lst_quyenSach.get(0));
             }
 
             datSachDAO.insert(new DatSach(maTuaSach, trangThai, LoginHelper.USER.getMaND(), EzHelper.now(), ngayHen));
@@ -566,7 +567,7 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        
+
         for (int i = 0; i < 10; i++) {
             JPanel jpanel = new JPanel();
             jpanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());

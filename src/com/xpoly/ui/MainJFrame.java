@@ -17,6 +17,7 @@ import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.helper.MyTask;
 import com.xpoly.model.NguoiDung;
+import com.xpoly.ui.QLSach.QLSachLuuTruJInternalFrame;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
 import com.xpoly.ui.QLnguoidung.QLBanDocJInternalFrame;
@@ -78,6 +79,13 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new ThemSachJInternalFrame());
             }
         });
+        
+        MenuItem menuSach_luuTru = new MenuItem(iconItem, "Sách lưu trữ",new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLSachLuuTruJInternalFrame());
+            }
+        });
         MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích", null);
         MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách", null);
 
@@ -129,7 +137,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_uaThich, menuSach_datSach);
+        MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_luuTru, menuSach_uaThich, menuSach_datSach);
 
         MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả", null, menuTacGia_danhSach, menuTacGia_them);
         
