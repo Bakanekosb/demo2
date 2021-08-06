@@ -7,7 +7,11 @@ package com.xpoly.QLnhansu;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.RectangleReadOnly;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.xpoly.DAO.LsgdDAO;
 import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
@@ -18,7 +22,9 @@ import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.LichSuGiaoDich;
 import com.xpoly.model.NguoiDung;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,14 +35,16 @@ public class NapTien extends javax.swing.JFrame implements IService<NguoiDung> {
     String keyword = "";
     NhanVienDao nguoidungDAO = new NhanVienDao();
     LsgdDAO lsgd = new LsgdDAO();
-int i;
+    double vitien = 0;
+    int i;
+
     /**
      * Creates new form NapTien
      */
     public NapTien() {
         initComponents();
         init();
-        pdf();
+
     }
 
     /**
@@ -158,29 +166,30 @@ int i;
         // TODO add your handling code here:
         keyword = txtmand.getText();
         loadTable();
-        if("".equals(lblTenNd.getText())){
+        if ("".equals(lblTenNd.getText())) {
             DialogHelper.alert(this, "Không tìm thấy Người dùng !");
         }
     }//GEN-LAST:event_btncheckActionPerformed
 
     private void btnNapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNapActionPerformed
         // TODO add your handling code here:
-        if("".equals(lblTenNd.getText())){
+        if ("".equals(lblTenNd.getText())) {
             DialogHelper.alert(this, "Không tìm thấy Người dùng !");
             System.out.println("thất bại !");
-        }else{
-           update();
-           lsgd.insert(lsgdgetmodel());
+        } else {
+            update();
+            lsgd.insert(lsgdgetmodel());
+            pdf();
             System.out.println("thành công ");
             txtMoney.setText("");
             txtmand.setText("");
             lblTenNd.setText("");
-            pdf();
-        if(i == 0){
-            this.dispose(); 
+
+            if (i == 0) {
+                this.dispose();
+            }
         }
-        }
-        
+
     }//GEN-LAST:event_btnNapActionPerformed
 
     /**
@@ -235,7 +244,6 @@ int i;
     public void init() {
         setLocationRelativeTo(this);
     }
-    double vitien = 0;
 
     @Override
     public void loadTable() {
@@ -251,7 +259,7 @@ int i;
 
     @Override
     public void insert() {
-     }
+    }
 
     @Override
     public void update() {
@@ -260,11 +268,11 @@ int i;
             if (getModel() != null) {
                 nguoidungDAO.updatevitien(getModel());
                 DialogHelper.alert(this, "nạp tiền thành công !");
-                 i =0;
+                i = 0;
             }
         } catch (Exception e) {
             DialogHelper.alert(this, "nạp tiền không thành công !");
-             i =1;
+            i = 1;
 
         }
     }
@@ -310,34 +318,39 @@ int i;
         double tiennap = vitien + tiennaptxt;
         return new NguoiDung(mand, tiennap);
     }
-public LichSuGiaoDich lsgdgetmodel(){
-   
-    String mand = txtmand.getText();
-    Date ngayDG = EzHelper.now();
-    double sotien = EzHelper.isDouble(txtMoney, "số tiền", this);
-    String nguoitaogd =LoginHelper.USER.getMaND();
-    
+
+    public LichSuGiaoDich lsgdgetmodel() {
+
+        String mand = txtmand.getText();
+        Date ngayDG = EzHelper.now();
+        double sotien = EzHelper.isDouble(txtMoney, "số tiền", this);
+        String nguoitaogd = "ND001";
+//    LoginHelper.USER.getMaND();
         return new LichSuGiaoDich(i++, mand, ngayDG, sotien, "Nạp Tiền", nguoitaogd);
 
-}
- public  void pdf (){
-   
+    }
+
+    public void pdf() {
+//        Rectangle pageSize = new RectangleReadOnly(250, 450);
         try {
 //            com.itextpdf.text.Rectangle rg = new  com.itextpdf.text.Rectangle(600, 800, 10, 10);
-             Document dc = new Document();
-          PdfWriter.getInstance(dc, new FileOutputStream("abc.pdf"));
-          dc.open();
-          dc.add(new Paragraph("Hóa Đơn Nạp Tiền Thư Viện Xpoly \n \n"));
-          dc.add(new Paragraph(EzHelper.now()+""));
-          dc.add(new Paragraph("Hóa đơn số "+ i));
-          dc.add(new Paragraph("Tài Khoản Được Nạp Tiền : "+ txtmand.getText()));
-          dc.add(new Paragraph("Số tiền nạp :  "+ txtMoney.getText()));
-          dc.add(new Paragraph("Người Nạp Tiền  "+ LoginHelper.USER));
-          dc.close();
-            System.out.println("1");
+            Document dc = new Document();
+            PdfWriter.getInstance(dc, new FileOutputStream("abc.pdf"));
+            dc.open();
+            dc.add(new Paragraph("hoa don nap tien thu vien Xpoly\n \n---------------------------"));
+            dc.add(new Paragraph("ngay tao hoa don : " + EzHelper.now()));
+            dc.add(new Paragraph("hoa don so " + i++));
+            dc.add(new Paragraph("khach hang  " + lblTenNd.getText()));
+            dc.add(new Paragraph("tai khoan duoc nap tien : " + txtmand.getText()));
+            dc.add(new Paragraph("So tien duoc nap :  " + txtMoney.getText()));
+            dc.add(new Paragraph("Nguoi nap tien  " + LoginHelper.USER.getMaND()));
+            dc.close();
+            System.out.println("1");       
+
         } catch (Exception e) {
         }
-     
+        
+        i = i;
     }
 
     @Override

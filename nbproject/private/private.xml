@@ -9,16 +9,10 @@
             <file>file:/F:/QUANG%20FPL/DUAN%201/QL%20thu%20vien/XPoly/demo2/src/com/xpoly/QLnhansu/QLNhansu.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/model/NguoiDung.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/QLnguoidung/QLnguoidung.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/TaiKhoan/rePass.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/PhieuMuon/QLPhieuMuonJFrame.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/EzHelper.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/DAO/NguoiDungDAO.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/TaiKhoan/DangNhap.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/PhieuMuon/PhieuMuonDangMuonJInternalFrame.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/QLnhansu/PDF.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/QLnhansu/NapTien.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/LoginHelper.java</file>
             <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/MainJFrame.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/HelpSendEmail.java</file>
         </group>
     </open-files>
 </project-private>
