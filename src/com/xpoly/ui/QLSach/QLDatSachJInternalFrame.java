@@ -5,6 +5,10 @@
  */
 package com.xpoly.ui.QLSach;
 
+/**
+ *
+ * @author Dell
+ */
 import com.xpoly.DAO.DatSachDAO;
 import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.QuyenSachDAO;
@@ -22,14 +26,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Dell
- */
-public class QLDatSach extends javax.swing.JFrame {
+public class QLDatSachJInternalFrame extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form QLDatSach
+     * Creates new form QLDatSachJInternalFrame
      */
     String keyword = "";
     String[] columns = {"Mã tựa sách", "Tên tựa sách", "Ngày đặt", "Ngày hẹn", "Trạng thái"};
@@ -39,7 +39,7 @@ public class QLDatSach extends javax.swing.JFrame {
     int madatsach = 0;
     String mand = "";
 
-    DefaultTableModel tblModel0 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt"}, 0) {
+    DefaultTableModel tblModel0 = new DefaultTableModel(new String[]{"Mã đặt sách", "Mã người dùng", "Mã tựa sách", "Tên tựa sách", "Ngày đặt"}, 0) {
 
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -48,7 +48,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel1 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel1 = new DefaultTableModel(new String[]{"Mã đặt sách", "Mã người dùng", "Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày hẹn đến lấy"}, 0) {
 
         @Override
@@ -58,7 +58,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel23 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel23 = new DefaultTableModel(new String[]{"Mã đặt sách", "Mã người dùng", "Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày hẹn đến lấy"}, 0) {
 
         @Override
@@ -68,7 +68,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    DefaultTableModel tblModel4 = new DefaultTableModel(new String[]{"Mã đặt sách","Mã người dùng","Mã tựa sách", "Tên tựa sách", "Ngày đặt",
+    DefaultTableModel tblModel4 = new DefaultTableModel(new String[]{"Mã đặt sách", "Mã người dùng", "Mã tựa sách", "Tên tựa sách", "Ngày đặt",
         "Ngày mượn"}, 0) {
 
         @Override
@@ -78,7 +78,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
     };
 
-    public QLDatSach() {
+    public QLDatSachJInternalFrame() {
         initComponents();
         init();
     }
@@ -113,8 +113,6 @@ public class QLDatSach extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_4 = new javax.swing.JTable();
         btn_detail = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -190,7 +188,7 @@ public class QLDatSach extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_huy1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -235,7 +233,7 @@ public class QLDatSach extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_huy2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -272,7 +270,7 @@ public class QLDatSach extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -304,7 +302,7 @@ public class QLDatSach extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -349,7 +347,7 @@ public class QLDatSach extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_detail)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -364,14 +362,6 @@ public class QLDatSach extends javax.swing.JFrame {
         keyword = txt_timKiem.getText();
         loadTable0();
     }//GEN-LAST:event_btn_searchActionPerformed
-
-    private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
-        // TODO add your handling code here:
-        rowIndex = tbl_dangdat0.getSelectedRow();
-        int matuasach = (int) tbl_dangdat0.getValueAt(rowIndex, 2);
-        new UpdateSach(new TuaSachDAO().selectById(matuasach), new Sach_TacGiaDAO().selectTacgia(matuasach),
-                new QuyenSachDAO().soSachDocTaiCho(matuasach)).setVisible(true);
-    }//GEN-LAST:event_btn_detailActionPerformed
 
     private void btn_huy1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huy1ActionPerformed
         // TODO add your handling code here:
@@ -390,40 +380,14 @@ public class QLDatSach extends javax.swing.JFrame {
         loadTable1();
     }//GEN-LAST:event_btn_huy2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLDatSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLDatSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLDatSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLDatSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btn_detailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detailActionPerformed
+        // TODO add your handling code here:
+        rowIndex = tbl_dangdat0.getSelectedRow();
+        int matuasach = (int) tbl_dangdat0.getValueAt(rowIndex, 2);
+        new UpdateSach(new TuaSachDAO().selectById(matuasach), new Sach_TacGiaDAO().selectTacgia(matuasach),
+                new QuyenSachDAO().soSachDocTaiCho(matuasach)).setVisible(true);
+    }//GEN-LAST:event_btn_detailActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QLDatSach().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_detail;
@@ -451,13 +415,12 @@ public class QLDatSach extends javax.swing.JFrame {
 
     private void init() {
         LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
-        if(LoginHelper.quyenQuanTri()){
+        if (LoginHelper.quyenQuanTri()) {
             mand = "";
-        }
-        else{
+        } else {
             mand = LoginHelper.USER.getMaND();
         }
-        
+
         tbl_dangdat0.setModel(tblModel0);
         tbl_henngay1.setModel(tblModel1);
         tbl_23.setModel(tblModel23);
@@ -480,7 +443,7 @@ public class QLDatSach extends javax.swing.JFrame {
         }
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel0.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2)});
+                tblModel0.addRow(new Object[]{x.get(5), x.get(6), x.get(0), x.get(1), x.get(2)});
             }
 
         }
@@ -499,7 +462,7 @@ public class QLDatSach extends javax.swing.JFrame {
 //                Date date = (Date) x.get(3);
 //                if(date.before(EzHelper.now()))
 //                    System.out.println(date);
-                tblModel1.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel1.addRow(new Object[]{x.get(5), x.get(6), x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }
@@ -515,7 +478,7 @@ public class QLDatSach extends javax.swing.JFrame {
 
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel23.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel23.addRow(new Object[]{x.get(5), x.get(6), x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }
@@ -531,7 +494,7 @@ public class QLDatSach extends javax.swing.JFrame {
 
         if (!lst.isEmpty()) {
             for (List<Object> x : lst) {
-                tblModel4.addRow(new Object[]{x.get(5),x.get(6),x.get(0), x.get(1), x.get(2), x.get(3)});
+                tblModel4.addRow(new Object[]{x.get(5), x.get(6), x.get(0), x.get(1), x.get(2), x.get(3)});
             }
 
         }

@@ -5,6 +5,8 @@
  */
 package com.xpoly.ui;
 
+import QLPhieuTra.DanhSachPhieuTraJInternalFrame;
+import QLPhieuTra.ThemPhieuTraJInternalFrame;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.LSGD.QLLichSuGiaoDichJInternalFrame;
@@ -17,6 +19,9 @@ import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.helper.MyTask;
 import com.xpoly.model.NguoiDung;
+import com.xpoly.ui.PhieuMuon.PhieuMuonDangMuonJInternalFrame;
+import com.xpoly.ui.PhieuMuon.PhieuMuonHoanThanhJInternalFrame;
+import com.xpoly.ui.QLSach.QLDatSachJInternalFrame;
 import com.xpoly.ui.QLSach.QLSachLuuTruJInternalFrame;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
@@ -87,7 +92,12 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
         MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích", null);
-        MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách", null);
+        MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách",new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLDatSachJInternalFrame());
+            }
+        });
 
 //        // create submenu bandoc
         MenuItem menuBanDoc_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
@@ -136,18 +146,60 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new QLLichSuGiaoDichJInternalFrame());
             }
         });
+        
+        MenuItem menuPhieuTra_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new DanhSachPhieuTraJInternalFrame());
+            }
+        });
+        MenuItem menuPhieuTra_them = new MenuItem(iconItem, "Tạo phiếu trả", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new ThemPhieuTraJInternalFrame());
+            }
+        });
+        
+        MenuItem menuPhieuMuon_danhSachDangMuon = new MenuItem(iconItem, "Danh sách đang mượn", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new PhieuMuonDangMuonJInternalFrame());
+            }
+        });
+        
+        MenuItem menuPhieuMuon_danhSachHoanThanh = new MenuItem(iconItem, "Danh sách hoàn thành", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new PhieuMuonHoanThanhJInternalFrame());
+            }
+        }); 
+        MenuItem menuPhieuMuon_them = new MenuItem(iconItem, "Tạo phiếu mượn", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new ThemPhieuTraJInternalFrame());
+            }
+        });
+        
+        
 
         MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_luuTru, menuSach_uaThich, menuSach_datSach);
 
         MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả", null, menuTacGia_danhSach, menuTacGia_them);
         
+        MenuItem menuDanhMuc = new MenuItem(iconTacGia, "Danh mục",new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLDanhMucJInternalFrame());
+            }
+        });     
         
         MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan,
                                                                                 menuNguoiDung_LSGD
         );
-        MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null);
-        MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null);
-        addMenu(menuSach, menuTacGia, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
+        MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null, menuPhieuMuon_danhSachDangMuon,
+        menuPhieuMuon_danhSachHoanThanh, menuPhieuMuon_them);
+        MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null, menuPhieuTra_danhSach, menuPhieuTra_them);
+        addMenu(menuSach, menuTacGia, menuDanhMuc, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
     }
 
     private void addMenu(MenuItem... menu) {
