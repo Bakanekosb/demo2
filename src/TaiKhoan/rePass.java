@@ -168,14 +168,10 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
     NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
     private void btnsendMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsendMailActionPerformed
         // TODO add your handling code here:
-        String code = HelpSendEmail.randomString(8);
-        for (NguoiDung x : nguoidungDAO.selectAll()) {
-            if (x.getEmail().equalsIgnoreCase(txtEmail.getText())) {
-                HelpSendEmail.SendMail(txtEmail.getText(), "Lấy lại mật khẩu ! ", "Mã CODE của bạn là : " + code);
-                CODE = code;
-                txtCODE.setEnabled(true);
-            }
+        if(checkmail()){
+        DialogHelper.alert(this, "mail không tồn tại mời nhập lại email khác !");
         }
+        
         System.out.println(CODE);
     }//GEN-LAST:event_btnsendMailActionPerformed
 
@@ -316,7 +312,18 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
         }
         return sb;
     }
-
+public boolean checkmail (){
+    String code = HelpSendEmail.randomString(8);
+for (NguoiDung x : nguoidungDAO.selectAll()) {
+            if (x.getEmail().equalsIgnoreCase(txtEmail.getText())) {
+                HelpSendEmail.SendMail(txtEmail.getText(), "Lấy lại mật khẩu ! ", "Mã CODE của bạn là : " + code);
+                CODE = code;
+                txtCODE.setEnabled(true);
+                return false;
+            }
+        }
+        return true;
+}
     @Override
     public NguoiDung getModel() {
         if (validateForm() != null) {

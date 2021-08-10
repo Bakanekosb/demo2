@@ -94,7 +94,7 @@ public class DangNhap extends javax.swing.JFrame {
         });
         getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\anh\\thuvien.jpg")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaiKhoan/thuvien.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 360));
 

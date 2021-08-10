@@ -9,10 +9,9 @@
             <file>file:/F:/QUANG%20FPL/DUAN%201/QL%20thu%20vien/XPoly/demo2/src/com/xpoly/QLnhansu/QLNhansu.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/QLnguoidung/QLnguoidung.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/EzHelper.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/DAO/NguoiDungDAO.java</file>
-            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/DangNhap.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/QLnhansu/PDF.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/QLnhansu/NapTien.java</file>
+            <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/helper/LoginHelper.java</file>
             <file>file:/C:/Users/Admin/Desktop/demo2/src/com/xpoly/ui/MainJFrame.java</file>
         </group>
     </open-files>
