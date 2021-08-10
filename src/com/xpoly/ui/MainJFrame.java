@@ -13,6 +13,8 @@ import com.xpoly.LSGD.QLLichSuGiaoDichJInternalFrame;
 import com.xpoly.QLnhansu.QLNhanVienJInternalFrame;
 import com.xpoly.QLnhansu.QLNhansu;
 import com.xpoly.QLnhansu.ThemNhanVienJInternalFrame;
+import com.xpoly.TaiKhoan.DoiMatKhau;
+import com.xpoly.TaiKhoan.QLTaiKhoanJInternalFrame;
 import com.xpoly.addTacGia.QLTacGia;
 import com.xpoly.addTacGia.QLTacGiaJInternalFrame;
 import com.xpoly.helper.DialogHelper;
@@ -127,6 +129,21 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
         
+        MenuItem menuTaiKhoan = new MenuItem(iconItem, "Tài khoản", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLTaiKhoanJInternalFrame());
+            }
+        });
+        MenuItem menuDoiMatKhau = new MenuItem(iconItem, "Đổi mật khẩu", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new DoiMatKhau().setVisible(true);
+            }
+        });
+        
+        
+        
         //        // create submenu tacgia
         MenuItem menuTacGia_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
             @Override
@@ -139,7 +156,7 @@ public class MainJFrame extends javax.swing.JFrame {
 //         //create submenu NguoiDung
         MenuItem menuNguoiDung_banDoc = new MenuItem(iconSubMenu, "Bạn đọc", null, menuBanDoc_danhSach, menuBanDoc_them);
         MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", null, menuNhanVien_danhSach, menuNhanVien_them);
-        MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null);
+        MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null, menuTaiKhoan, menuDoiMatKhau);
         MenuItem menuNguoiDung_LSGD = new MenuItem(iconSubMenu, "Lịch sử giao dịch", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -26,6 +26,12 @@ public class PhieuMuonCT_DAO implements IDAO<PMCT, String> {
         JdbcHelper.executeUpdate(sql, model.getMaPhieuMuon(), model.getMaQuyenSach(), 0,
                  0, model.getGhiChu());
     }
+    
+    public void insert(int maPhieuMuon, PMCT model) {
+        String sql = "insert into pmct (maphieumuon ,maquyensach ,trangthai ,solangiahan ,ghichu ) values (?,?,?,?,?)";
+        JdbcHelper.executeUpdate(sql, maPhieuMuon, model.getMaQuyenSach(), 0,
+                 0, model.getGhiChu());
+    }
 
     @Override
     public void update(PMCT model) {

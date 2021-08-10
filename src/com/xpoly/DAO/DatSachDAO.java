@@ -44,7 +44,7 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
             JdbcHelper.executeUpdate(sql, trangthai, ngayHen, madatsach);
         }
     }
-    
+
     public void updateTrangThaiDatSach2(int trangthai, int madatsach, Date ngayHen) {
         if (trangthai != 1) {
             String update_sql = "update Datsach set trangthai = ? where madatsach = ? ";
@@ -70,10 +70,10 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     public List<DatSach> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public DatSach selectDatSachDangChoDenLay(String mand, int matuasach) {
         String sql = "select * from datsach where mand = ? and matuasach = ? and trangthai = 1";
-        List<DatSach> lst = selectBySql(sql, mand,matuasach);
+        List<DatSach> lst = selectBySql(sql, mand, matuasach);
         return lst.isEmpty() ? null : lst.get(0);
     }
 
@@ -93,9 +93,9 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
                 Date d = rs.getDate("ngayhenlaysach");
 
                 if (d != null && d.before(EzHelper.now()) && rs.getInt(5) != 3) {
-                    updateTrangThaiDatSach(3, rs.getInt("madatsach"),EzHelper.now());
+                    updateTrangThaiDatSach(3, rs.getInt("madatsach"), EzHelper.now());
                 } else {
-                    
+
                     temp.add(rs.getInt(3));
                     temp.add(rs.getString("tentuasach"));
                     temp.add(rs.getDate("ngaydat"));
@@ -122,17 +122,18 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
         String sql = "{call sp_danhSachDenLuotMuon (?,?)}";
         return selectBySql(sql, matuasach, soluongsach);
     }
-    
-     public boolean sachDuocBanDocDatTruocKhong(int matuasach, String mand){
+
+    public boolean sachDuocBanDocDatTruocKhong(int matuasach, String mand) {
+
         boolean sachDuocBanDocDatTruoc = false;
         try {
             ResultSet rs = null;
             try {
                 String sql = "{call SP_coDungNguoiDatSachKhong (?,?)}";
-                rs = JdbcHelper.executeQuery(sql, matuasach,mand);
+                rs = JdbcHelper.executeQuery(sql, matuasach, mand);
                 while (rs.next()) {
-                    System.out.println(rs.getInt(1));
-                    sachDuocBanDocDatTruoc = (rs.getInt(1) == 1);
+                    System.out.println(rs.getInt("TrueOrFalse"));
+                    sachDuocBanDocDatTruoc = true;
                 }
             } finally {
                 rs.getStatement().getConnection().close();
@@ -162,8 +163,6 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
         }
         return lst;
     }
-    
-   
 
     @Override
     public DatSach readFromResultSet(ResultSet rs) throws SQLException {

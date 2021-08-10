@@ -68,6 +68,26 @@ public class PhieuMuon_DAO implements IDAO<PhieuMuon, Integer>{
         return soSachDangMuon;
     }    
     
+    public boolean tuaSachDangDuocMuon(int matuaSach, String mand){
+       int tuaSachDangDuocMuon = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "{call SP_tuaSachDangMuon (?, ?)}";
+                rs = JdbcHelper.executeQuery(sql, matuaSach, mand);
+                while (rs.next()) {
+                    tuaSachDangDuocMuon = rs.getInt(1);
+                    System.out.println("count = " + tuaSachDangDuocMuon);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return tuaSachDangDuocMuon > 0;
+    } 
+    
     public int soSachChuaTraTrongPhieuMuon(int maphieumuon){
        int soSachChuaTraTrongPhieuMuon = 0;
         try {

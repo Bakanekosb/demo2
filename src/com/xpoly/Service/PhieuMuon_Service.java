@@ -63,6 +63,12 @@ public class PhieuMuon_Service {
     }
 
     public int kiemTraQuyenSach(int maquyensach, String mand) {
+        int matuasach = quyenSachDAO.selectById(maquyensach).getMaTuaSach();
+        System.out.println("dsfsdfs" + !phieuMuonDAO.tuaSachDangDuocMuon(matuasach, mand));
+        if (phieuMuonDAO.tuaSachDangDuocMuon(matuasach, mand)) {
+            return -1;
+        }
+
         if (quyenSachDAO.selectSachSanSangChoMuonByQuyenSach(maquyensach)) {
             return 1; // mượn được
         }
@@ -72,6 +78,7 @@ public class PhieuMuon_Service {
             return 1;
         }
 
+        // tựa sách đang không được mượn
         return 0;
     }
 

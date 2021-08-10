@@ -12,8 +12,12 @@ import com.xpoly.Service.PhieuMuon_Service;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.model.NguoiDung;
+import com.xpoly.model.PMCT;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.TuaSach;
+import com.xpoly.ui.QLSach.UpdateSach;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,9 +41,13 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
 
     PhieuMuon_Service service = new PhieuMuon_Service();
     String maBanDoc = "";
+    int maQuyenSach;
     NguoiDung nd;
     QuyenSach qSach;
     TuaSach tSach;
+    PMCT pmct;
+    int rowIndex = 0;
+    List<PMCT> lst_pmct = new ArrayList<>();
 
     int soSachDuocMuon = 0;
 
@@ -68,7 +76,6 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btn_muon = new javax.swing.JButton();
         lbl_cover = new javax.swing.JLabel();
-        btn_chitiet = new javax.swing.JButton();
         lbl_maTuaSach = new javax.swing.JLabel();
         lbl_tenSach = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -83,6 +90,8 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         txt_ghiChu = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txt_timKiem.setEnabled(false);
 
         btn_timkiem.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btn_timkiem.setText("Tìm kiếm");
@@ -127,6 +136,11 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_ctpm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_ctpmMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_ctpm);
 
         btn_xoa1.setText("Xoá quyển sách");
@@ -172,8 +186,11 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin sách"));
 
         btn_muon.setText("Mượn");
-
-        btn_chitiet.setText("Chi tiết");
+        btn_muon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_muonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Mã tựa sách:");
 
@@ -187,17 +204,15 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                     .addComponent(lbl_tenSach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_chitiet)
-                        .addGap(18, 18, 18)
                         .addComponent(btn_muon))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lbl_maTuaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -209,12 +224,10 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(lbl_tenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_muon)
-                    .addComponent(btn_chitiet))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(btn_muon)
                 .addContainerGap())
         );
 
@@ -292,9 +305,7 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn_save)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btn_save)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -307,6 +318,8 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
 
     private void btn_xoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoa1ActionPerformed
         // TODO add your handling code here:
+        tblModel.removeRow(rowIndex);
+        lst_pmct.remove(rowIndex);
     }//GEN-LAST:event_btn_xoa1ActionPerformed
 
     private void btn_xoaHetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaHetActionPerformed
@@ -323,8 +336,10 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
             if (soSachDuocMuon <= 0) {
                 DialogHelper.alert(jPanel1, "Người dùng cần trả sách trước khi mượn tiếp");
                 btn_timkiem.setEnabled(false);
+                txt_timKiem.setEnabled(false);
             } else {
                 btn_timkiem.setEnabled(true);
+                txt_timKiem.setEnabled(true);
             }
             lbl_soSachDuocMuon.setText(soSachDuocMuon + "");
         }
@@ -333,9 +348,14 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
         // TODO add your handling code here:
         try {
-            int maQuyenSach = Integer.parseInt(txt_timKiem.getText());
+            maQuyenSach = Integer.parseInt(txt_timKiem.getText());
             qSach = new QuyenSachDAO().selectById(maQuyenSach);
             tSach = new TuaSachDAO().selectById(qSach.getMaTuaSach());
+            
+            if(service.kiemTraQuyenSach(maQuyenSach, maBanDoc) == -1){
+                DialogHelper.alert(jPanel1, "Bạn đang mượn tựa sách này!");
+                return;
+            }
             
             if(service.kiemTraQuyenSach(maQuyenSach, maBanDoc) == 0){
                 DialogHelper.alert(jPanel1, "Bạn không thể mượn được quyển sách này!");
@@ -343,12 +363,39 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
             }
             lbl_maTuaSach.setText(tSach.getMaTuaSach() +"");
             lbl_tenSach.setText(tSach.getTenTuaSach());
-            lbl_cover.setIcon(EzHelper.readImg(tSach.getAnh()));
+//            lbl_cover.setIcon(EzHelper.readImg(tSach.getAnh()));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }//GEN-LAST:event_btn_timkiemActionPerformed
+
+    private void btn_muonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_muonActionPerformed
+        // TODO add your handling code here:
+        pmct = new PMCT();
+        pmct.setMaQuyenSach(maQuyenSach);
+        pmct.setGhiChu(txt_ghiChu.getText());
+        pmct.setTrangThai(0);
+        pmct.setSoLanGiaHan(0);
+        pmct.setMaPhieuMuon(0);
+        QuyenSachDAO qSDAO =  new QuyenSachDAO();
+        if(!lst_pmct.isEmpty()){
+            for (PMCT x : lst_pmct) {
+                if(qSDAO.selectById(x.getMaQuyenSach()).getMaTuaSach() == 
+                        qSDAO.selectById(pmct.getMaQuyenSach()).getMaTuaSach()){
+                    DialogHelper.alert(jPanel1, "Tựa sách đã trong danh sách mượn");
+                    return;
+                }
+            }
+        }
+        lst_pmct.add(pmct);
+        tblModel.addRow(new Object[]{maQuyenSach, tSach.getTenTuaSach(), pmct.getGhiChu()});
+    }//GEN-LAST:event_btn_muonActionPerformed
+
+    private void tbl_ctpmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ctpmMouseClicked
+        // TODO add your handling code here:
+        rowIndex = tbl_ctpm.getSelectedRow();        
+    }//GEN-LAST:event_tbl_ctpmMouseClicked
 
     /**
      * @param args the command line arguments
@@ -386,7 +433,6 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_chitiet;
     private javax.swing.JButton btn_muon;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_timkiem;
