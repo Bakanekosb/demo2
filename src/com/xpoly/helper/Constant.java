@@ -13,5 +13,5 @@ public class Constant {
 
     public static final int SO_SACH_MUON_TOI_DA = 5;
     public static final int SO_NGAY_MUON_TOI_DA = 10;
-    public static final int SO_LAN_GIA_HAN_TOI_DA = 10;
+    public static final int SO_LAN_GIA_HAN_TOI_DA = 2;
 }

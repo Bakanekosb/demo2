@@ -9,6 +9,8 @@ import com.xpoly.helper.JdbcHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JRootPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +29,10 @@ public class PhieuMuonHoanThanhJInternalFrame extends javax.swing.JInternalFrame
      
     public PhieuMuonHoanThanhJInternalFrame() {
         initComponents();
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
         defaultTableModelA.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Bạn Đọc","Tên Bạn Đọc", "Ngày Mượn", "Mã Người Tạo Phiếu","Tên Người Tạo Phiếu"});
         defaultTableModelB.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Quyển Sách", "Tên Tựa Sách", "Ngày Gia Hạn", "Số Lần Gia Hạn","Ghi Chú","Vị Trí Quyển Sách"});
         tblA.setModel(defaultTableModelA);

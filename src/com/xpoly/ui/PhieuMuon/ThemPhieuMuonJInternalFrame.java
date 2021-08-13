@@ -20,16 +20,18 @@ import com.xpoly.model.TuaSach;
 import com.xpoly.ui.QLSach.UpdateSach;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JRootPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Dell
  */
-public class ThemPhieuMuon extends javax.swing.JFrame {
+public class ThemPhieuMuonJInternalFrame extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ThemPhieuMuon
+     * Creates new form ThemPhieuMuonJInternalFrame
      */
     String[] columns = {"Mã quyển sách", "Tên tựa sách", "Ghi chú"};
     DefaultTableModel tblModel = new DefaultTableModel(columns, 0) {
@@ -53,7 +55,7 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
 
     int soSachDuocMuon = 0;
 
-    public ThemPhieuMuon() {
+    public ThemPhieuMuonJInternalFrame() {
         initComponents();
         init();
     }
@@ -76,7 +78,6 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         btn_xoa1 = new javax.swing.JButton();
         btn_xoaHet = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btn_muon = new javax.swing.JButton();
         lbl_cover = new javax.swing.JLabel();
         lbl_maTuaSach = new javax.swing.JLabel();
         lbl_tenSach = new javax.swing.JLabel();
@@ -91,8 +92,7 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         btn_doiBanDoc = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_ghiChu = new javax.swing.JTextArea();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        btn_muon = new javax.swing.JButton();
 
         txt_timKiem.setEnabled(false);
         txt_timKiem.addActionListener(new java.awt.event.ActionListener() {
@@ -195,14 +195,6 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin sách"));
 
-        btn_muon.setText("Mượn");
-        btn_muon.setEnabled(false);
-        btn_muon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_muonActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Mã tựa sách:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -214,9 +206,6 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_cover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_tenSach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_muon))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
@@ -233,9 +222,7 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lbl_tenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lbl_cover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_muon)
+                .addComponent(lbl_cover, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -270,14 +257,22 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         txt_ghiChu.setRows(5);
         jScrollPane1.setViewportView(txt_ghiChu);
 
+        btn_muon.setText("Mượn");
+        btn_muon.setEnabled(false);
+        btn_muon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_muonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,16 +287,20 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
                             .addComponent(lbl_hoten, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btn_muon)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(306, 306, 306)
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
@@ -312,178 +311,37 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_maBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btn_doiBanDoc))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_hoten, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_soSachDuocMuon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_maBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(btn_doiBanDoc))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbl_hoten, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbl_soSachDuocMuon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_save)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23))))))
+                    .addComponent(btn_save)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_muon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_xoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoa1ActionPerformed
-        // TODO add your handling code here:
-        try {
-            tblModel.removeRow(rowIndex);
-            lst_pmct.remove(rowIndex);
-            setBtnEnabled();
-            soSachDuocMuon(1);
-        } catch (Exception e) {
-            DialogHelper.alert(jPanel1, "Cần chọn thông tin cần xóa");
-        }
-    }//GEN-LAST:event_btn_xoa1ActionPerformed
-
-    private void btn_xoaHetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaHetActionPerformed
-        // TODO add your handling code here:
-        if (!lst_pmct.isEmpty()) {
-            soSachDuocMuon(lst_pmct.size());
-            tblModel.setRowCount(0);
-            lst_pmct = new ArrayList<>();
-            setBtnEnabled();
-        }
-    }//GEN-LAST:event_btn_xoaHetActionPerformed
-
-    private void txt_maBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maBanDocActionPerformed
-        // TODO add your handling code here:
-        maBanDoc = txt_maBanDoc.getText();
-        nd = new NguoiDungDAO().selectById(maBanDoc);
-        if (nd != null) {
-            lbl_hoten.setText(nd.getHoTen());
-            soSachDuocMuon = service.soSachMuonDuoc(maBanDoc);
-            if (soSachDuocMuon <= 0) {
-                DialogHelper.alert(jPanel1, "Người dùng cần trả sách trước khi mượn tiếp");
-                btn_timkiem.setEnabled(false);
-                txt_timKiem.setEnabled(false);
-            } else {
-                btn_timkiem.setEnabled(true);
-                txt_timKiem.setEnabled(true);
-            }
-            lbl_soSachDuocMuon.setText(soSachDuocMuon + "");
-            txt_maBanDoc.setEnabled(false);
-        }
-    }//GEN-LAST:event_txt_maBanDocActionPerformed
-
-    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-        // TODO add your handling code here:
-        try {
-            maQuyenSach = Integer.parseInt(txt_timKiem.getText());
-            qSach = new QuyenSachDAO().selectById(maQuyenSach);
-            if (qSach == null) {
-                return;
-            }
-            tSach = new TuaSachDAO().selectById(qSach.getMaTuaSach());
-
-            if (service.kiemTraQuyenSach(maQuyenSach, maBanDoc) == -1) {
-                DialogHelper.alert(jPanel1, "Bạn đang mượn tựa sách này!");
-                return;
-            }
-
-            if (service.kiemTraQuyenSach(maQuyenSach, maBanDoc) == 0) {
-                DialogHelper.alert(jPanel1, "Bạn không thể mượn được quyển sách này!");
-                return;
-            }
-            lbl_maTuaSach.setText(tSach.getMaTuaSach() + "");
-            lbl_tenSach.setText(tSach.getTenTuaSach());
-            setBtnEnabled();
-//            lbl_cover.setIcon(EzHelper.readImg(tSach.getAnh()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }//GEN-LAST:event_btn_timkiemActionPerformed
-
-    private void btn_muonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_muonActionPerformed
-        // TODO add your handling code here:
-        pmct = new PMCT();
-        pmct.setMaQuyenSach(maQuyenSach);
-        pmct.setGhiChu(txt_ghiChu.getText());
-        pmct.setTrangThai(0);
-        pmct.setSoLanGiaHan(0);
-        pmct.setMaPhieuMuon(0);
-        QuyenSachDAO qSDAO = new QuyenSachDAO();
-        if (!lst_pmct.isEmpty()) {
-            for (PMCT x : lst_pmct) {
-                if (qSDAO.selectById(x.getMaQuyenSach()).getMaTuaSach()
-                        == qSDAO.selectById(pmct.getMaQuyenSach()).getMaTuaSach()) {
-                    DialogHelper.alert(jPanel1, "Tựa sách đã trong danh sách mượn");
-                    return;
-                }
-            }
-        }
-        lst_pmct.add(pmct);
-        tblModel.addRow(new Object[]{maQuyenSach, tSach.getTenTuaSach(), pmct.getGhiChu()});
-        tbl_ctpm.setRowSelectionInterval(rowIndex, rowIndex);
-        soSachDuocMuon(-1);
-        setBtnEnabled();
-    }//GEN-LAST:event_btn_muonActionPerformed
-
-    private void tbl_ctpmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ctpmMouseClicked
-        // TODO add your handling code here:
-        rowIndex = tbl_ctpm.getSelectedRow();
-    }//GEN-LAST:event_tbl_ctpmMouseClicked
-
-    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-        // TODO add your handling code here:
-        try {
-            PhieuMuon phieuMuon = new PhieuMuon();
-            phieuMuon.setMaBanDoc(maBanDoc);
-            phieuMuon.setMaPhieuMuon(0);
-            phieuMuon.setNgayMuon(EzHelper.now());
-            phieuMuon.setNguoiTaoPhieu(LoginHelper.USER.getMaND());
-            service.themPhieuMuon(phieuMuon);
-            service.themPhieuMuonCT(lst_pmct);
-            DialogHelper.alert(jPanel1, "Phiếu được tạo thành công");
-            clearAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btn_saveActionPerformed
-
-    private void btn_doiBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_doiBanDocActionPerformed
-        // TODO add your handling code here:
-        if (txt_maBanDoc.getText().isEmpty()) {
-            return;
-        }
-        if (!lst_pmct.isEmpty()) {
-
-            boolean ans = DialogHelper.confirm(jPanel1, "Phiếu mượn sẽ bị xóa hết, bạn chắc chắn muốn tiếp tục không?");
-            if (ans) {
-                clearAll();
-                btn_xoaHetActionPerformed(evt);
-                setBtnEnabled();
-            }
-        }
-        txt_maBanDoc.setEnabled(true);
-    }//GEN-LAST:event_btn_doiBanDocActionPerformed
 
     private void txt_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timKiemActionPerformed
         // TODO add your handling code here:
@@ -513,40 +371,140 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_timKiemActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
+        // TODO add your handling code here:
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            maQuyenSach = Integer.parseInt(txt_timKiem.getText());
+            qSach = new QuyenSachDAO().selectById(maQuyenSach);
+            if (qSach == null) {
+                return;
+            }
+            tSach = new TuaSachDAO().selectById(qSach.getMaTuaSach());
+
+            if (service.kiemTraQuyenSach(maQuyenSach, maBanDoc) == -1) {
+                DialogHelper.alert(jPanel1, "Bạn đang mượn tựa sách này!");
+                return;
+            }
+
+            if (service.kiemTraQuyenSach(maQuyenSach, maBanDoc) == 0) {
+                DialogHelper.alert(jPanel1, "Bạn không thể mượn được quyển sách này!");
+                return;
+            }
+            lbl_maTuaSach.setText(tSach.getMaTuaSach() + "");
+            lbl_tenSach.setText(tSach.getTenTuaSach());
+            setBtnEnabled();
+            //            lbl_cover.setIcon(EzHelper.readImg(tSach.getAnh()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_timkiemActionPerformed
+
+    private void tbl_ctpmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ctpmMouseClicked
+        // TODO add your handling code here:
+        rowIndex = tbl_ctpm.getSelectedRow();
+    }//GEN-LAST:event_tbl_ctpmMouseClicked
+
+    private void btn_xoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoa1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            tblModel.removeRow(rowIndex);
+            lst_pmct.remove(rowIndex);
+            setBtnEnabled();
+            soSachDuocMuon(1);
+        } catch (Exception e) {
+            DialogHelper.alert(jPanel1, "Cần chọn thông tin cần xóa");
+        }
+    }//GEN-LAST:event_btn_xoa1ActionPerformed
+
+    private void btn_xoaHetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaHetActionPerformed
+        // TODO add your handling code here:
+        if (!lst_pmct.isEmpty()) {
+            soSachDuocMuon(lst_pmct.size());
+            tblModel.setRowCount(0);
+            lst_pmct = new ArrayList<>();
+            setBtnEnabled();
+        }
+    }//GEN-LAST:event_btn_xoaHetActionPerformed
+
+    private void btn_muonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_muonActionPerformed
+        // TODO add your handling code here:
+        pmct = new PMCT();
+        pmct.setMaQuyenSach(maQuyenSach);
+        pmct.setGhiChu(txt_ghiChu.getText());
+        pmct.setTrangThai(0);
+        pmct.setSoLanGiaHan(0);
+        pmct.setMaPhieuMuon(0);
+        QuyenSachDAO qSDAO = new QuyenSachDAO();
+        if (!lst_pmct.isEmpty()) {
+            for (PMCT x : lst_pmct) {
+                if (qSDAO.selectById(x.getMaQuyenSach()).getMaTuaSach()
+                        == qSDAO.selectById(pmct.getMaQuyenSach()).getMaTuaSach()) {
+                    DialogHelper.alert(jPanel1, "Tựa sách đã trong danh sách mượn");
+                    return;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ThemPhieuMuon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        lst_pmct.add(pmct);
+        tblModel.addRow(new Object[]{maQuyenSach, tSach.getTenTuaSach(), pmct.getGhiChu()});
+        tbl_ctpm.setRowSelectionInterval(rowIndex, rowIndex);
+        soSachDuocMuon(-1);
+        setBtnEnabled();
+    }//GEN-LAST:event_btn_muonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ThemPhieuMuon().setVisible(true);
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        // TODO add your handling code here:
+        try {
+            PhieuMuon phieuMuon = new PhieuMuon();
+            phieuMuon.setMaBanDoc(maBanDoc);
+            phieuMuon.setMaPhieuMuon(0);
+            phieuMuon.setNgayMuon(EzHelper.now());
+            phieuMuon.setNguoiTaoPhieu(LoginHelper.USER.getMaND());
+            service.themPhieuMuon(phieuMuon);
+            service.themPhieuMuonCT(lst_pmct);
+            DialogHelper.alert(jPanel1, "Phiếu được tạo thành công");
+            clearAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void txt_maBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maBanDocActionPerformed
+        // TODO add your handling code here:
+        maBanDoc = txt_maBanDoc.getText();
+        nd = new NguoiDungDAO().selectById(maBanDoc);
+        if (nd != null) {
+            lbl_hoten.setText(nd.getHoTen());
+            soSachDuocMuon = service.soSachMuonDuoc(maBanDoc);
+            if (soSachDuocMuon <= 0) {
+                DialogHelper.alert(jPanel1, "Người dùng cần trả sách trước khi mượn tiếp");
+                btn_timkiem.setEnabled(false);
+                txt_timKiem.setEnabled(false);
+            } else {
+                btn_timkiem.setEnabled(true);
+                txt_timKiem.setEnabled(true);
             }
-        });
-    }
+            lbl_soSachDuocMuon.setText(soSachDuocMuon + "");
+            txt_maBanDoc.setEnabled(false);
+        }
+    }//GEN-LAST:event_txt_maBanDocActionPerformed
+
+    private void btn_doiBanDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_doiBanDocActionPerformed
+        // TODO add your handling code here:
+        if (txt_maBanDoc.getText().isEmpty()) {
+            return;
+        }
+        if (!lst_pmct.isEmpty()) {
+
+            boolean ans = DialogHelper.confirm(jPanel1, "Phiếu mượn sẽ bị xóa hết, bạn chắc chắn muốn tiếp tục không?");
+            if (ans) {
+                clearAll();
+                btn_xoaHetActionPerformed(evt);
+                setBtnEnabled();
+            }
+        }
+        txt_maBanDoc.setEnabled(true);
+    }//GEN-LAST:event_btn_doiBanDocActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_doiBanDoc;
@@ -574,9 +532,11 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
     private javax.swing.JTextField txt_maBanDoc;
     private javax.swing.JTextField txt_timKiem;
     // End of variables declaration//GEN-END:variables
-
-    private void init() {
-
+ private void init() {
+putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
         tbl_ctpm.setModel(tblModel);
         LoginHelper.USER = new NguoiDung("ND004");
     }
@@ -596,6 +556,8 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
         lbl_tenSach.setText("");
         txt_ghiChu.setText("");
         btn_timkiem.setEnabled(false);
+        lst_pmct = new ArrayList<>();
+        tblModel.setRowCount(0);
     }
 
     void soSachDuocMuon(int tangGiam) {

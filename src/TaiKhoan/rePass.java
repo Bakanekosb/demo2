@@ -10,6 +10,7 @@ import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.HelpSendEmail;
 import com.xpoly.model.NguoiDung;
+import java.util.Arrays;
 
 /**
  *
@@ -41,7 +42,6 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
         jLabel1 = new javax.swing.JLabel();
         txtCODE = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNewPass = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -49,6 +49,7 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
         btnExit = new javax.swing.JButton();
         btnsendMail = new javax.swing.JButton();
         btncheckCODE = new javax.swing.JButton();
+        txtNewPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,7 +107,7 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                                 .addGap(243, 243, 243)))
                         .addGap(153, 153, 153))
                     .addGroup(layout.createSequentialGroup()
@@ -115,15 +116,14 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(97, 97, 97)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtCODE, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnchangpass)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnExit))
-                                    .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtCODE, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                                        .addComponent(txtNewPass)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnchangpass)
+                                    .addGap(144, 144, 144)
+                                    .addComponent(btnExit)))
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -147,10 +147,10 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btncheckCODE))
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(txtNewPass))
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnchangpass)
                     .addComponent(btnExit))
@@ -168,10 +168,10 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
     NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
     private void btnsendMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsendMailActionPerformed
         // TODO add your handling code here:
-        if(checkmail()){
-        DialogHelper.alert(this, "mail không tồn tại mời nhập lại email khác !");
+        if (checkmail()) {
+            DialogHelper.alert(this, "mail không tồn tại mời nhập lại email khác !");
         }
-        
+
         System.out.println(CODE);
     }//GEN-LAST:event_btnsendMailActionPerformed
 
@@ -246,7 +246,7 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txtCODE;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtNewPass;
+    private javax.swing.JPasswordField txtNewPass;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -269,11 +269,11 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
     @Override
     public void update() {
         Email = txtEmail.getText();
-        paSs = txtNewPass.getText();
-        
+        paSs = new String(txtNewPass.getPassword());
+
         try {
             if (nd != null) {
-                nguoidungDAO.updateMatKhau(paSs,Email);
+                nguoidungDAO.updateMatKhau(Email, paSs);
                 DialogHelper.alert(this, "Thay đổi mật khẩu thành công !");
             }
 
@@ -312,9 +312,10 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
         }
         return sb;
     }
-public boolean checkmail (){
-    String code = HelpSendEmail.randomString(8);
-for (NguoiDung x : nguoidungDAO.selectAll()) {
+
+    public boolean checkmail() {
+        String code = HelpSendEmail.randomString(8);
+        for (NguoiDung x : nguoidungDAO.selectAll()) {
             if (x.getEmail().equalsIgnoreCase(txtEmail.getText())) {
                 HelpSendEmail.SendMail(txtEmail.getText(), "Lấy lại mật khẩu ! ", "Mã CODE của bạn là : " + code);
                 CODE = code;
@@ -323,7 +324,8 @@ for (NguoiDung x : nguoidungDAO.selectAll()) {
             }
         }
         return true;
-}
+    }
+
     @Override
     public NguoiDung getModel() {
         if (validateForm() != null) {
@@ -332,7 +334,8 @@ for (NguoiDung x : nguoidungDAO.selectAll()) {
         }
         Email = txtEmail.getText();
         String code = txtCODE.getText();
-         paSs = txtNewPass.getText();
+        paSs = new String(txtNewPass.getPassword());
+        System.out.println(paSs);
         return new NguoiDung(paSs, Email);
     }
 

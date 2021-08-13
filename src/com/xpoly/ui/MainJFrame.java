@@ -23,12 +23,14 @@ import com.xpoly.helper.MyTask;
 import com.xpoly.model.NguoiDung;
 import com.xpoly.ui.PhieuMuon.PhieuMuonDangMuonJInternalFrame;
 import com.xpoly.ui.PhieuMuon.PhieuMuonHoanThanhJInternalFrame;
+import com.xpoly.ui.PhieuMuon.ThemPhieuMuonJInternalFrame;
 import com.xpoly.ui.QLSach.QLDatSachJInternalFrame;
 import com.xpoly.ui.QLSach.QLSachLuuTruJInternalFrame;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
 import com.xpoly.ui.QLnguoidung.QLBanDocJInternalFrame;
 import com.xpoly.ui.QLnguoidung.ThemBanDocJInternalFrame;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -52,7 +54,6 @@ public class MainJFrame extends javax.swing.JFrame {
      * Creates new form MainJFrame
      */
     List<JInternalFrame> lst_internalFrame = new ArrayList<>();
-     
 
     public MainJFrame() {
         initComponents();
@@ -80,21 +81,26 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new QLTuaSachJInternalFrame());
             }
         });
-        MenuItem menuSach_them = new MenuItem(iconItem, "Thêm tựa sách",new ActionListener() {
+        MenuItem menuSach_them = new MenuItem(iconItem, "Thêm tựa sách", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new ThemSachJInternalFrame());
             }
         });
-        
-        MenuItem menuSach_luuTru = new MenuItem(iconItem, "Sách lưu trữ",new ActionListener() {
+
+        MenuItem menuSach_luuTru = new MenuItem(iconItem, "Sách lưu trữ", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new QLSachLuuTruJInternalFrame());
             }
         });
-        MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích", null);
-        MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách",new ActionListener() {
+        MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new QLDatSachJInternalFrame());
+            }
+        });
+        MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new QLDatSachJInternalFrame());
@@ -108,14 +114,15 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new QLBanDocJInternalFrame());
             }
         });
+
         MenuItem menuBanDoc_them = new MenuItem(iconItem, "Thêm bạn đọc", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new ThemBanDocJInternalFrame());
             }
         });
-        
-          // create submenu nhanvien
+
+        // create submenu nhanvien
         MenuItem menuNhanVien_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,7 +135,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new ThemNhanVienJInternalFrame());
             }
         });
-        
+
         MenuItem menuTaiKhoan = new MenuItem(iconItem, "Tài khoản", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -141,9 +148,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 new DoiMatKhau().setVisible(true);
             }
         });
-        
-        
-        
+
         //        // create submenu tacgia
         MenuItem menuTacGia_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
             @Override
@@ -156,6 +161,7 @@ public class MainJFrame extends javax.swing.JFrame {
 //         //create submenu NguoiDung
         MenuItem menuNguoiDung_banDoc = new MenuItem(iconSubMenu, "Bạn đọc", null, menuBanDoc_danhSach, menuBanDoc_them);
         MenuItem menuNguoiDung_nhanSu = new MenuItem(iconSubMenu, "Nhân sự", null, menuNhanVien_danhSach, menuNhanVien_them);
+
         MenuItem menuNguoiDung_taiKhoan = new MenuItem(iconSubMenu, "Tài khoản", null, menuTaiKhoan, menuDoiMatKhau);
         MenuItem menuNguoiDung_LSGD = new MenuItem(iconSubMenu, "Lịch sử giao dịch", new ActionListener() {
             @Override
@@ -163,7 +169,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new QLLichSuGiaoDichJInternalFrame());
             }
         });
-        
+
         MenuItem menuPhieuTra_danhSach = new MenuItem(iconItem, "Danh sách", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,53 +182,85 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new ThemPhieuTraJInternalFrame());
             }
         });
-        
+
         MenuItem menuPhieuMuon_danhSachDangMuon = new MenuItem(iconItem, "Danh sách đang mượn", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new PhieuMuonDangMuonJInternalFrame());
             }
         });
-        
+
         MenuItem menuPhieuMuon_danhSachHoanThanh = new MenuItem(iconItem, "Danh sách hoàn thành", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new PhieuMuonHoanThanhJInternalFrame());
             }
-        }); 
+        });
         MenuItem menuPhieuMuon_them = new MenuItem(iconItem, "Tạo phiếu mượn", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showChucNang(new ThemPhieuTraJInternalFrame());
+                showChucNang(new ThemPhieuMuonJInternalFrame());
             }
         });
-        
-        
-
-        MenuItem menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_luuTru, menuSach_uaThich, menuSach_datSach);
-
-        MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả", null, menuTacGia_danhSach, menuTacGia_them);
-        
-        MenuItem menuDanhMuc = new MenuItem(iconTacGia, "Danh mục",new ActionListener() {
+        MenuItem menuDanhMuc_danhSach = new MenuItem(iconItem, "Danh mục", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChucNang(new QLDanhMucJInternalFrame());
             }
-        });     
+        });
+
+        MenuItem menuSach ;
+        if (LoginHelper.quyenQuanTri()) {
+            menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_luuTru, menuSach_uaThich, menuSach_datSach);
+        } else {
+            menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_luuTru, menuSach_uaThich, menuSach_datSach
+            );
+        }
         
-        MenuItem menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan,
-                                                                                menuNguoiDung_LSGD
-        );
+        
+        MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả", null, menuTacGia_danhSach);
+        menuTacGia.setVisible(LoginHelper.quyenQuanTri());
+
+        MenuItem menuDanhMuc = new MenuItem(iconTacGia, "Danh mục", null, menuDanhMuc_danhSach);
+        menuDanhMuc.setVisible(LoginHelper.quyenQuanTri());
+
+        MenuItem menuNguoiDung;
+        if (LoginHelper.admin()) {
+            menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_nhanSu, menuNguoiDung_taiKhoan,
+                    menuNguoiDung_LSGD
+            );
+        } else if (LoginHelper.thuThu()) {
+            menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_banDoc, menuNguoiDung_taiKhoan,
+                    menuNguoiDung_LSGD
+            );
+        } else {
+            menuNguoiDung = new MenuItem(iconNguoiDung, "Người dùng", null, menuNguoiDung_taiKhoan,
+                    menuNguoiDung_LSGD
+            );
+        }
+
+//        menuNguoiDung.setVisible(LoginHelper.quyenQuanTri());
         MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null, menuPhieuMuon_danhSachDangMuon,
-        menuPhieuMuon_danhSachHoanThanh, menuPhieuMuon_them);
-        MenuItem menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null, menuPhieuTra_danhSach, menuPhieuTra_them);
+                menuPhieuMuon_danhSachHoanThanh, menuPhieuMuon_them);
+
+        MenuItem menuPhieuTra ;
+        if (LoginHelper.quyenQuanTri()) {
+            menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null, menuPhieuTra_danhSach, menuPhieuTra_them);
+        } else {
+            menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null, menuPhieuTra_danhSach);
+        }
+        
         addMenu(menuSach, menuTacGia, menuDanhMuc, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
+
     }
+
+    static ArrayList<MenuItem> allItem = new ArrayList<>();
 
     private void addMenu(MenuItem... menu) {
         for (int i = 0; i < menu.length; i++) {
             panel_menu.add(menu[i]);
             ArrayList<MenuItem> subMenu = menu[i].getSubMenu();
+            allItem.addAll(subMenu);
             for (MenuItem m : subMenu) {
                 addMenu(m);
             }
@@ -230,15 +268,17 @@ public class MainJFrame extends javax.swing.JFrame {
         panel_menu.revalidate();
     }
 
+    public static void resetColor() {
+        for (int i = 0; i < allItem.size(); i++) {
+            allItem.get(i).setBackground(Color.white);
+        }
+
+    }
+
     public static void showChucNang(JInternalFrame newJIF) {
         try {
-//             if (!lst_internalFrame.isEmpty()) {
-//                 for (JInternalFrame x : lst_internalFrame) {
-//                     x.dispose();
-//                 }
-//             }
-//             lst_internalFrame = new ArrayList<>();
-//             lst_internalFrame.add(newJIF);
+
+            resetColor();
             panel_body.removeAll();
             panel_body.add(newJIF);
             panel_body.repaint();
@@ -400,7 +440,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void init() {
         LoginHelper.USER = new NguoiDung("ND004");
-        
+
         MyTask myTask = new MyTask();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 5);
@@ -413,7 +453,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         Timer timer = new Timer();
         timer.schedule(myTask, dateSchedule, period);
-        
+
         lbl_tuasach.setText("Tựa sách: " + new TuaSachDAO().getTotalTuaSach());
         lbl_quyensach.setText("Quyển sách: " + new QuyenSachDAO().getTotalQSach());
         lbl_bandoc.setText("Bạn đọc: " + new TuaSachDAO().getTotalBanDoc());

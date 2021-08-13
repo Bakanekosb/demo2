@@ -18,13 +18,13 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class DangNhap extends javax.swing.JFrame {
-    
+
     NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
+
     /**
      * Creates new form DangNhap
      */
-    MainJFrame mf = new MainJFrame();
-    
+
     public DangNhap() {
         initComponents();
         setLocationRelativeTo(this);
@@ -42,10 +42,10 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtmatkhau = new javax.swing.JTextField();
         txtmand = new javax.swing.JTextField();
         btnexit = new javax.swing.JButton();
         btnlogin = new javax.swing.JButton();
+        txtmatkhau = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,13 +63,6 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Mật Khẩu");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 100, 30));
-
-        txtmatkhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtmatkhauActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtmatkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 310, 30));
 
         txtmand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +86,7 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
+        getContentPane().add(txtmatkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 310, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaiKhoan/thuvien.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -100,10 +94,6 @@ public class DangNhap extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtmatkhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmatkhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtmatkhauActionPerformed
 
     private void txtmandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmandActionPerformed
         // TODO add your handling code here:
@@ -113,34 +103,47 @@ public class DangNhap extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (validatetext()) {
             nd = nguoidungDAO.selectById(txtmand.getText());
+            if(nd == null){
+                DialogHelper.alert(this, "Mã người dùng không tồn tại");
+                return;
+            }
+            
             if (nd != null) {
                 if (nd.getTrangthai() == 0) {
                     if (nd.getMatKhau().equalsIgnoreCase(txtmatkhau.getText())) {
+                        LoginHelper.USER = nd;
+                        MainJFrame mf = new MainJFrame();
+                        this.dispose();
                         mf.setVisible(true);
                     }
+                    else{
+                        DialogHelper.alert(this, "Thông tin đăng nhập sai");
+                    }
+                }
+                else{
+                    DialogHelper.alert(this, "Tài khoản của bạn đã bị khóa");
                 }
             }
-            
         }
 
 //        mf.setVisible(true);
 
     }//GEN-LAST:event_btnloginActionPerformed
-    
+
     public boolean sosanh(String x1, String x2) {
         for (NguoiDung x : nguoidungDAO.selectAll()) {
-            
+
             if (x1.equalsIgnoreCase(x.getMaND()) && x2.equals(x.getMatKhau())) {
-                
+                MainJFrame mf = new MainJFrame();
                 mf.setVisible(true);
                 this.dispose();
-                
+
                 return true;
             }
         }
         return false;
     }
-    
+
     private void btnexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexitActionPerformed
         // TODO add your handling code here:
         System.exit(0);
@@ -180,7 +183,7 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public boolean validatetext() {
         StringBuilder sb = new StringBuilder();
         if (EzHelper.blank(txtmand, "Tài khoản", this)) {
@@ -199,11 +202,11 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField txtmand;
-    private javax.swing.JTextField txtmatkhau;
+    private javax.swing.JPasswordField txtmatkhau;
     // End of variables declaration//GEN-END:variables
 
     private boolean dangnhap() {
-        
+
         return false;
     }
 }

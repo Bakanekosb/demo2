@@ -281,6 +281,11 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         });
 
         jButton2.setText("Add");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setText("Tìm kiếm");
@@ -523,6 +528,10 @@ public class QLTuaSachJFrame extends javax.swing.JFrame implements IService<Inte
         System.out.println(maTuaSachChiTiet);
         new ChiTietSachJFrame(maTuaSachChiTiet).setVisible(true);
     }//GEN-LAST:event_btn_chiTietActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

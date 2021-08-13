@@ -115,7 +115,6 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         btn_prev1 = new javax.swing.JButton();
         btn_first1 = new javax.swing.JButton();
         Panel_grid = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         btn_search = new javax.swing.JButton();
         txt_timKiem = new javax.swing.JTextField();
         btn_chiTiet = new javax.swing.JButton();
@@ -267,8 +266,6 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         Panel_grid.setLayout(new java.awt.GridLayout(2, 5, 15, 15));
         jPanel2.add(Panel_grid, "card2");
 
-        jButton2.setText("Add");
-
         btn_search.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btn_search.setText("Search");
         btn_search.addActionListener(new java.awt.event.ActionListener() {
@@ -326,13 +323,11 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(690, Short.MAX_VALUE)
+                .addContainerGap(741, Short.MAX_VALUE)
                 .addComponent(btn_chiTiet)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addComponent(btn_reload)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jButton1)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,10 +356,9 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(543, Short.MAX_VALUE)
+                .addContainerGap(547, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
                     .addComponent(btn_reload)
                     .addComponent(btn_chiTiet))
                 .addGap(73, 73, 73))
@@ -549,7 +543,6 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
     private javax.swing.JButton btn_themSL;
     private javax.swing.JComboBox<String> cbo_danhMuc;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;

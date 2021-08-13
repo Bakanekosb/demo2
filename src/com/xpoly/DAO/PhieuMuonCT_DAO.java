@@ -22,17 +22,11 @@ public class PhieuMuonCT_DAO implements IDAO<PMCT, String> {
 
     @Override
     public void insert(PMCT model) {
-        String sql = "insert into pmct (maphieumuon ,maquyensach ,trangthai ,solangiahan ,ghichu ) values (?,?,?,?,?)";
-        JdbcHelper.executeUpdate(sql, model.getMaPhieuMuon(), model.getMaQuyenSach(), 0,
+        String sql = "insert into pmct (maphieumuon ,maquyensach ,trangthai ,solangiahan ,ghichu ) values ((select max(maphieumuon) from phieumuon),?,?,?,?)";
+        JdbcHelper.executeUpdate(sql, model.getMaQuyenSach(), 0,
                  0, model.getGhiChu());
     }
     
-    public void insert(int maPhieuMuon, PMCT model) {
-        String sql = "insert into pmct (maphieumuon ,maquyensach ,trangthai ,solangiahan ,ghichu ) values (?,?,?,?,?)";
-        JdbcHelper.executeUpdate(sql, maPhieuMuon, model.getMaQuyenSach(), 0,
-                 0, model.getGhiChu());
-    }
-
     @Override
     public void update(PMCT model) {
         String sql = "update pmct set trangthai =?,ngaygiahan =?,solangiahan =?,ghichu =? where maphieumuon = ? and maquyensach = ?";

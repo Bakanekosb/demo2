@@ -14,6 +14,7 @@ import com.xpoly.DN.DangNhap;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.JdbcHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.NguoiDung;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
@@ -30,6 +31,7 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
     
     public DoiMatKhau() {
         initComponents();
+        txtMaND.setText(LoginHelper.USER.getMaND());
         setLocationRelativeTo(null);
     }
         
@@ -73,6 +75,13 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
         });
 
         jLabel5.setText("MaND");
+
+        txtMaND.setEnabled(false);
+        txtMaND.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNDActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Hủy");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +183,10 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtMaNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaNDActionPerformed
 
     /**
      * @param args the command line arguments

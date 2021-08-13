@@ -5,6 +5,7 @@
  */
 package com.xpoly.ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,11 +21,15 @@ public class MenuItem extends javax.swing.JPanel {
     /**
      * Creates new form MenuItem
      */
-    private final ArrayList<MenuItem> subMenu = new ArrayList<>();
+    public final ArrayList<MenuItem> subMenu = new ArrayList<>();
     private ActionListener act;
 
     public void setShowing(boolean showing) {
         this.showing = showing;
+    }
+
+
+    public MenuItem() {
     }
 
     public ArrayList<MenuItem> getSubMenu() {
@@ -102,8 +107,11 @@ public class MenuItem extends javax.swing.JPanel {
         } else {
             showMenu();
         }
-        if(act!=null){
+        if (act != null) {                       
+            getParent().repaint();
+            getParent().revalidate();
             act.actionPerformed(null);
+            this.setBackground(Color.lightGray);
         }
     }//GEN-LAST:event_formMousePressed
 

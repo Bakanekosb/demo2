@@ -124,11 +124,15 @@ public class PhieuMuon_Service {
     public boolean giaHanDuoc(int maphieumuon, int maquyensach) {
         PMCT pmct = pmctDAO.selectById(maphieumuon, maquyensach);
         PhieuMuon phieuMuon = phieuMuonDAO.selectById(maphieumuon);
+        System.out.println(phieuMuon.toString());
         if (phieuMuonDAO.soSanhNgay(phieuMuon.getNgayMuon()) <= 7) {
             return true;
         }
         if (pmct.getSoLanGiaHan() == Constant.SO_LAN_GIA_HAN_TOI_DA || pmct.getSoLanGiaHan() == 0) {
             return false; // không gia hạn thêm được;
+        }
+        if(pmct.getNgayGiaHan() == null){
+            return true;
         }
         if (phieuMuonDAO.soSanhNgay(pmct.getNgayGiaHan()) <= 7) {
             return true;

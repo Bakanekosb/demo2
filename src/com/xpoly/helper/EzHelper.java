@@ -14,7 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import static java.util.Date.from;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -123,6 +125,7 @@ public class EzHelper extends javax.swing.JFrame {
     }
     
     static final SimpleDateFormat DATE_FORMATER = new SimpleDateFormat("dd/MM/yyyy");
+    static final SimpleDateFormat DATE_FORMATER2 = new SimpleDateFormat("yyyy-MM-dd");
 
     
     // VD: EzHelper.toDate(txt_ngaySinh.getText())
@@ -139,6 +142,21 @@ public class EzHelper extends javax.swing.JFrame {
             throw new RuntimeException(ex);
         }
     }
+    
+     public static Date toDate2(String date, String... pattern) {
+        try {
+            if (pattern.length > 0) {
+                DATE_FORMATER2.applyPattern(pattern[0]);
+            }
+            if (date == null) {
+                return EzHelper.now();
+            }
+            return DATE_FORMATER2.parse(date);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
 
     
     // VD: DateHelper.toString(model.getNgaySinh())
@@ -156,4 +174,8 @@ public class EzHelper extends javax.swing.JFrame {
         return new Date();
     }
     
+    public static String addDate(Date d, int days){
+        Date date = Date.from(d.toInstant().plus(days, ChronoUnit.DAYS));
+        return toString(date,"dd/MM/yyyy");
+    }
 }

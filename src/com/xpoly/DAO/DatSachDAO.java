@@ -119,8 +119,11 @@ public class DatSachDAO implements IDAO<DatSach, Integer> {
     }
 
     public List<DatSach> danhSachDenLuotMuon(int matuasach, int soluongsach) {
+        System.out.println(matuasach);
         String sql = "{call sp_danhSachDenLuotMuon (?,?)}";
-        return selectBySql(sql, matuasach, soluongsach);
+        List<DatSach> lst = selectBySql(sql, matuasach, soluongsach);
+        System.out.println("lst dao " + lst.size());
+        return lst;
     }
 
     public boolean sachDuocBanDocDatTruocKhong(int matuasach, String mand) {

@@ -125,6 +125,31 @@ public class PhieuMuon_DAO implements IDAO<PhieuMuon, Integer>{
         }
         return soSanhNgay;
     }    
+    
+    public int[] soSachDaTra(int maphieumuon){
+        int soSachDaTra = 0;
+        int soSachMuon = 0;
+        try {
+            ResultSet rs = null;
+            try {
+                String sql = "select count(*) from pmct where maphieumuon = ? and trangthai = 1";
+                rs = JdbcHelper.executeQuery(sql, maphieumuon);
+                while (rs.next()) {
+                    soSachDaTra = rs.getInt(1);
+                }
+                sql = "select count(*) from pmct where maphieumuon = ?";
+                rs = JdbcHelper.executeQuery(sql, maphieumuon);
+                while (rs.next()) {
+                    soSachMuon = rs.getInt(1);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return new int[]{soSachDaTra,soSachMuon};
+    }
 
     @Override
     public List<PhieuMuon> selectBySql(String sql, Object... args) {
