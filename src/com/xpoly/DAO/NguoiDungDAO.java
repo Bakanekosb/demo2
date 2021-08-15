@@ -57,6 +57,11 @@ public class NguoiDungDAO implements IDAO<NguoiDung, String> {
         JdbcHelper.executeUpdate(sql, Pass, Email);
         
     }
+    
+    public boolean kiemTraEmail(String email){
+        String sql = "select * from nguoidung where email = ?";
+        return selectBySql(sql, email).isEmpty();
+    }
 
     @Override
     public void delete(String id) {

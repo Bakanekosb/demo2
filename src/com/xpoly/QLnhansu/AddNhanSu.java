@@ -5,6 +5,7 @@
  */
 package com.xpoly.QLnhansu;
 
+import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
@@ -22,11 +23,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author Admin
  */
-public class AddNhanSu extends javax.swing.JFrame implements IService<NguoiDung>{
-     String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
+public class AddNhanSu extends javax.swing.JFrame implements IService<NguoiDung> {
+
+    String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
     DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
-String keyword = "";
-    JFileChooser chooser =new JFileChooser();; 
+    String keyword = "";
+    JFileChooser chooser = new JFileChooser();
+    ; 
     File f = null;
     NhanVienDao nhanvienDAO = new NhanVienDao();
     NguoiDung nguoidung = new NguoiDung();
@@ -39,8 +42,9 @@ String keyword = "";
     private static final String digits = "0123456789"; // 0-9
     private static final String specials = "~=+%^*/()[]{}/!@#$?|";
     private static final String ALPHA_NUMERIC = alpha + alphaUpperCase + digits;
-        private static Random generator = new Random();
-        int numberOfCharactor = 8;
+    private static Random generator = new Random();
+    int numberOfCharactor = 8;
+
     /**
      * Creates new form AddNhanSu
      */
@@ -220,9 +224,7 @@ String keyword = "";
                             .addComponent(txtghichu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel27))
                         .addGap(20, 20, 20)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtvitien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblIMG, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblIMG, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,9 +235,11 @@ String keyword = "";
                                     .addComponent(rdbNu)
                                     .addComponent(rdbnam)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel32)))
-                        .addGap(20, 20, 20)
+                                .addGap(47, 47, 47)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel32)
+                                    .addComponent(txtvitien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(17, 17, 17)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel33)
                             .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,15 +325,15 @@ String keyword = "";
         } catch (Exception e) {
             DialogHelper.alert(this, "Mã Nhân viên đã tồn tại !");
         }
-        
-       nhanvienDAO.SendMail(txtEmail.getText(), "Đăng kí tài Khoản thành công !", "Mật khẩu của bạn là : " +randomString(numberOfCharactor)+ "\n Số tiền bạn nạp lần đầu là : "+ txtvitien.getText()
-       + "\n bạn hãy đổi mật khẩu khi đọc được Email này để đảm bảo tính bảo mật cho tài khoản của bạn !");
+
+        nhanvienDAO.SendMail(txtEmail.getText(), "Đăng kí tài Khoản thành công !", "Mật khẩu của bạn là : " + randomString(numberOfCharactor) + "\n Số tiền bạn nạp lần đầu là : " + txtvitien.getText()
+                + "\n bạn hãy đổi mật khẩu khi đọc được Email này để đảm bảo tính bảo mật cho tài khoản của bạn !");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnclearActionPerformed
-         // TODO add your handling code here:
-         clear();
-        
+        // TODO add your handling code here:
+        clear();
+
     }//GEN-LAST:event_btnclearActionPerformed
 
     private void combovaitroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combovaitroActionPerformed
@@ -340,7 +344,7 @@ String keyword = "";
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
-EzHelper ez = new EzHelper();
+    EzHelper ez = new EzHelper();
     private void lblIMGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIMGMouseClicked
         // TODO add your handling code here:
         ez.selectImage(lblIMG);
@@ -415,11 +419,11 @@ EzHelper ez = new EzHelper();
 
     @Override
     public void init() {
-     setLocationRelativeTo(this);      
+        setLocationRelativeTo(this);
         combovaitro.setModel((DefaultComboBoxModel) combo);
-        
+
         pack();
-                }
+    }
 
     @Override
     public void loadTable() {
@@ -427,17 +431,17 @@ EzHelper ez = new EzHelper();
 
     @Override
     public void insert() {
-         try {
-            if(nguoidung != null){
-        nhanvienDAO.insert(getModel());
-        DialogHelper.alert(this, "Thêm Thành Công!");
-        }
+        try {
+            if (getModel() != null) {
+                nhanvienDAO.insert(getModel());
+                DialogHelper.alert(this, "Thêm Thành Công!");
+            }
         } catch (Exception e) {
             DialogHelper.alert(this, "Thêm thất bại !");
             e.printStackTrace();
             return;
         }
-   }
+    }
 
     @Override
     public void update() {
@@ -451,25 +455,25 @@ EzHelper ez = new EzHelper();
 
     @Override
     public void clear() {
-    txtEmail.setText("");
-    txtMand.setText("");
-    txtdiachi.setText("");
-    txtghichu.setText("");
-    txthoten.setText("");
-    
-    txtsdt.setText("");
-    txtvitien.setText("");
-    rdbnam.setSelected(true);
-    combovaitro.setSelectedIndex(1);
-    lblIMG.setText("Tải lên");
+        txtEmail.setText("");
+        txtMand.setText("");
+        txtdiachi.setText("");
+        txtghichu.setText("");
+        txthoten.setText("");
+
+        txtsdt.setText("");
+        txtvitien.setText("");
+        rdbnam.setSelected(true);
+        combovaitro.setSelectedIndex(1);
+        lblIMG.setText("Tải lên");
     }
 
     @Override
     public StringBuilder validateForm() {
-     StringBuilder sb = new StringBuilder();
-     
+        StringBuilder sb = new StringBuilder();
+
         String mand = txtMand.getText();
-        
+
         String hoten = txthoten.getText();
         Date ngaysinh = jdatengaysinh.getDate();
         boolean gioitinh = rdbnam.isSelected() ? true : false;
@@ -481,28 +485,35 @@ EzHelper ez = new EzHelper();
         String matkhau = randomString(numberOfCharactor);
         Double vitien = EzHelper.isDouble(txtvitien, "Ví tiền", this);
         String vitien2 = txtvitien.getText();
+        NguoiDungDAO ndDAO = new NguoiDungDAO();
         if (mand.isBlank()) {
-            
-           
+
             return sb.append("Mã Nhân viên không được để trống !");
         }
-        if(!mand.matches(reMaNV)){
-       return sb.append(" \n Bạn nhập định dạng mã nhân viên sai \n xin Nhập theo định dạng NV12345");
+        if (!mand.matches(reMaNV)) {
+            return sb.append(" \n Bạn nhập định dạng mã nhân viên sai \n xin Nhập theo định dạng NV12345");
+        }
+        if (ndDAO.selectById(mand) != null) {
+            return sb.append(" \n Mã người dùng đã tồn tại ! ");
         }
         if (hoten.isBlank()) {
-           return sb.append("\n Họ tên không được để trống!");
+            return sb.append("\n Họ tên không được để trống!");
         }
         if (sdt.isBlank()) {
             return sb.append("\n SĐT không được để trống !");
         }
-        if(!sdt.matches(resdt)){
-          return sb.append("\n SĐT phải bắt đầu bằng số 0 và có độ dài là 10 số ! \"");
+        if (!sdt.matches(resdt)) {
+            return sb.append("\n SĐT phải bắt đầu bằng số 0 và có độ dài là 10 số ! \"");
         }
         if (email.isBlank()) {
             return sb.append(" \n Email Không được để trống ! ");
         }
+
+        if (!ndDAO.kiemTraEmail(email)) {
+            return sb.append(" \n Email đã tồn tại ! ");
+        }
         if (diachi.isBlank()) {
-           return sb.append(" \n Địa chỉ Không được để trống ! ");
+            return sb.append(" \n Địa chỉ Không được để trống ! ");
         }
         if (matkhau.isBlank()) {
             return sb.append("\n mật khẩu không được để trống !");
@@ -510,14 +521,15 @@ EzHelper ez = new EzHelper();
         if (vitien2.isBlank()) {
             return sb.append("\n Ví tiền Không được để trống ! ");
         }
-        if(vitien < 50000 && vitien/1000 ==0){
-        return sb.append("Số tiền phải lớn hơn 50.000 và phải chia hết cho 1000");
+        if (vitien < 50000 && vitien / 1000 == 0) {
+            return sb.append("Số tiền phải lớn hơn 50.000 và phải chia hết cho 1000");
         }
-        return sb;}
+        return sb;
+    }
 
     @Override
     public NguoiDung getModel() {
-   if (validateForm().length() > 0) {
+        if (validateForm().length() > 0) {
             DialogHelper.alert(this, validateForm().toString());
             return null;
         }
@@ -533,9 +545,10 @@ EzHelper ez = new EzHelper();
         String matkhau = randomString(numberOfCharactor);
         vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
         String anh = nhanvienDAO.selectIMG(lblIMG);
-    return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi,selectrole() , ghichu, matkhau, vitien, "",trangthai);
-        }
-  public int selectrole() {
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+    }
+
+    public int selectrole() {
         if (combovaitro.getSelectedIndex() == 1) {
             return 1;
         }
@@ -552,8 +565,8 @@ EzHelper ez = new EzHelper();
     public void setModel(NguoiDung model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-       
-        public String randomString(int numberOfCharactor) {
+
+    public String randomString(int numberOfCharactor) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < numberOfCharactor; i++) {
             int number = randomNumber(0, ALPHA_NUMERIC.length() - 1);
@@ -562,8 +575,9 @@ EzHelper ez = new EzHelper();
         }
         return sb.toString();
     }
-       public static int randomNumber(int min, int max) {
+
+    public static int randomNumber(int min, int max) {
         return generator.nextInt((max - min) + 1) + min;
     }
-       
+
 }

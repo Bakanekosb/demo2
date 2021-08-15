@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JRootPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 public class QLDatSachJInternalFrame extends javax.swing.JInternalFrame {
@@ -436,6 +438,11 @@ public class QLDatSachJInternalFrame extends javax.swing.JInternalFrame {
 
     private void init() {
 //        LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
+
         if (LoginHelper.quyenQuanTri()) {
             mand = "";
         } else {

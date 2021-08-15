@@ -61,6 +61,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
     public UpdateSach(TuaSach model, String tacGia, int soSachDocTaiCho) {
 //        LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
         initComponents();
+        setLocationRelativeTo(null);
         tuaSachUpdate = model;
         init();
         setModel(model, tacGia, soSachDocTaiCho);
@@ -113,11 +114,11 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         btn_save = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("SỬA THÔNG TIN SÁCH");
+        jLabel1.setText("THÔNG TIN SÁCH");
 
         lbl_cover.setBackground(new java.awt.Color(255, 255, 255));
         lbl_cover.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -489,19 +490,19 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         loadComboboxDanhMuc();
         lst_tSach = tuaSachDAO.selectAll();
         cbo_namxb.setModel(cboModelNam);
-        cbo_danhMuc.setEnabled(LoginHelper.quyenQuanTri());
-        txt_tenSach.setEditable(LoginHelper.quyenQuanTri());
-        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
-        txt_namxb.setEditable(LoginHelper.quyenQuanTri());
-        txt_soTrang.setEditable(LoginHelper.quyenQuanTri());
-        txt_gia.setEditable(LoginHelper.quyenQuanTri());
-        txt_moTa.setEditable(LoginHelper.quyenQuanTri());
-        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
-        txt_nxb.setEditable(LoginHelper.quyenQuanTri());
-        btn_chonTg.setVisible(LoginHelper.quyenQuanTri());
-        btn_clear.setVisible(LoginHelper.quyenQuanTri());
-        btn_save.setVisible(LoginHelper.quyenQuanTri());
-        lbl_cover.setEnabled(LoginHelper.quyenQuanTri());
+        cbo_danhMuc.setEnabled(false);
+        txt_tenSach.setEditable(false);
+        txt_nxb.setEditable(false);
+        txt_namxb.setEditable(false);
+        txt_soTrang.setEditable(false);
+        txt_gia.setEditable(false);
+        txt_moTa.setEditable(false);
+        txt_nxb.setEditable(false);
+        txt_nxb.setEditable(false);
+        btn_chonTg.setVisible(false);
+        btn_clear.setVisible(false);
+        btn_save.setVisible(false);
+        lbl_cover.setEnabled(false);
     }
 
     @Override

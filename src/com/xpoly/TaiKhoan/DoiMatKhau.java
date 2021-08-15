@@ -32,6 +32,7 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
     public DoiMatKhau() {
         initComponents();
         txtMaND.setText(LoginHelper.USER.getMaND());
+
         setLocationRelativeTo(null);
     }
 
@@ -56,7 +57,7 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
         txtNhapLai = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Đổi mật khẩu");
@@ -162,13 +163,12 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         update();
-        System.out.println(txtMKMoi.getText());
+//        System.out.println(txtMKMoi.getText());
 //        for (NguoiDung x : nguoidungDAO.selectAll()) {
 //            if (txtMaND.getText().equals(x.getMaND())) {
 //                if (txtMKHienTai.getText().equals(x.getMatKhau())) {
-//                    if (txtMKMoi.getText().equals(txtNhapLai.getText())) {
-//            
-//                        JOptionPane.showMessageDialog(this, "Mat khau moi hong trung khop");
+//                    if (!txtMKMoi.getText().equals(txtNhapLai.getText())) {            
+//                        JOptionPane.showMessageDialog(this, "Mat khau moi khong trung khop");
 //                        break;
 //                    }
 //                }else{
@@ -255,17 +255,19 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
 
     @Override
     public void update() {
-//        NguoiDung nguoidung = new NguoiDung();
-//        try {
-//            if (nguoidung != null) {
-//                nguoidungDAO.updatematkhau(getModel());
-//                DialogHelper.alert(this, "sua thanh cong");               
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            DialogHelper.alert(this, "sua that bai");
-//            return;
-//        }
+
+        if (validateform()) {
+            LoginHelper.USER.setMatKhau(txtMKMoi.getText());
+            try {
+                nguoidungDAO.update(LoginHelper.USER);
+                DialogHelper.alert(this, "sua thanh cong");
+                this.dispose();
+            } catch (Exception e) {
+                e.printStackTrace();
+                DialogHelper.alert(this, "sua that bai");
+                return;
+            }
+        }
     }
 
     @Override
@@ -281,16 +283,37 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
     @Override
     public StringBuilder validateForm() {
         StringBuilder sb = new StringBuilder();
+
+        return sb;
+    }
+
+    boolean validateform() {
+        System.out.println(txtMKHienTai.getText());
         if (txtMKHienTai.getText().isBlank()) {
             DialogHelper.alert(this, "mat khau khong duoc de trong ! ");
+            return false;
         }
         if (txtMKMoi.getText().isBlank()) {
             DialogHelper.alert(this, "mat khau moi khong duoc de trong ! ");
+            return false;
         }
         if (txtMKMoi.getText().isBlank()) {
             DialogHelper.alert(this, "mat khau moi khong duoc de trong ! ");
+            return false;
         }
-        return sb;
+        if (!LoginHelper.USER.getMatKhau().equals(txtMKHienTai.getText())) {
+            DialogHelper.alert(this, "mat khau hien tai khong khop ! ");
+            return false;
+        }
+        if (txtMKMoi.getText().length() < 8) {
+            DialogHelper.alert(this, "Mat khau dai toi thieu 8 ky tu");
+            return false;
+        }
+        if (!txtMKMoi.getText().equals(txtNhapLai.getText())) {
+            DialogHelper.alert(this, "Mat khau moi khong trung khop");
+            return false;
+        }
+        return true;
     }
 
     @Override

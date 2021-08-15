@@ -393,7 +393,7 @@ public class ThemBanDocJInternalFrame extends javax.swing.JInternalFrame impleme
     @Override
     public void insert() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nhanvienDAO.insert(getModel());
                 DialogHelper.alert(this, "Thêm Thành Công!");
             }
@@ -446,12 +446,17 @@ public class ThemBanDocJInternalFrame extends javax.swing.JInternalFrame impleme
         String matkhau = randomString(numberOfCharactor);
         Double vitien = EzHelper.isDouble(txtvitien, "Ví tiền", this);
         String vitien2 = txtvitien.getText();
+        
+        NguoiDungDAO ndDAO = new NguoiDungDAO();
         if (mand.isBlank()) {
 
             return sb.append("Mã Nhân viên không được để trống !");
         }
         if (!mand.matches(reMaNV)) {
             return sb.append(" \n Bạn nhập định dạng mã nhân viên sai \n xin Nhập theo định dạng NV12345");
+        }
+        if (ndDAO.selectById(mand) != null) {
+            return sb.append(" \n Mã người dùng đã tồn tại ! ");
         }
         if (hoten.isBlank()) {
             return sb.append("\n Họ tên không được để trống!");
@@ -464,6 +469,10 @@ public class ThemBanDocJInternalFrame extends javax.swing.JInternalFrame impleme
         }
         if (email.isBlank()) {
             return sb.append(" \n Email Không được để trống ! ");
+        }
+        
+        if (!ndDAO.kiemTraEmail(email)) {
+            return sb.append(" \n Email đã tồn tại ! ");
         }
         if (diachi.isBlank()) {
             return sb.append(" \n Địa chỉ Không được để trống ! ");

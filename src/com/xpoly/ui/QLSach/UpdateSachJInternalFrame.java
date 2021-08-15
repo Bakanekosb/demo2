@@ -37,8 +37,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     /**
      * Creates new form UpdateSachJInternalFrame
      */
-    
-      TuaSachDAO tuaSachDAO = new TuaSachDAO();
+    TuaSachDAO tuaSachDAO = new TuaSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
     DanhMucDAO danhMucDAO = new DanhMucDAO();
     Sach_TacGiaDAO stgDAO = new Sach_TacGiaDAO();
@@ -460,20 +459,20 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     // End of variables declaration//GEN-END:variables
 
     public static void hienThiTG(List<TacGia> lst) {
-        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList()); 
+        List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList());
         String s = String.join(";", namesList);
-       
+
         txt_tgupdate.setText(s);
-        
+
     }
-    
+
     @Override
     public void init() {
         putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        
+
         cbo_danhMuc.setModel((DefaultComboBoxModel) cboModel);
         loadComboboxDanhMuc();
         lst_tSach = tuaSachDAO.selectAll();
@@ -654,7 +653,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
         txt_docTaiCho.setText(soSachDocTaiCho + "");
         if (model.getAnh() != null) {
             lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
-        }else{
+        } else {
             lbl_cover.setIcon(EzHelper.readImg("2.png"));
         }
     }

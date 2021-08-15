@@ -709,7 +709,7 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
     @Override
     public void insert() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nguoidungDAO.insert(getModel());
                 DialogHelper.alert(this, "Thêm Thành Công!");
             }
@@ -766,9 +766,15 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
     @Override
     public StringBuilder validateForm() {
         StringBuilder sb = new StringBuilder();
+
+        return sb;
+    }
+
+    public boolean validateform() {
         String mand = txtMand.getText();
         String hoten = txthoten.getText();
         Date ngaysinh = jdatengaysinh.getDate();
+        System.out.println("namsinh = " + ngaysinh.getYear());
         boolean gioitinh = rdbnam.isSelected() ? true : false;
         String sdt = txtsdt.getText();
         String email = txtEmail.getText();
@@ -779,37 +785,37 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
         String vitien = txtvitien.getText();
         if (mand.isBlank()) {
             DialogHelper.alert(this, "Mã Người dùng Không được để trống ! ");
-            return null;
+            return false;
         }
         if (hoten.isBlank()) {
             DialogHelper.alert(this, "Họ tên Không được để trống ! ");
-            return null;
+            return false;
         }
         if (mand.isBlank()) {
             DialogHelper.alert(this, "Mã Người dùng Không được để trống ! ");
-            return null;
+            return false;
         }
         if (sdt.isBlank()) {
             DialogHelper.alert(this, "SĐT Không được để trống ! ");
-            return null;
+            return false;
         }
         if (email.isBlank()) {
             DialogHelper.alert(this, "Email Không được để trống ! ");
-            return null;
+            return false;
         }
         if (diachi.isBlank()) {
             DialogHelper.alert(this, "Địa chỉ Không được để trống ! ");
-            return null;
+            return false;
         }
         if (matkhau.isBlank()) {
             DialogHelper.alert(this, "Mật khẩu Không được để trống ! ");
-            return null;
+            return false;
         }
         if (vitien.isBlank()) {
             DialogHelper.alert(this, "Ví tiền Không được để trống ! ");
-            return null;
+            return false;
         }
-        return sb;
+        return true;
     }
 
     public int selectrole() {
@@ -827,8 +833,7 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
 
     @Override
     public NguoiDung getModel() {
-        if (validateForm().length() > 0) {
-            DialogHelper.alert(this, "");
+        if (!validateform()) {
             return null;
         }
         String mand = txtMand.getText();

@@ -5,14 +5,10 @@
  */
 package com.xpoly.ui.QLnguoidung;
 
-
-
 /**
  *
  * @author Dell
  */
-
-
 import com.xpoly.DAO.NguoiDungDAO;
 import com.xpoly.DAO.NhanVienDao;
 import com.xpoly.Interface.IService;
@@ -32,7 +28,7 @@ import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implements IService<NguoiDung>  {
+public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implements IService<NguoiDung> {
 
     /**
      * Creates new form QLBanDocJInternalFrame
@@ -63,10 +59,10 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
 
     int totalPage;
     NapTien nt = new NapTien();
-    
+
     public QLBanDocJInternalFrame() {
         initComponents();
-         init();
+        init();
     }
 
     /**
@@ -586,10 +582,10 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     private javax.swing.JTextField txtvitien;
     // End of variables declaration//GEN-END:variables
 
- @Override
+    @Override
     public void init() {
 //        setLocationRelativeTo(this);
- putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
@@ -638,7 +634,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     @Override
     public void update() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nhanvienDAO.update(getModel());
                 DialogHelper.alert(this, "Sửa Thành Công!");
             }
@@ -681,6 +677,11 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     @Override
     public StringBuilder validateForm() {
         StringBuilder sb = new StringBuilder();
+
+        return sb;
+    }
+
+    public boolean validateform() {
         String mand = txtMand.getText();
         String hoten = txthoten.getText();
         Date ngaysinh = jdatengaysinh.getDate();
@@ -694,42 +695,42 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
         String vitien = txtvitien.getText();
         if (mand.isBlank()) {
             DialogHelper.alert(this, "Mã Người dùng Không được để trống ! ");
-            return null;
+            return false;
         }
         if (hoten.isBlank()) {
             DialogHelper.alert(this, "Họ tên Không được để trống ! ");
-            return null;
+            return false;
         }
         if (mand.isBlank()) {
             DialogHelper.alert(this, "Mã Người dùng Không được để trống ! ");
-            return null;
+            return false;
         }
         if (sdt.isBlank()) {
             DialogHelper.alert(this, "SĐT Không được để trống ! ");
-            return null;
+            return false;
         }
         if (email.isBlank()) {
             DialogHelper.alert(this, "Email Không được để trống ! ");
-            return null;
+            return false;
         }
         if (diachi.isBlank()) {
             DialogHelper.alert(this, "Địa chỉ Không được để trống ! ");
-            return null;
+            return false;
         }
         if (matkhau.isBlank()) {
             DialogHelper.alert(this, "Mật khẩu Không được để trống ! ");
-            return null;
+            return false;
         }
         if (vitien.isBlank()) {
             DialogHelper.alert(this, "Ví tiền Không được để trống ! ");
-            return null;
+            return false;
         }
-        return sb;
+        return true;
     }
 
     @Override
     public NguoiDung getModel() {
-        if (validateForm().length() > 0) {
+        if (!validateform()) {
             DialogHelper.alert(this, validateForm().toString());
             return null;
         }

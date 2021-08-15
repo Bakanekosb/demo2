@@ -43,6 +43,7 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
 
     public ChiTietSachJFrame(int maTuaSach) {
         initComponents();
+        setLocationRelativeTo(null);
         this.maTuaSach = maTuaSach;
         System.out.println(maTuaSach);
         init();
@@ -77,7 +78,7 @@ public class ChiTietSachJFrame extends javax.swing.JFrame implements IService<Qu
         lbl_tuaSach = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tbl_qSach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
