@@ -123,6 +123,17 @@ public class QLDatSachJInternalFrame extends javax.swing.JInternalFrame {
         jLabel10.setText("Tìm kiếm");
 
         txt_timKiem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_timKiem.setText("Mã hoặc tên tựa sách");
+        txt_timKiem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txt_timKiemMouseClicked(evt);
+            }
+        });
+        txt_timKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_timKiemActionPerformed(evt);
+            }
+        });
         txt_timKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_timKiemKeyReleased(evt);
@@ -388,6 +399,16 @@ public class QLDatSachJInternalFrame extends javax.swing.JInternalFrame {
                 new QuyenSachDAO().soSachDocTaiCho(matuasach)).setVisible(true);
     }//GEN-LAST:event_btn_detailActionPerformed
 
+    private void txt_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timKiemActionPerformed
+        // TODO add your handling code here:
+        txt_timKiem.setText("");
+    }//GEN-LAST:event_txt_timKiemActionPerformed
+
+    private void txt_timKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_timKiemMouseClicked
+        // TODO add your handling code here:
+        txt_timKiem.setText("");
+    }//GEN-LAST:event_txt_timKiemMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_detail;
@@ -414,7 +435,7 @@ public class QLDatSachJInternalFrame extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void init() {
-        LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
+//        LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
         if (LoginHelper.quyenQuanTri()) {
             mand = "";
         } else {

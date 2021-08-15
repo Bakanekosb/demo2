@@ -317,7 +317,7 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
 
         defaultTableModelA.setRowCount(0);
         defaultTableModelB.setRowCount(0);
-        String findBy = (cboIndex == 0 ? " phieumuon.maphieumuon=?" : (cboIndex == 1) ? " phieumuon.mabandoc=?" : (cboIndex == 2) ? " matuasach = ? ": "pmct.maquyensach=?");
+        String findBy = (cboIndex == 0 ? " phieumuon.maphieumuon=?" : (cboIndex == 1) ? " phieumuon.mabandoc=?" : (cboIndex == 2) ? " matuasach = ? " : "pmct.maquyensach=?");
 
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT distinct dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu)"
                 + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc "
@@ -354,7 +354,7 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
             preparedStatement.setString(1, maPhieuMuon);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                
+
                 String d = resultSet.getString(4);
                 Date date = d == null ? null : EzHelper.toDate2(d);
                 defaultTableModelB.addRow(new Object[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
@@ -379,18 +379,19 @@ public class QLPhieuMuonJFrame extends javax.swing.JFrame {
         int maQuyenSach = Integer.parseInt(defaultTableModelB.getValueAt(indexPMCT, 1).toString());
         System.out.println(maPhieuMuon);
         System.out.println(maQuyenSach);
-        if(soLanGiaHan >= Constant.SO_LAN_GIA_HAN_TOI_DA){
+        if (soLanGiaHan >= Constant.SO_LAN_GIA_HAN_TOI_DA) {
             DialogHelper.alert(jPanel1, "Đã đạt số lần gia hạn tối đa");
             return;
         }
-        if(service.giaHanDuoc(maPhieuMuon, maQuyenSach)){
+        if (service.giaHanDuoc(maPhieuMuon, maQuyenSach)) {
             service.giaHanSach(maPhieuMuon, maQuyenSach);
-            defaultTableModelB.setValueAt(soLanGiaHan + 1, indexPMCT, 5);
-            defaultTableModelB.setValueAt(EzHelper.now(), indexPMCT, 3);
-            defaultTableModelB.setValueAt(EzHelper.addDate(EzHelper.now(), 7), indexPMCT, 4);
+//            defaultTableModelB.setValueAt(soLanGiaHan + 1, indexPMCT, 5);
+//            defaultTableModelB.setValueAt(EzHelper.now(), indexPMCT, 3);
+//            defaultTableModelB.setValueAt(EzHelper.addDate(EzHelper.now(), 7), indexPMCT, 4);
+            loadTablePMCT(maPhieuMuon);
             DialogHelper.alert(jPanel1, "Gia hạn thành công");
         }
-        
+
     }//GEN-LAST:event_btn_giaHanActionPerformed
 
     private void tblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBMouseClicked

@@ -15,11 +15,13 @@ import com.xpoly.helper.Constant;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
+import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.PMCT;
 import com.xpoly.ui.MainJFrame;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +39,6 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
     /**
      * Creates new form PhieuMuonDangMuonJInternalFrame
      */
-    
     Connection connection = JdbcHelper.ketNoi();
     DefaultTableModel defaultTableModelA = new DefaultTableModel();
     DefaultTableModel defaultTableModelB = new DefaultTableModel();
@@ -72,6 +73,7 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
         d = (d == null ? d0 : d);
         System.out.println(d);
         Date ngayHen = Date.from(d.toInstant().plus(7, ChronoUnit.DAYS));
+        System.out.println("ngay hen before tostring " + ngayHen);
         return EzHelper.toString(ngayHen);
 
     }
@@ -79,16 +81,20 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
     public void fillToTable() {
 
         defaultTableModelA.setRowCount(0);
+        String mand = LoginHelper.quyenQuanTri() ? "%%" : LoginHelper.USER.getMaND();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT distinct dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu)"
                 + "maquyensach \n"
-                + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0");) {
+                + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc WHERE pmct.trangthai=0 "
+                + " and phieumuon.mabandoc like '" + mand + "'");) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int matuasach = Integer.parseInt(resultSet.getString(1));
+                String ngaymuon = EzHelper.toString(resultSet.getDate(4));
                 defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2),
-                    resultSet.getString(3), resultSet.getString(4),
+                    resultSet.getString(3), ngaymuon,
+//                    resultSet.getString(4),
                     resultSet.getString(5),
                     phieuMuonDAO.soSachDaTra(matuasach)[0] + "/" + phieuMuonDAO.soSachDaTra(matuasach)[1]
                 });
@@ -104,9 +110,14 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
         List<PMCT> lst_pmct = pmctDAO.selectByMaPhieuMuon(maphieumuon);
         defaultTableModelB.setRowCount(0);
         for (PMCT x : lst_pmct) {
+            System.out.println(x.getNgayGiaHan());
+            String d = EzHelper.toString(x.getNgayGiaHan());
+            Date date = EzHelper.toDate(d);
+            System.out.println("date sau khi parse : " + date);
+            System.out.println("ngay gia han " + EzHelper.toString(x.getNgayGiaHan()));
             defaultTableModelB.addRow(new Object[]{x.getMaPhieuMuon(), x.getMaQuyenSach(),
                 new TuaSachDAO().selectById(new QuyenSachDAO().selectById(x.getMaQuyenSach()).getMaTuaSach()).getTenTuaSach(),
-                x.getNgayGiaHan(), x.getSoLanGiaHan(), ngayHenTra(x.getNgayGiaHan(), ngayMuon), x.getGhiChu(), trangThaiPMCT(x.getTrangThai())
+                EzHelper.toString(x.getNgayGiaHan()), ngayHenTra(date, ngayMuon),x.getSoLanGiaHan(), x.getGhiChu(), trangThaiPMCT(x.getTrangThai())
             });
         }
 //                defaultTableModelB.setColumnIdentifiers(new String[]{"Mã Phiếu Mượn", "Mã Quyển Sách", "Tên Tựa Sách", "Ngày Gia Hạn", "Số Lần Gia Hạn", "Ghi Chú", "Vị Trí Quyển Sách"});
@@ -142,7 +153,7 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Phiếu Đang Mượn");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Phiếu trả"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Phiếu mượn"));
 
         tblA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,7 +208,7 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Phiếu trả chi tiết"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Phiếu mượn chi tiết"));
 
         tblB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -318,22 +329,25 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
         String maPhieuMuon = (String) (defaultTableModelA.getValueAt(index, 0));
         defaultTableModelB.setRowCount(0);
         String d1 = (String) defaultTableModelA.getValueAt(index, 3);
-        ngayMuon = EzHelper.toDate2(d1);
+        ngayMuon = EzHelper.toDate(d1);
+        System.out.println("ngay muon tblA" + ngayMuon);
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT maphieumuon,pmct.maquyensach,(SELECT tentuasach FROM dbo.tuasach WHERE matuasach=dbo.quyensach.matuasach),ngaygiahan,solangiahan,pmct.ghichu, pmct.trangthai  FROM dbo.pmct INNER JOIN dbo.quyensach ON quyensach.maquyensach = pmct.maquyensach WHERE maphieumuon=?");) {
             preparedStatement.setString(1, maPhieuMuon);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
 
                 String d = resultSet.getString(4);
-                Date date = d == null ? null : EzHelper.toDate2(d);
-                defaultTableModelB.addRow(new Object[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
+                Date date = EzHelper.toDate2(d);                System.out.println("date tblA " + date);
+
+                defaultTableModelB.addRow(new Object[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), EzHelper.toString(resultSet.getDate(4)),
                     ngayHenTra(date, ngayMuon),
                     resultSet.getString(5), resultSet.getString(6), trangThaiPMCT(Integer.parseInt(resultSet.getString(7)))});
-        }
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e);
         }
+//        loadTablePMCT(Integer.parseInt(maPhieuMuon));
     }//GEN-LAST:event_tblAMouseClicked
 
     private void txt_timKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timKiemKeyReleased
@@ -345,26 +359,26 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
 
         defaultTableModelA.setRowCount(0);
         defaultTableModelB.setRowCount(0);
-        String findBy = (cboIndex == 0 ? " phieumuon.maphieumuon=?" : (cboIndex == 1) ? " phieumuon.mabandoc=?" : (cboIndex == 2) ? " matuasach = ? ": "pmct.maquyensach=?");
+        String findBy = (cboIndex == 0 ? " phieumuon.maphieumuon=?" : (cboIndex == 1) ? " phieumuon.mabandoc=?" : (cboIndex == 2) ? " matuasach = ? " : "pmct.maquyensach=?");
 
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT distinct dbo.phieumuon.maphieumuon,mabandoc,hoten,ngaymuon,nguoitaophieu,(SELECT hoten FROM dbo.nguoidung WHERE mand=nguoitaophieu)"
-            + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc "
-            + " INNER JOIN dbo.quyensach ON pmct.maquyensach = quyensach.maquyensach"
-            + " WHERE pmct.trangthai=0 AND " + findBy);) {
-        preparedStatement.setString(1, txt_timKiem.getText());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            int matuasach = Integer.parseInt(resultSet.getString(1));
-            ngayMuon = EzHelper.toDate2(resultSet.getString(4));
-            defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2),
-                resultSet.getString(3), resultSet.getString(4),
-                resultSet.getString(5),
-                phieuMuonDAO.soSachDaTra(matuasach)[0] + "/" + phieuMuonDAO.soSachDaTra(matuasach)[1]
-            });
-        }
-        if (defaultTableModelA.getRowCount() > 0) {
-            loadTablePMCT(Integer.parseInt(defaultTableModelA.getValueAt(0, 0).toString()));
-        }
+                + "                 FROM dbo.pmct INNER JOIN dbo.phieumuon ON phieumuon.maphieumuon = pmct.maphieumuon INNER JOIN dbo.nguoidung ON nguoidung.mand = phieumuon.mabandoc "
+                + " INNER JOIN dbo.quyensach ON pmct.maquyensach = quyensach.maquyensach"
+                + " WHERE pmct.trangthai=0 AND " + findBy);) {
+            preparedStatement.setString(1, txt_timKiem.getText());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int matuasach = Integer.parseInt(resultSet.getString(1));
+                ngayMuon = EzHelper.toDate2(resultSet.getString(4));
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2),
+                    resultSet.getString(3), resultSet.getString(4),
+                    resultSet.getString(5),
+                    phieuMuonDAO.soSachDaTra(matuasach)[0] + "/" + phieuMuonDAO.soSachDaTra(matuasach)[1]
+                });
+            }
+            if (defaultTableModelA.getRowCount() > 0) {
+                loadTablePMCT(Integer.parseInt(defaultTableModelA.getValueAt(0, 0).toString()));
+            }
         } catch (Exception e) {
             System.out.println("ERROR : " + e);
         }
@@ -388,15 +402,16 @@ public class PhieuMuonDangMuonJInternalFrame extends javax.swing.JInternalFrame 
         int maQuyenSach = Integer.parseInt(defaultTableModelB.getValueAt(indexPMCT, 1).toString());
         System.out.println(maPhieuMuon);
         System.out.println(maQuyenSach);
-        if(soLanGiaHan >= Constant.SO_LAN_GIA_HAN_TOI_DA){
+        if (soLanGiaHan >= Constant.SO_LAN_GIA_HAN_TOI_DA) {
             DialogHelper.alert(jPanel1, "Đã đạt số lần gia hạn tối đa");
             return;
         }
-        if(service.giaHanDuoc(maPhieuMuon, maQuyenSach)){
+        if (service.giaHanDuoc(maPhieuMuon, maQuyenSach)) {
             service.giaHanSach(maPhieuMuon, maQuyenSach);
             defaultTableModelB.setValueAt(soLanGiaHan + 1, indexPMCT, 5);
-            defaultTableModelB.setValueAt(EzHelper.now(), indexPMCT, 3);
+            defaultTableModelB.setValueAt(EzHelper.toString(EzHelper.now()), indexPMCT, 3);
             defaultTableModelB.setValueAt(EzHelper.addDate(EzHelper.now(), 7), indexPMCT, 4);
+//            loadTablePMCT(maPhieuMuon);
             DialogHelper.alert(jPanel1, "Gia hạn thành công");
         }
 

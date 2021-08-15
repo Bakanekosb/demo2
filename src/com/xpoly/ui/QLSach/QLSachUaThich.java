@@ -6,6 +6,7 @@
 package com.xpoly.ui.QLSach;
 
 import com.xpoly.helper.JdbcHelper;
+import com.xpoly.helper.LoginHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,13 +25,22 @@ public class QLSachUaThich extends javax.swing.JFrame {
     Connection connection = JdbcHelper.ketNoi();
     DefaultTableModel defaultTableModelA = new DefaultTableModel();
     DefaultTableModel defaultTableModelB = new DefaultTableModel();
-     int index=0;
+    int index = 0;
+
     public QLSachUaThich() {
         initComponents();
-        defaultTableModelA.setColumnIdentifiers(new String[]{"Mã Tựa Sách", "Tên Tựa Sách","Mô Tả", "Số Lượt Thích"});
+        defaultTableModelA.setColumnIdentifiers(new String[]{"Mã Tựa Sách", "Tên Tựa Sách", "Mô Tả", "Số Lượt Thích"});
         defaultTableModelB.setColumnIdentifiers(new String[]{"Mã Người Dùng", "Họ Và Tên", "Email", "Số Điện Thoại"});
         tblA.setModel(defaultTableModelA);
         tblB.setModel(defaultTableModelB);
+        if (LoginHelper.quyenQuanTri()) {
+            btnSearchMaSach.setVisible(true);
+        } else {
+            btnSearchMaSach.setVisible(false);
+            txtMaNguoiDung.setEnabled(false);
+            txtMaNguoiDung.setText(LoginHelper.USER.getMaND());
+            timKiemByUser();
+        }
     }
 
     /**
@@ -224,37 +234,37 @@ public class QLSachUaThich extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public void timKiemByUser(){
-    defaultTableModelA.setRowCount(0);
+public void timKiemByUser() {
+        defaultTableModelA.setRowCount(0);
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT tuasach.matuasach,tentuasach,mota,soluongthich  FROM dbo.sachuathich INNER JOIN dbo.tuasach ON tuasach.matuasach = sachuathich.matuasach WHERE mand=?");) {
-           preparedStatement.setString(1, txtMaNguoiDung.getText());
+            preparedStatement.setString(1, txtMaNguoiDung.getText());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               
+
                 defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)});
             }
         } catch (Exception e) {
-            System.out.println("ERROR : "+e);
+            System.out.println("ERROR : " + e);
         }
-}
+    }
     private void btnSearchNguoiDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchNguoiDungActionPerformed
         // TODO add your handling code here:
-         timKiemByUser();
-        
+        timKiemByUser();
+
     }//GEN-LAST:event_btnSearchNguoiDungActionPerformed
 
     private void btnSearchMaSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchMaSachActionPerformed
         // TODO add your handling code here:
         defaultTableModelB.setRowCount(0);
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT sachuathich.mand,hoten,email,sdt FROM dbo.nguoidung INNER JOIN dbo.sachuathich ON sachuathich.mand = nguoidung.mand WHERE matuasach=?");) {
-           preparedStatement.setString(1, txtMaSach.getText());
+            preparedStatement.setString(1, txtMaSach.getText());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               
+
                 defaultTableModelB.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)});
             }
         } catch (Exception e) {
-            System.out.println("ERROR : "+e);
+            System.out.println("ERROR : " + e);
         }
     }//GEN-LAST:event_btnSearchMaSachActionPerformed
 
@@ -274,16 +284,15 @@ public void timKiemByUser(){
         } catch (Exception e) {
             System.out.println("UnlikeActionPerformed thất bại." + e.toString());
         }
-         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM dbo.sachuathich WHERE mand =? AND matuasach=?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM dbo.sachuathich WHERE mand =? AND matuasach=?")) {
             preparedStatement.setString(1, txtMaNguoiDung.getText());
             preparedStatement.setString(2, (String) (defaultTableModelA.getValueAt(index, 0)));
-          
 
             int i = preparedStatement.executeUpdate();
             if (i > 0) {
-               
+
                 timKiemByUser();
-              
+
             } else {
                 JOptionPane.showMessageDialog(this, "UnlikeActionPerformed thất bại.");
                 return;

@@ -5,6 +5,7 @@
  */
 package com.xpoly.ui.PhieuMuon;
 
+import com.xpoly.helper.EzHelper;
 import com.xpoly.helper.JdbcHelper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +50,7 @@ public void fillToTable() {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                
-                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),resultSet.getString(6)});
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), EzHelper.toString(resultSet.getDate(4)), resultSet.getString(5),resultSet.getString(6)});
             }
         } catch (Exception e) {
             System.out.println("ERROR : "+e);
@@ -222,7 +223,7 @@ defaultTableModelB.setRowCount(0);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                
-                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5),resultSet.getString(6)});
+                defaultTableModelA.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), EzHelper.toString(resultSet.getDate(4)), resultSet.getString(5),resultSet.getString(6)});
             }
         } catch (Exception e) {
             System.out.println("ERROR : "+e);
@@ -240,8 +241,8 @@ defaultTableModelB.setRowCount(0);
             preparedStatement.setString(1, maPhieuMuon);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-               
-                defaultTableModelB.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),  resultSet.getString(4), resultSet.getString(5), resultSet.getString(6),resultSet.getString(7)});
+               String date = resultSet.getDate(4) == null ? "" : EzHelper.toString(resultSet.getDate(4));
+                defaultTableModelB.addRow(new String[]{resultSet.getString(1), resultSet.getString(2), resultSet.getString(3),  date, resultSet.getString(5), resultSet.getString(6),resultSet.getString(7)});
             }
         } catch (Exception e) {
             System.out.println(e);

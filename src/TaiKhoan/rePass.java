@@ -196,7 +196,13 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
 
     private void btnchangpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnchangpassActionPerformed
         // TODO add your handling code here:
-        update();
+        try {
+            update();
+            this.dispose();
+            new DangNhap().setVisible(true);
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_btnchangpassActionPerformed
 
     /**

@@ -450,7 +450,7 @@ public class QLDatSach extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void init() {
-        LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
+//        LoginHelper.USER = new NguoiDungDAO().selectById("ND002");
         if(LoginHelper.quyenQuanTri()){
             mand = "";
         }

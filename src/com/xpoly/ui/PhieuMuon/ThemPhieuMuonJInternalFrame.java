@@ -538,7 +538,7 @@ putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
         tbl_ctpm.setModel(tblModel);
-        LoginHelper.USER = new NguoiDung("ND004");
+//        LoginHelper.USER = new NguoiDung("ND004");
     }
 
     private void setBtnEnabled() {

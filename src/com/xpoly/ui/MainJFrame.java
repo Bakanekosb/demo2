@@ -7,6 +7,7 @@ package com.xpoly.ui;
 
 import QLPhieuTra.DanhSachPhieuTraJInternalFrame;
 import QLPhieuTra.ThemPhieuTraJInternalFrame;
+import TaiKhoan.DangNhap;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.LSGD.QLLichSuGiaoDichJInternalFrame;
@@ -26,6 +27,7 @@ import com.xpoly.ui.PhieuMuon.PhieuMuonHoanThanhJInternalFrame;
 import com.xpoly.ui.PhieuMuon.ThemPhieuMuonJInternalFrame;
 import com.xpoly.ui.QLSach.QLDatSachJInternalFrame;
 import com.xpoly.ui.QLSach.QLSachLuuTruJInternalFrame;
+import com.xpoly.ui.QLSach.QLSachUaThichJInternalFrame;
 import com.xpoly.ui.QLSach.QLTuaSachJInternalFrame;
 import com.xpoly.ui.QLSach.ThemSachJInternalFrame;
 import com.xpoly.ui.QLnguoidung.QLBanDocJInternalFrame;
@@ -97,7 +99,7 @@ public class MainJFrame extends javax.swing.JFrame {
         MenuItem menuSach_uaThich = new MenuItem(iconItem, "Sách ưa thích", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showChucNang(new QLDatSachJInternalFrame());
+                showChucNang(new QLSachUaThichJInternalFrame());
             }
         });
         MenuItem menuSach_datSach = new MenuItem(iconItem, "Đặt sách", new ActionListener() {
@@ -304,6 +306,8 @@ public class MainJFrame extends javax.swing.JFrame {
         lbl_tuasach = new javax.swing.JLabel();
         lbl_quyensach = new javax.swing.JLabel();
         lbl_bandoc = new javax.swing.JLabel();
+        lbl_user = new javax.swing.JLabel();
+        btn_logout = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         panel_menu = new javax.swing.JPanel();
@@ -326,6 +330,17 @@ public class MainJFrame extends javax.swing.JFrame {
         lbl_bandoc.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbl_bandoc.setText("Bạn đọc");
 
+        lbl_user.setText("jLabel2");
+
+        btn_logout.setBackground(new java.awt.Color(255, 255, 255));
+        btn_logout.setText("Logout");
+        btn_logout.setBorder(null);
+        btn_logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_logoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_headerLayout = new javax.swing.GroupLayout(panel_header);
         panel_header.setLayout(panel_headerLayout);
         panel_headerLayout.setHorizontalGroup(
@@ -338,7 +353,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(lbl_quyensach, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbl_bandoc, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(panel_headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbl_user, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panel_headerLayout.setVerticalGroup(
             panel_headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,6 +368,12 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(lbl_tuasach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbl_quyensach, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panel_headerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_user, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_logout, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel_header, java.awt.BorderLayout.PAGE_START);
@@ -366,11 +391,13 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
@@ -383,13 +410,21 @@ public class MainJFrame extends javax.swing.JFrame {
         );
         panel_bodyLayout.setVerticalGroup(
             panel_bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
         getContentPane().add(panel_body, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logoutActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        LoginHelper.USER = null;
+        new DangNhap().setVisible(true);
+        
+    }//GEN-LAST:event_btn_logoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -427,19 +462,25 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_logout;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_bandoc;
     private javax.swing.JLabel lbl_quyensach;
     private javax.swing.JLabel lbl_tuasach;
+    private javax.swing.JLabel lbl_user;
     public static javax.swing.JDesktopPane panel_body;
     private javax.swing.JPanel panel_header;
     private javax.swing.JPanel panel_menu;
     // End of variables declaration//GEN-END:variables
 
     private void init() {
-        LoginHelper.USER = new NguoiDung("ND004");
+//        LoginHelper.USER = new NguoiDung("ND004");
+        String vaiTro = LoginHelper.USER.getVaiTro() == 0 ? "Thủ thư - " :
+                LoginHelper.USER.getVaiTro() == 1 ? "Quản lý - " : "Bạn đọc - ";
+        String name =  LoginHelper.USER.getMaND();
+        lbl_user.setText(vaiTro + name);
 
         MyTask myTask = new MyTask();
         Calendar calendar = Calendar.getInstance();

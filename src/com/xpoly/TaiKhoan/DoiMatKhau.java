@@ -5,7 +5,6 @@
  */
 package com.xpoly.TaiKhoan;
 
-
 import com.sun.jdi.connect.spi.Connection;
 import com.xpoly.DAO.DangNhapDAO;
 import com.xpoly.DAO.NguoiDungDAO;
@@ -24,17 +23,18 @@ import javax.swing.JOptionPane;
  * @author 77 thai ha
  */
 public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung> {
+
     //QLtaiKhoanJFrame DN = new QLtaiKhoanJFrame();
-        NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
-        Connection con;
-        DangNhapDAO dao = new DangNhapDAO();
-    
+    NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
+    Connection con;
+    DangNhapDAO dao = new DangNhapDAO();
+
     public DoiMatKhau() {
         initComponents();
         txtMaND.setText(LoginHelper.USER.getMaND());
         setLocationRelativeTo(null);
     }
-        
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -266,7 +266,7 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
 //            DialogHelper.alert(this, "sua that bai");
 //            return;
 //        }
-   }
+    }
 
     @Override
     public void delete() {
@@ -280,17 +280,17 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
 
     @Override
     public StringBuilder validateForm() {
-   StringBuilder sb = new StringBuilder();
-   if(txtMKHienTai.getText().isBlank()){
-       DialogHelper.alert(this,"mat khau khong duoc de trong ! ");
-   }
-    if(txtMKMoi.getText().isBlank()){
-       DialogHelper.alert(this,"mat khau moi khong duoc de trong ! ");
-   }
-     if(txtMKMoi.getText().isBlank()){
-       DialogHelper.alert(this,"mat khau moi khong duoc de trong ! ");
-   }
-            return sb;
+        StringBuilder sb = new StringBuilder();
+        if (txtMKHienTai.getText().isBlank()) {
+            DialogHelper.alert(this, "mat khau khong duoc de trong ! ");
+        }
+        if (txtMKMoi.getText().isBlank()) {
+            DialogHelper.alert(this, "mat khau moi khong duoc de trong ! ");
+        }
+        if (txtMKMoi.getText().isBlank()) {
+            DialogHelper.alert(this, "mat khau moi khong duoc de trong ! ");
+        }
+        return sb;
     }
 
     @Override
@@ -301,8 +301,7 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
         }
         String mand = txtMaND.getText();
         String matkhaumoi = txtMKMoi.getText();
-        
-        
+
         return new NguoiDung(mand, matkhaumoi);
     }
 
@@ -311,7 +310,4 @@ public class DoiMatKhau extends javax.swing.JFrame implements IService<NguoiDung
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-
- 
 }

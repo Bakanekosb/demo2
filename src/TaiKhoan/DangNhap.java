@@ -46,6 +46,7 @@ public class DangNhap extends javax.swing.JFrame {
         btnexit = new javax.swing.JButton();
         btnlogin = new javax.swing.JButton();
         txtmatkhau = new javax.swing.JPasswordField();
+        btn_quenMatKhau = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,7 +78,7 @@ public class DangNhap extends javax.swing.JFrame {
                 btnexitActionPerformed(evt);
             }
         });
-        getContentPane().add(btnexit, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, -1, -1));
+        getContentPane().add(btnexit, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, -1, -1));
 
         btnlogin.setText("Đăng nhập");
         btnlogin.addActionListener(new java.awt.event.ActionListener() {
@@ -85,8 +86,16 @@ public class DangNhap extends javax.swing.JFrame {
                 btnloginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
+        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, -1, -1));
         getContentPane().add(txtmatkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 310, 30));
+
+        btn_quenMatKhau.setText("Quên mật khẩu");
+        btn_quenMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_quenMatKhauActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_quenMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 110, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TaiKhoan/thuvien.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -149,6 +158,12 @@ public class DangNhap extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnexitActionPerformed
 
+    private void btn_quenMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_quenMatKhauActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new rePass().setVisible(true);
+    }//GEN-LAST:event_btn_quenMatKhauActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -195,6 +210,7 @@ public class DangNhap extends javax.swing.JFrame {
         return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_quenMatKhau;
     private javax.swing.JButton btnexit;
     private javax.swing.JButton btnlogin;
     private javax.swing.JLabel jLabel1;

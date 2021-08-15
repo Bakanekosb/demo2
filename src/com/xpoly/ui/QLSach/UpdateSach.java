@@ -59,7 +59,7 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
      * Creates new form ThemSach
      */
     public UpdateSach(TuaSach model, String tacGia, int soSachDocTaiCho) {
-        LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
+//        LoginHelper.USER = new NguoiDungDAO().selectById("ND001");
         initComponents();
         tuaSachUpdate = model;
         init();

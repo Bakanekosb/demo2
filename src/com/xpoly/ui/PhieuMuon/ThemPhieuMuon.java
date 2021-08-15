@@ -578,7 +578,7 @@ public class ThemPhieuMuon extends javax.swing.JFrame {
     private void init() {
 
         tbl_ctpm.setModel(tblModel);
-        LoginHelper.USER = new NguoiDung("ND004");
+       // LoginHelper.USER = new NguoiDung("ND004");
     }
 
     private void setBtnEnabled() {
