@@ -13,6 +13,7 @@ import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.JdbcHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.NguoiDung;
@@ -20,6 +21,10 @@ import com.xpoly.model.QuyenSach;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -665,9 +670,29 @@ public class UpdateSach extends javax.swing.JFrame implements IService<TuaSach> 
         txt_soLuong.setText(model.getSoLuong() + "");
         txt_docTaiCho.setText(soSachDocTaiCho + "");
         if (model.getAnh() != null) {
-            lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
+             getAnh(model.getAnh());
         }else{
             lbl_cover.setIcon(EzHelper.readImg("2.png"));
+        }
+    }
+    
+     void getAnh(String photoName) {
+        InputStream input;
+        try {
+            String select_sql = "select * from photo where photoName = ?";
+            ResultSet rs = JdbcHelper.executeQuery(select_sql, photoName);
+            File file = new File("images", "cover.jpg");
+            FileOutputStream fos = new FileOutputStream(file);
+
+            if (rs.next()) {
+                input = rs.getBinaryStream("photo");
+                byte buffer[] = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    fos.write(buffer);
+                }
+                lbl_cover.setIcon(EzHelper.readImg(file.getName()));
+            }
+        } catch (Exception e) {
         }
     }
 

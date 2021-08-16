@@ -12,11 +12,13 @@ import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,6 +53,7 @@ public class ThemSachJInternalFrame extends javax.swing.JInternalFrame implement
     int docTaiCho;
     boolean isAD = true;
     int soLuong;
+    FileInputStream fis;
 
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
     DefaultComboBoxModel<String> cboModelNam = new DefaultComboBoxModel<>(new String[]{"AD", "BC"});
@@ -359,7 +362,9 @@ public class ThemSachJInternalFrame extends javax.swing.JInternalFrame implement
     private void lbl_coverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_coverMouseClicked
         // TODO add your handling code here:
         EzHelper ez = new EzHelper();
-        ez.selectImage(lbl_cover);
+//        ez.selectImage(lbl_cover);
+        fis = ez.saveImage(lbl_cover);
+
     }//GEN-LAST:event_lbl_coverMouseClicked
 
     private void cbo_danhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_danhMucActionPerformed
@@ -445,7 +450,7 @@ public class ThemSachJInternalFrame extends javax.swing.JInternalFrame implement
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
-        
+
         cbo_danhMuc.setModel((DefaultComboBoxModel) cboModel);
         loadComboboxDanhMuc();
         lst_tSach = tuaSachDAO.selectAll();
@@ -470,6 +475,12 @@ public class ThemSachJInternalFrame extends javax.swing.JInternalFrame implement
                 for (int i = 0; i < soLuong; i++) {
                     quyenSach = new QuyenSach(viTriXep, i >= docTaiCho, tuaSach.getGhiChu(), tuaSach.getMaTuaSach());
                     quyenSachDAO.insert(quyenSach);
+                }
+                String sql = "insert into photo (photoName, photo) values (?,?)";
+                try {
+                    JdbcHelper.executeUpdate(sql, lbl_cover.getToolTipText(), fis);
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
 
                 DialogHelper.alert(jPanel1, "Thêm thành công");

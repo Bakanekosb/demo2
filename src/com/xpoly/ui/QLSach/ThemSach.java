@@ -5,6 +5,8 @@
  */
 package com.xpoly.ui.QLSach;
 
+import com.itextpdf.text.pdf.codec.PngWriter;
+import com.microsoft.sqlserver.jdbc.SQLServerStatementColumnEncryptionSetting;
 import com.xpoly.DAO.DanhMucDAO;
 import com.xpoly.DAO.QuyenSachDAO;
 import com.xpoly.DAO.Sach_TacGiaDAO;
@@ -12,11 +14,17 @@ import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.JdbcHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -46,6 +54,8 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     int docTaiCho;
     boolean isAD = true;
     int soLuong;
+    
+    FileInputStream fis;
 
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
     DefaultComboBoxModel<String> cboModelNam = new DefaultComboBoxModel<>(new String[]{"AD", "BC"});
@@ -68,7 +78,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        lbl_cover = new javax.swing.JLabel();
+        lbl_cover2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         cbo_danhMuc = new javax.swing.JComboBox<>();
@@ -101,6 +111,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         btn_clear = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
+        lbl_cover = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,11 +119,11 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("THÊM TỰA SÁCH");
 
-        lbl_cover.setBackground(new java.awt.Color(255, 255, 255));
-        lbl_cover.setText("Chọn ảnh bìa");
-        lbl_cover.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbl_cover2.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_cover2.setText("Chọn ảnh bìa");
+        lbl_cover2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_coverMouseClicked(evt);
+                lbl_cover2MouseClicked(evt);
             }
         });
 
@@ -297,6 +308,14 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
 
         btn_cancel.setText("Cancel");
 
+        lbl_cover.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_cover.setText("Chọn ảnh bìa");
+        lbl_cover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_coverMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -307,26 +326,28 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btn_cancel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
                         .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(31, 31, 31))
+                        .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_cover2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 14, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbl_cover2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_clear)
                         .addGap(18, 18, 18)
                         .addComponent(btn_save)
@@ -359,11 +380,37 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
         chonTG.setVisible(true);
     }//GEN-LAST:event_btn_chonTgActionPerformed
 
-    private void lbl_coverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_coverMouseClicked
+    private void lbl_cover2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_cover2MouseClicked
         // TODO add your handling code here:
         EzHelper ez = new EzHelper();
-        ez.selectImage(lbl_cover);
-    }//GEN-LAST:event_lbl_coverMouseClicked
+        fis = ez.saveImage(lbl_cover2);
+        String sql = "insert into photo (photoName, photo) values (?,?)";
+        try {
+            JdbcHelper.executeUpdate(sql, lbl_cover2.getToolTipText(), fis);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        InputStream input;
+        try {
+            String select_sql = "select * from photo where photoName = ?";
+            ResultSet rs = JdbcHelper.executeQuery(select_sql, lbl_cover2.getToolTipText());
+            File file = new File("images","cover.jpg");
+            FileOutputStream fos = new FileOutputStream(file);
+            
+            if(rs.next()){
+                input = rs.getBinaryStream("photo");
+                byte buffer[] = new byte[1024];
+                while(input.read(buffer) > 0){
+                    fos.write(buffer);
+                }
+                
+                lbl_cover.setIcon(EzHelper.readImg(file.getName()));
+                
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_lbl_cover2MouseClicked
 
     private void cbo_namxbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_namxbActionPerformed
         // TODO add your handling code here:
@@ -373,6 +420,10 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
             isAD = false;
         }
     }//GEN-LAST:event_cbo_namxbActionPerformed
+
+    private void lbl_coverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_coverMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_coverMouseClicked
 
     public static void hienThiTG(List<TacGia> lst) {
         List<String> namesList = lst.stream().map(p -> p.getTenTg()).collect(Collectors.toList()); 
@@ -441,6 +492,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_cover;
+    private javax.swing.JLabel lbl_cover2;
     private javax.swing.JTextField txt_docTaiCho;
     private javax.swing.JTextArea txt_ghiChu;
     private javax.swing.JTextField txt_gia;
@@ -577,7 +629,7 @@ public class ThemSach extends javax.swing.JFrame implements IService<TuaSach> {
             return null;
         }
 
-        String anh = lbl_cover.getToolTipText();
+        String anh = lbl_cover2.getToolTipText();
         System.out.println(anh);
 
         for (TuaSach x : lst_tSach) {

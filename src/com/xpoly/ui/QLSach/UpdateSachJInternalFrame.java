@@ -13,6 +13,7 @@ import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Interface.IService;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.JdbcHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.DanhMuc;
 import com.xpoly.model.QuyenSach;
@@ -20,6 +21,11 @@ import com.xpoly.model.Sach_Tg;
 import com.xpoly.model.TacGia;
 import com.xpoly.model.TuaSach;
 import com.xpoly.ui.MainJFrame;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -56,6 +62,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     int soLuong;
     int indexCombobox = 0;
     boolean chonTacGia = false;
+    FileInputStream fis;
 
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
     DefaultComboBoxModel<String> cboModelNam = new DefaultComboBoxModel<>(new String[]{"AD", "BC"});
@@ -331,7 +338,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -349,7 +356,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 8, Short.MAX_VALUE))
+                        .addGap(0, 12, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_cover, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,7 +377,7 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     private void lbl_coverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_coverMouseClicked
         // TODO add your handling code here:
         EzHelper ez = new EzHelper();
-        ez.selectImage(lbl_cover);
+        fis = ez.saveImage(lbl_cover);
     }//GEN-LAST:event_lbl_coverMouseClicked
 
     private void cbo_danhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_danhMucActionPerformed
@@ -509,16 +516,18 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
     @Override
     public void update() {
         if (tuaSachUpdate != null) {
-            try {
-                tuaSachDAO.update(getModel());
+            boolean ans = DialogHelper.confirm(jPanel1, "Bạn có chắc chắn muốn cập nhật không?");
+            if (ans) {
+                try {
+                    tuaSachDAO.update(getModel());
 
-                if (chonTacGia) {
-                    stgDAO.delete(tuaSachUpdate.getMaTuaSach());
-                    for (TacGia x : ChonTacGiaJFrame.lst_chonTG) {
-                        System.out.println("chon tac gia");
-                        stgDAO.insert(new Sach_Tg(tuaSachUpdate.getMaTuaSach(), x.getMaTg()));
+                    if (chonTacGia) {
+                        stgDAO.delete(tuaSachUpdate.getMaTuaSach());
+                        for (TacGia x : ChonTacGiaJFrame.lst_chonTG) {
+                            System.out.println("chon tac gia");
+                            stgDAO.insert(new Sach_Tg(tuaSachUpdate.getMaTuaSach(), x.getMaTg()));
+                        }
                     }
-                }
 //                if (soLuong > tuaSachUpdate.getSoLuong()) {
 //                    for (int i = 0; i < soLuong - tuaSachUpdate.getSoLuong(); i++) {
 //                        quyenSach = new QuyenSach(viTriXep, i >= (docTaiCho - new QuyenSachDAO().soSachDocTaiCho(tuaSachUpdate.getMaTuaSach())),
@@ -526,12 +535,20 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
 //                        quyenSachDAO.insert(quyenSach);
 //                    }
 //                }
-                DialogHelper.alert(jPanel1, "Update thành công");
-            } catch (Exception e) {
-                DialogHelper.alert(jPanel1, "Update không thành công");
+                    String sql = "insert into photo (photoName, photo) values (?,?)";
+                    try {
+                        JdbcHelper.executeUpdate(sql, lbl_cover.getToolTipText(), fis);
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+
+                    DialogHelper.alert(jPanel1, "Update thành công");
+                } catch (Exception e) {
+                    DialogHelper.alert(jPanel1, "Update không thành công");
+                }
+            } else {
+                DialogHelper.alert(jPanel1, "Fail");
             }
-        } else {
-            DialogHelper.alert(jPanel1, "Fail");
         }
     }
 
@@ -652,9 +669,30 @@ public class UpdateSachJInternalFrame extends javax.swing.JInternalFrame impleme
         txt_soLuong.setText(model.getSoLuong() + "");
         txt_docTaiCho.setText(soSachDocTaiCho + "");
         if (model.getAnh() != null) {
-            lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
+//            lbl_cover.setIcon(EzHelper.readImg(model.getAnh()));
+            getAnh(model.getAnh());
         } else {
-            lbl_cover.setIcon(EzHelper.readImg("2.png"));
+            lbl_cover.setIcon(EzHelper.readImg("no_cover.jpg"));
+        }
+    }
+
+    void getAnh(String photoName) {
+        InputStream input;
+        try {
+            String select_sql = "select * from photo where photoName = ?";
+            ResultSet rs = JdbcHelper.executeQuery(select_sql, photoName);
+            File file = new File("images", "cover.jpg");
+            FileOutputStream fos = new FileOutputStream(file);
+
+            if (rs.next()) {
+                input = rs.getBinaryStream("photo");
+                byte buffer[] = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    fos.write(buffer);
+                }
+                lbl_cover.setIcon(EzHelper.readImg(file.getName()));
+            }
+        } catch (Exception e) {
         }
     }
 

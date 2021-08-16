@@ -8,6 +8,7 @@ package com.xpoly.helper;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -122,6 +123,25 @@ public class EzHelper extends javax.swing.JFrame {
             DialogHelper.alert(this, "Lỗi save ảnh");
         }
 
+    }
+    
+    public  FileInputStream saveImage(JLabel lbl_image) {
+        FileInputStream fis = null;
+        try {
+            JFileChooser fc = new JFileChooser("images\\");
+            if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                String path = file.getAbsolutePath();
+                if (saveImg(file)) {
+                    lbl_image.setIcon(readImg(file.getName()));
+                    lbl_image.setToolTipText(file.getName());
+                    fis = new FileInputStream(path);
+                }
+            }
+        } catch (Exception e) {
+            DialogHelper.alert(this, "Lỗi save ảnh");
+        }
+        return fis;
     }
     
     static final SimpleDateFormat DATE_FORMATER = new SimpleDateFormat("dd/MM/yyyy");

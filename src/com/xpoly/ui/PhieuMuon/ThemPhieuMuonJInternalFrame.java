@@ -11,6 +11,7 @@ import com.xpoly.DAO.TuaSachDAO;
 import com.xpoly.Service.PhieuMuon_Service;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.EzHelper;
+import com.xpoly.helper.JdbcHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.NguoiDung;
 import com.xpoly.model.PMCT;
@@ -18,6 +19,10 @@ import com.xpoly.model.PhieuMuon;
 import com.xpoly.model.QuyenSach;
 import com.xpoly.model.TuaSach;
 import com.xpoly.ui.QLSach.UpdateSach;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JRootPane;
@@ -393,6 +398,11 @@ public class ThemPhieuMuonJInternalFrame extends javax.swing.JInternalFrame {
             lbl_maTuaSach.setText(tSach.getMaTuaSach() + "");
             lbl_tenSach.setText(tSach.getTenTuaSach());
             setBtnEnabled();
+            if (tSach.getAnh() != null) {
+                getAnh(tSach.getAnh());
+            } else {
+                lbl_cover.setIcon(EzHelper.readImg("no_cover.jpg"));
+            }
             //            lbl_cover.setIcon(EzHelper.readImg(tSach.getAnh()));
         } catch (Exception e) {
             e.printStackTrace();
@@ -533,7 +543,7 @@ public class ThemPhieuMuonJInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_timKiem;
     // End of variables declaration//GEN-END:variables
  private void init() {
-putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
@@ -570,6 +580,26 @@ putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
         } else {
             txt_timKiem.setEnabled(true);
             btn_timkiem.setEnabled(true);
+        }
+    }
+
+    void getAnh(String photoName) {
+        InputStream input;
+        try {
+            String select_sql = "select * from photo where photoName = ?";
+            ResultSet rs = JdbcHelper.executeQuery(select_sql, photoName);
+            File file = new File("images", "cover.jpg");
+            FileOutputStream fos = new FileOutputStream(file);
+
+            if (rs.next()) {
+                input = rs.getBinaryStream("photo");
+                byte buffer[] = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    fos.write(buffer);
+                }
+                lbl_cover.setIcon(EzHelper.readImg(file.getName()));
+            }
+        } catch (Exception e) {
         }
     }
 }

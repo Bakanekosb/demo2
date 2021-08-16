@@ -21,6 +21,7 @@ import com.xpoly.addTacGia.QLTacGiaJInternalFrame;
 import com.xpoly.helper.DialogHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.helper.MyTask;
+import com.xpoly.helper.TaskDaily;
 import com.xpoly.model.NguoiDung;
 import com.xpoly.ui.PhieuMuon.PhieuMuonDangMuonJInternalFrame;
 import com.xpoly.ui.PhieuMuon.PhieuMuonHoanThanhJInternalFrame;
@@ -73,6 +74,7 @@ public class MainJFrame extends javax.swing.JFrame {
         ImageIcon iconPhieuMuon = new ImageIcon("icon\\icon.png");
         ImageIcon iconPhieuTra = new ImageIcon("icon\\icon.png");
         ImageIcon iconTacGia = new ImageIcon("icon\\icon.png");
+        ImageIcon iconThongKe = new ImageIcon("icon\\icon.png");
         ImageIcon iconSubMenu = new ImageIcon("icon\\subMenu.png");
         ImageIcon iconItem = new ImageIcon("icon\\item.png");
 
@@ -210,16 +212,22 @@ public class MainJFrame extends javax.swing.JFrame {
                 showChucNang(new QLDanhMucJInternalFrame());
             }
         });
+        
+        MenuItem menuThongKe_soLuotMuon = new MenuItem(iconItem, "Số lượt mượn", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChucNang(new ThongKeJInternalFrame());
+            }
+        });
 
-        MenuItem menuSach ;
+        MenuItem menuSach;
         if (LoginHelper.quyenQuanTri()) {
             menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_them, menuSach_luuTru, menuSach_uaThich, menuSach_datSach);
         } else {
             menuSach = new MenuItem(iconSach, "Sách", null, menuSach_danhSach, menuSach_luuTru, menuSach_uaThich, menuSach_datSach
             );
         }
-        
-        
+
         MenuItem menuTacGia = new MenuItem(iconTacGia, "Tác giả", null, menuTacGia_danhSach);
         menuTacGia.setVisible(LoginHelper.quyenQuanTri());
 
@@ -245,12 +253,17 @@ public class MainJFrame extends javax.swing.JFrame {
         MenuItem menuPhieuMuon = new MenuItem(iconPhieuMuon, "Phiếu mượn", null, menuPhieuMuon_danhSachDangMuon,
                 menuPhieuMuon_danhSachHoanThanh, menuPhieuMuon_them);
 
-        MenuItem menuPhieuTra ;
+        MenuItem menuPhieuTra;
         if (LoginHelper.quyenQuanTri()) {
             menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null, menuPhieuTra_danhSach, menuPhieuTra_them);
         } else {
             menuPhieuTra = new MenuItem(iconPhieuTra, "Phiếu trả", null, menuPhieuTra_danhSach);
         }
+        
+        MenuItem menuThongKe;
+        if (LoginHelper.quyenQuanTri()) {
+            menuPhieuTra = new MenuItem(iconPhieuTra, "Thống kê", null, menuThongKe_soLuotMuon);
+        } 
         
         addMenu(menuSach, menuTacGia, menuDanhMuc, menuNguoiDung, menuPhieuMuon, menuPhieuTra);
 
@@ -423,7 +436,7 @@ public class MainJFrame extends javax.swing.JFrame {
         this.dispose();
         LoginHelper.USER = null;
         new DangNhap().setVisible(true);
-        
+
     }//GEN-LAST:event_btn_logoutActionPerformed
 
     /**
@@ -477,23 +490,24 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void init() {
 //        LoginHelper.USER = new NguoiDung("ND004");
-        String vaiTro = LoginHelper.USER.getVaiTro() == 0 ? "Thủ thư - " :
-                LoginHelper.USER.getVaiTro() == 1 ? "Quản lý - " : "Bạn đọc - ";
-        String name =  LoginHelper.USER.getMaND();
+        String vaiTro = LoginHelper.USER.getVaiTro() == 0 ? "Thủ thư - "
+                : LoginHelper.USER.getVaiTro() == 1 ? "Quản lý - " : "Bạn đọc - ";
+        String name = LoginHelper.USER.getMaND();
         lbl_user.setText(vaiTro + name);
 
-        MyTask myTask = new MyTask();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 5);
-        calendar.set(Calendar.MINUTE, 30);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-
-        Date dateSchedule = calendar.getTime();
-        long period = 24 * 60 * 60 * 1000;
-
-        Timer timer = new Timer();
-        timer.schedule(myTask, dateSchedule, period);
+//        MyTask myTask = new MyTask();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.HOUR_OF_DAY, 5);
+//        calendar.set(Calendar.MINUTE, 30);
+//        calendar.set(Calendar.SECOND, 0);
+//        calendar.set(Calendar.MILLISECOND, 0);
+//
+//        Date dateSchedule = calendar.getTime();
+//        long period = 24 * 60 * 60 * 1000;
+//
+//        Timer timer = new Timer();
+//        timer.schedule(myTask, dateSchedule, period);
+        TaskDaily taskDaily = new TaskDaily();
 
         lbl_tuasach.setText("Tựa sách: " + new TuaSachDAO().getTotalTuaSach());
         lbl_quyensach.setText("Quyển sách: " + new QuyenSachDAO().getTotalQSach());

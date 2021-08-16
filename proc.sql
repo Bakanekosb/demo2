@@ -145,8 +145,7 @@ go
 CREATE PROC sp_danhSachDatSachKhongDenLay ( @today DATE )
 AS
 	BEGIN 				 
-				SELECT matuasach, count(matuasach) soLuongTuaSach, email FROM datsach
-				join nguoidung on datsach.mand = nguoidung.mand
+				SELECT matuasach, count(matuasach) soLuongTuaSach FROM datsach
 				where datsach.trangthai = 1 and ngayhenlaysach < @today
 				group by matuasach
 	END
@@ -155,14 +154,14 @@ GO
 
 
 IF OBJECT_ID('sp_EmailDatSachKhongDenLay') IS NOT NULL
-DROP PROC sp_danhSachDatSachKhongDenLay 
+DROP PROC sp_EmailDatSachKhongDenLay 
 go
-CREATE PROC sp_danhSachDatSachKhongDenLay ( @today DATE )
+CREATE PROC sp_EmailDatSachKhongDenLay ( @today DATE )
 AS
 	BEGIN 				 
 				SELECT email, madatsach FROM datsach
 				join nguoidung on datsach.mand = nguoidung.mand
-				where datsach.trangthai = 1 and ngayhenlaysach < getdate()
+				where datsach.trangthai = 1 and ngayhenlaysach < @today
 	END
 GO
 
@@ -370,3 +369,50 @@ matuasach int not null foreign key references tuasach(matuasach),
 noidung nvarchar(max),
 ngayreview date
 )
+
+if OBJECT_ID('photo') is not null
+drop table photo
+go
+create table photo(
+id int identity primary key,
+photoName nvarchar(max),
+photo image
+)
+
+select * from photo
+
+
+IF OBJECT_ID('sp_namMuon') IS NOT NULL
+DROP PROC sp_namMuon 
+go
+CREATE PROC sp_namMuon
+AS
+	BEGIN 				 
+				select Distinct YEAR(ngaymuon),count(*) as sosachmuon  from pmct join phieumuon on pmct.maphieumuon = phieumuon.maphieumuon
+				group by YEAR(ngaymuon)
+	END
+GO
+
+IF OBJECT_ID('sp_sachMuonTheoThang') IS NOT NULL
+DROP PROC sp_sachMuonTheoThang 
+go
+CREATE PROC sp_sachMuonTheoThang (@nam int)
+AS
+	BEGIN 				 
+				select count(*) as sosachmuon, MONTH(ngaymuon) as thang from pmct join phieumuon on pmct.maphieumuon = phieumuon.maphieumuon
+				where YEAR(ngaymuon) = @nam
+				group by MONTH(ngaymuon)
+	END
+GO
+
+IF OBJECT_ID('sp_nguoiMuonTheoThang') IS NOT NULL
+DROP PROC sp_sachMuonTheoThang 
+go
+CREATE PROC sp_sachMuonTheoThang (@nam int)
+AS
+	BEGIN 				 
+				select count(mabandoc) as songuoimuon,mabandoc, MONTH(ngaymuon) as thang from pmct join phieumuon on pmct.maphieumuon = phieumuon.maphieumuon
+				where YEAR(ngaymuon) = 2021
+				group by MONTH(ngaymuon), mabandoc
+	END
+GO

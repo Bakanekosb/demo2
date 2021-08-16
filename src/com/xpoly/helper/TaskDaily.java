@@ -15,10 +15,10 @@ import java.util.Timer;
 
 public class TaskDaily {
 
-    public static void main(String[] args) {
+    public TaskDaily() {
         MyTask myTask = new MyTask();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 5);
+        calendar.set(Calendar.HOUR_OF_DAY, 22);
         calendar.set(Calendar.MINUTE, 30);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);

@@ -50,19 +50,19 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
      * Creates new form QLTuaSachJInternalFrame
      */
     DanhMucDAO danhMucDAO = new DanhMucDAO();
-
+    
     int pageNumber = 1, rowsOfPage = 6, rowIndex = 0;
     String keyword = "";
     int totalPage;
     DanhMuc danhMuc = new DanhMuc();
     static int maTuaSachChiTiet;
-
+    
     DefaultComboBoxModel<DanhMuc> cboModel = new DefaultComboBoxModel<>();
     String[] columns = {"Mã tựa sách", "Tên tựa sách", "Tác giả", "Nhà xuất bản", "Năm xuất bản", "Số trang", "Giá tiền",
         "Mô tả", "Ghi chú", "Số lượng", "Danh mục", "Số lượng thích", "Like", "Đặt sách"};
-
+    
     DefaultTableModel tblModel = new DefaultTableModel(columns, 0) {
-
+        
         @Override
         public boolean isCellEditable(int row, int column) {
             //all cells false
@@ -76,16 +76,16 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
     List<Integer> lst_sachUaThich;
     List<DatSach> lst_datSach;
     List<QuyenSach> lst_quyenSach;
-
+    
     TuaSachDAO tuaSachDAO = new TuaSachDAO();
     SachUaThichDAO sachUaThichDAO = new SachUaThichDAO();
     DatSachDAO datSachDAO = new DatSachDAO();
     QuyenSachDAO quyenSachDAO = new QuyenSachDAO();
-
+    
     String madm = "";
-
+    
     public QLTuaSachJInternalFrame() {
-
+        
         lst_sachUaThich = sachUaThichDAO.selectMaTuaSachFromSachUaThichByMaND(LoginHelper.USER.getMaND());
         lst_datSach = datSachDAO.selectByMand(LoginHelper.USER.getMaND());
         initComponents();
@@ -406,7 +406,7 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
+            
         } else {
             try {
                 sachUaThichDAO.deleteByND(maTuaSach, LoginHelper.USER.getMaND());
@@ -423,23 +423,27 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
 
     private void btn_datSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_datSachActionPerformed
         // TODO add your handling code here:
-        try {
-            int trangThai = 0;
-            Date ngayHen = null;
-            int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
-            lst_quyenSach = quyenSachDAO.selectSachSanSangChoMuonByTuaSach(maTuaSach);
-            if (!lst_quyenSach.isEmpty()) {
-                trangThai = 1;
-                ngayHen = Date.from(Instant.now().plus(2, ChronoUnit.DAYS));
-                lst_quyenSach.get(0).setTrangThai(2);
-                quyenSachDAO.update(lst_quyenSach.get(0));
+        boolean ans = DialogHelper.confirm(this, "Bạn có chắc chắn muốn đặt sách này không?");
+        
+        if (ans) {
+            try {
+                int trangThai = 0;
+                Date ngayHen = null;
+                int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
+                lst_quyenSach = quyenSachDAO.selectSachSanSangChoMuonByTuaSach(maTuaSach);
+                if (!lst_quyenSach.isEmpty()) {
+                    trangThai = 1;
+                    ngayHen = Date.from(Instant.now().plus(2, ChronoUnit.DAYS));
+                    lst_quyenSach.get(0).setTrangThai(2);
+                    quyenSachDAO.update(lst_quyenSach.get(0));
+                }
+                
+                datSachDAO.insert(new DatSach(maTuaSach, trangThai, LoginHelper.USER.getMaND(), EzHelper.now(), ngayHen));
+                JOptionPane.showMessageDialog(this, "dat sach thanh cong");
+                tblModel.setValueAt(ngayHen == null ? "Đang đặt" : ngayHen, rowIndex, tbl_tuaSach.getColumn("Đặt sách").getModelIndex());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            datSachDAO.insert(new DatSach(maTuaSach, trangThai, LoginHelper.USER.getMaND(), EzHelper.now(), ngayHen));
-            JOptionPane.showMessageDialog(this, "dat sach thanh cong");
-            tblModel.setValueAt(ngayHen == null ? "Đang đặt" : ngayHen, rowIndex, tbl_tuaSach.getColumn("Đặt sách").getModelIndex());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }//GEN-LAST:event_btn_datSachActionPerformed
 
@@ -560,11 +564,11 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
-
+        
         for (int i = 0; i < 10; i++) {
             JPanel jpanel = new JPanel();
             jpanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
+            
             javax.swing.GroupLayout jpanelLayout = new javax.swing.GroupLayout(jpanel);
             jpanel.setLayout(jpanelLayout);
             jpanelLayout.setHorizontalGroup(
@@ -575,15 +579,15 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
                     jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGap(0, 227, Short.MAX_VALUE)
             );
-
+            
             Panel_grid.add(jpanel);
         }
-
+        
         cbo_danhMuc.setModel((DefaultComboBoxModel) cboModel);
         loadComboboxDanhMuc();
         tbl_tuaSach.setModel(tblModel);
         tblHider = new TableColumnHider(tbl_tuaSach);
-
+        
         for (int i = 2; i < columns.length - 2; i++) {
             hideCols[i - 2] = new JCheckBox(columns[i], true);
             hideCols[i - 2].addActionListener(new java.awt.event.ActionListener() {
@@ -600,15 +604,15 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
                         }
                     } catch (Exception ex) {
                     }
-
+                    
                 }
             });
             panel_chk.add(hideCols[i - 2]);
         }
         panel_chk.setLayout(new GridLayout(1, 10));
-
+        
         lst_datSach = datSachDAO.selectByMand(LoginHelper.USER.getMaND());
-
+        
         loadTable();
     }
 //{"Mã tựa sách", "Tên tựa sách", "Nhà xuất bản", "Năm xuất bản", "Số trang", "Giá tiền",
@@ -625,12 +629,12 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
             int i = 0;
             if (!lst_tuaSach.isEmpty()) {
                 for (TuaSach x : lst_tuaSach) {
-
+                    
                     String like = lst_sachUaThich.contains(x.getMaTuaSach()) ? "Like" : "";
                     btn_like.setText(like.equals("Like") ? "Like" : "Unlike");
                     String datSach = "";
                     String tacGia = new Sach_TacGiaDAO().selectTacgia(x.getMaTuaSach());
-
+                    
                     for (DatSach y : lst_datSach) {
                         if (y.getMaTuaSach() == x.getMaTuaSach()) {
                             if (y.getTrangThai() == 0) {
@@ -654,7 +658,7 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
                         x.getMaTuaSach(), x.getTenTuaSach(), tacGia, x.getNxb(), x.getNamxb(),
                         x.getSoTrang(), x.getGiaTien(), x.getMoTa(), x.getGhiChu(), x.getSoLuong(),
                         EzHelper.MAP_DANHMUC.get(x.getMadm()), x.getSoLuotThich(), like, datSach});
-
+                    
                 }
             }
             System.out.println(pageNumber);
@@ -664,42 +668,42 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
             System.out.println("loi loadtable");
         }
     }
-
+    
     @Override
     public void insert() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void delete() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public StringBuilder validateForm() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Integer getModel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void setModel(Integer model) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     void buttonEnabled() {
         System.out.println(pageNumber + " in button enabled");
         btn_first1.setEnabled(pageNumber > 1);
@@ -707,14 +711,14 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
         btn_last1.setEnabled(pageNumber < totalPage);
         btn_next1.setEnabled(pageNumber < totalPage);
     }
-
+    
     private void loadComboboxDanhMuc() {
         cboModel.addElement(new DanhMuc("", "All"));
         for (DanhMuc x : danhMucDAO.selectAll()) {
             cboModel.addElement(x);
         }
     }
-
+    
     private void nhapThemSoLuongSach() {
         int maTuaSach = (Integer) tblModel.getValueAt(rowIndex, 0);
         TuaSach model = tuaSachDAO.selectById(maTuaSach);
@@ -726,7 +730,7 @@ public class QLTuaSachJInternalFrame extends javax.swing.JInternalFrame implemen
             for (int i = 0; i < slthem; i++) {
                 quyenSachDAO.insert(new QuyenSach("", true, model.getGhiChu(), maTuaSach));
                 System.out.println("something");
-
+                
             }
             loadTable();
         } catch (Exception e) {
