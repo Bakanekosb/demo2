@@ -470,21 +470,21 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
 
     private void TableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableListMouseClicked
         // TODO add your handling code here:
-        int i = TableList.getSelectedRow();
+         int i = TableList.getSelectedRow();
         if (i >= 0) {
             txtMand.setText(TableList.getValueAt(i, 1).toString());
             txtMand.setEditable(false);
             txthoten.setText(TableList.getValueAt(i, 2).toString());
             jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
-            if (TableList.getValueAt(i, 4) == "Nam") {
-                rdbnam.setSelected(true);
+            if (TableList.getValueAt(i, 4).equals("nam")) {
+                rdbnam.setSelected(true); 
             } else {
-                rdbNu.setSelected(true);
+               rdbNu.setSelected(true);
             }
             txtsdt.setText(TableList.getValueAt(i, 5).toString());
             txtEmail.setText(TableList.getValueAt(i, 6).toString());
             txtdiachi.setText(TableList.getValueAt(i, 7).toString());
-            combovaitro.setSelectedItem(TableList.getValueAt(i, 8).toString());
+            combo.setSelectedItem(TableList.getValueAt(i, 8).toString());
             txtghichu.setText(TableList.getValueAt(i, 9).toString());
             txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
             txtvitien.setText(TableList.getValueAt(i, 11).toString());
@@ -680,10 +680,13 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
             Logger.getLogger(QLnguoidung.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (NguoiDung x : lst_tg) {
-            model.addRow(new Object[]{
+            if(x.getVaiTro() == 0 || x.getVaiTro() ==1){
+                 model.addRow(new Object[]{
                 i++, x.getMaND(), x.getHoTen(), x.getNgaySinh(), gioitinh(x.isGioiTinh()), x.getSdt(), x.getEmail(), x.getDiaChi(),
                 vaitro(x.getVaiTro()), x.getGhiChu(), x.getMatKhau(), x.getViTien(), x.getAnh()
             });
+            }
+           
         }
     }
 
@@ -723,7 +726,7 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
     @Override
     public void update() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nguoidungDAO.update(getModel());
                 DialogHelper.alert(this, "Sửa Thành Công!");
             }
@@ -737,7 +740,7 @@ public class QLNhanVienJInternalFrame extends javax.swing.JInternalFrame impleme
     @Override
     public void delete() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nguoidungDAO.delete(txtMand.getText());
 //            TableList.remove(TableList.getSelectedRow());
                 DialogHelper.alert(this, "xóa Thành Công!");

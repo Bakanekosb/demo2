@@ -545,7 +545,7 @@ public class AddNhanSu extends javax.swing.JFrame implements IService<NguoiDung>
         String matkhau = randomString(numberOfCharactor);
         vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
         String anh = nhanvienDAO.selectIMG(lblIMG);
-        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, anh, trangthai);
     }
 
     public int selectrole() {

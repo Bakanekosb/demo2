@@ -51,7 +51,7 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
         btncheckCODE = new javax.swing.JButton();
         txtNewPass = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
@@ -162,6 +162,7 @@ public class rePass extends javax.swing.JFrame implements IService<NguoiDung> {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         this.dispose();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExitActionPerformed
     NguoiDung nd = new NguoiDung();

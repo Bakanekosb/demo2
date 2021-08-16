@@ -6,6 +6,7 @@
 package com.xpoly.QLnhansu;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.RectangleReadOnly;
@@ -21,6 +22,7 @@ import com.xpoly.helper.JdbcHelper;
 import com.xpoly.helper.LoginHelper;
 import com.xpoly.model.LichSuGiaoDich;
 import com.xpoly.model.NguoiDung;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -331,26 +333,33 @@ public class NapTien extends javax.swing.JFrame implements IService<NguoiDung> {
     }
 
     public void pdf() {
-//        Rectangle pageSize = new RectangleReadOnly(250, 450);
-        try {
-//            com.itextpdf.text.Rectangle rg = new  com.itextpdf.text.Rectangle(600, 800, 10, 10);
-            Document dc = new Document();
-            PdfWriter.getInstance(dc, new FileOutputStream("abc.pdf"));
-            dc.open();
-            dc.add(new Paragraph("hoa don nap tien thu vien Xpoly\n \n---------------------------"));
-            dc.add(new Paragraph("ngay tao hoa don : " + EzHelper.now()));
-            dc.add(new Paragraph("hoa don so " + i++));
-            dc.add(new Paragraph("khach hang  " + lblTenNd.getText()));
-            dc.add(new Paragraph("tai khoan duoc nap tien : " + txtmand.getText()));
-            dc.add(new Paragraph("So tien duoc nap :  " + txtMoney.getText()));
-            dc.add(new Paragraph("Nguoi nap tien  " + LoginHelper.USER.getMaND()));
-            dc.close();
-            System.out.println("1");       
+       Rectangle pageSize = new RectangleReadOnly(250, 450);
+        // tạo một document
+        Document document = new Document(pageSize);
 
-        } catch (Exception e) {
+        try {
+            // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+            PdfWriter.getInstance(document, new FileOutputStream("hoadon.pdf"));
+
+            // mở file để thực hiện viết
+            document.open();
+            // thêm nội dung sử dụng add function
+            document.add(new Paragraph("hoa don nap tien thu vien Xpoly\n \n--------------------------------------------\n \n"));
+            document.add(new Paragraph("ngay tao hoa don : " +EzHelper.now() ));
+            document.add(new Paragraph("hoa don so " ));
+            document.add(new Paragraph("khach hang  " +lblTenNd.getText()));
+            document.add(new Paragraph("tai khoan duoc nap tien : " +txtmand.getText()));
+            document.add(new Paragraph("So tien duoc nap :  " + txtMoney.getText()));
+            document.add(new Paragraph("Nguoi nap tien  " ));
+            System.out.println("ghi file thành công ! ");
+//            LoginHelper.USER.getMaND()
+            
+            // đóng file
+            document.close();
+
+        } catch (DocumentException | FileNotFoundException e) {
         }
-        
-        i = i;
+
     }
 
     @Override

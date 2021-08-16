@@ -37,8 +37,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     EzHelper ez = new EzHelper();
     String head[] = {"STT", "Mã Người Dùng", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Email", "Địa Chỉ", "Vai Trò", "Ghi Chú", "Mật Khẩu", "Ví Tiền", "Ảnh"};
     DefaultTableModel model = new DefaultTableModel(head, 0);
-    String role[] = {"ADMIN", "THỦ THƯ", "BẠN ĐỌC"};
-    DefaultComboBoxModel<Object> combo = new DefaultComboBoxModel<>(role);
+    
     NhanVienDao nhanvienDAO = new NhanVienDao();
     NguoiDung nguoidung = new NguoiDung();
     NguoiDungDAO nguoidungDAO = new NguoiDungDAO();
@@ -100,8 +99,6 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
         txtmatkhau = new javax.swing.JPasswordField();
         txtvitien = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        combovaitro = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jdatengaysinh = new com.toedter.calendar.JDateChooser();
@@ -172,10 +169,6 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
 
         jLabel11.setText("Ví Tiền");
 
-        jLabel12.setText("Vai Trò");
-
-        combovaitro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel10.setText("Mật Khẩu");
 
         jLabel13.setText("Ảnh");
@@ -198,18 +191,14 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(combovaitro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtvitien, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jdatengaysinh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(txthoten, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMand, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtvitien, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jdatengaysinh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(txthoten, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtMand, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rdbNu)
                         .addGap(39, 39, 39)
@@ -235,7 +224,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblImg, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,12 +256,13 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
                                     .addComponent(txtvitien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel11)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel13)
-                                .addComponent(lblImg)))
+                                .addComponent(lblImg))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -289,11 +279,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtmatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(combovaitro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
@@ -546,7 +532,6 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     private javax.swing.JButton btnadd;
     private javax.swing.JButton btnseach;
     private javax.swing.JButton btnupdate;
-    private javax.swing.JComboBox<String> combovaitro;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -554,7 +539,6 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -591,8 +575,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
         this.setBorder(null);
 
         TableList.setModel(model);
-        combovaitro.setModel((DefaultComboBoxModel) combo);
-        loadTable();
+      
         pack();
     }
     List<NguoiDung> lst_tg = null;
@@ -620,7 +603,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     @Override
     public void insert() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nhanvienDAO.insert(getModel());
                 DialogHelper.alert(this, "Thêm Thành Công!");
             }
@@ -648,7 +631,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
     @Override
     public void delete() {
         try {
-            if (nguoidung != null) {
+            if (getModel() != null) {
                 nhanvienDAO.delete(txtMand.getText());
 //            TableList.remove(TableList.getSelectedRow());
                 DialogHelper.alert(this, "xóa Thành Công!");
@@ -670,7 +653,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
         txtsdt.setText("");
         txtvitien.setText("");
         rdbnam.setSelected(true);
-        combovaitro.setSelectedIndex(1);
+      
         lblImg.setText("Tải lên");
     }
 
@@ -746,7 +729,7 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
         String matkhau = randomString(numberOfCharactor);
         vitien = EzHelper.isDouble(txtvitien, "Ví tiền !", this);
         String anh = lblImg.getToolTipText();
-        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, selectrole(), ghichu, matkhau, vitien, "", trangthai);
+        return new NguoiDung(mand, hoten, ngaysinh, gioitinh, sdt, email, diachi, 2, ghichu, matkhau, vitien, "", trangthai);
     }
 
     public String randomString(int numberOfCharactor) {
@@ -799,43 +782,29 @@ public class QLBanDocJInternalFrame extends javax.swing.JInternalFrame implement
 
     }
 
-    public int selectrole() {
-        if (combovaitro.getSelectedIndex() == 1) {
-            return 1;
-        }
-        if (combovaitro.getSelectedIndex() == 2) {
-            return 2;
-        }
-        if (combovaitro.getSelectedIndex() == 3) {
-            return 3;
-        }
-        return 0;
-    }
+
 
     public void mouseCLick() {
-        List<NguoiDung> lst = new ArrayList<>();
         int i = TableList.getSelectedRow();
         if (i >= 0) {
             txtMand.setText(TableList.getValueAt(i, 1).toString());
             txtMand.setEditable(false);
             txthoten.setText(TableList.getValueAt(i, 2).toString());
             jdatengaysinh.setDate((Date) TableList.getValueAt(i, 3));
-            if (TableList.getValueAt(i, 4) == "Nam") {
-                rdbnam.setSelected(true);
+            if (TableList.getValueAt(i, 4).equals("nam")) {
+                rdbnam.setSelected(true); 
             } else {
-                rdbNu.setSelected(true);
+               rdbNu.setSelected(true);
             }
             txtsdt.setText(TableList.getValueAt(i, 5).toString());
             txtEmail.setText(TableList.getValueAt(i, 6).toString());
             txtdiachi.setText(TableList.getValueAt(i, 7).toString());
-            combovaitro.setSelectedItem(TableList.getValueAt(i, 8).toString());
+//            combo.setSelectedItem(TableList.getValueAt(i, 8).toString());
             txtghichu.setText(TableList.getValueAt(i, 9).toString());
             txtmatkhau.setText(TableList.getValueAt(i, 10).toString());
             txtvitien.setText(TableList.getValueAt(i, 11).toString());
             txtvitien.setEditable(false);
-            combovaitro.setSelectedItem(TableList.getValueAt(i, (9)));
-
-        }
+    }
     }
 
     void buttonEnabled() {

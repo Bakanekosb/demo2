@@ -6,12 +6,16 @@
 package com.xpoly.helper;
 
 import com.xpoly.model.NguoiDung;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
  * @author Dell
  */
 public class LoginHelper {
+
+
 
     public static NguoiDung USER = null;
 
