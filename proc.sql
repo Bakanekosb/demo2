@@ -400,7 +400,7 @@ CREATE PROC sp_sachMuonTheoThang (@nam int)
 AS
 	BEGIN 				 
 				select count(*) as sosachmuon, MONTH(ngaymuon) as thang from pmct join phieumuon on pmct.maphieumuon = phieumuon.maphieumuon
-				where YEAR(ngaymuon) = @nam
+				where YEAR(ngaymuon) = 2020
 				group by MONTH(ngaymuon)
 	END
 GO
@@ -416,3 +416,16 @@ AS
 				group by MONTH(ngaymuon), mabandoc
 	END
 GO
+
+IF OBJECT_ID('SP_SELECTbandoc') IS NOT NULL
+DROP PROC SP_SELECTbandoc
+GO 
+	CREATE PROC SP_SELECTbandoc ( @KEYWORD NVARCHAR(50), @PAGENUMBER INT, @ROWSOFPAGE INT)
+AS
+	BEGIN 
+				SELECT * FROM nguoidung
+				WHERE hoten LIKE @KEYWORD OR mand LIKE @KEYWORD and vaitro = 2   and trangthai = 0	  -- tim kiem
+				ORDER BY mand
+				OFFSET (@PAGENUMBER - 1) * @ROWSOFPAGE ROWS
+				FETCH NEXT @ROWSOFPAGE ROWS ONLY 				
+	END
